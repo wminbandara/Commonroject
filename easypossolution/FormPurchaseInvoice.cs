@@ -2796,33 +2796,37 @@ namespace easyPOSSolution
 
         private void comboBoxPayMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            errorProvider1.Clear();
-            comboBoxBank.Enabled = false;
-            textBoxChequeNo.Enabled = false;
-            dateTimePickerChqExpDate.Enabled = false;
-            button2.Enabled = false;
+            if (loadStatus = false)
+            {
+                errorProvider1.Clear();
+                comboBoxBank.Enabled = false;
+                textBoxChequeNo.Enabled = false;
+                dateTimePickerChqExpDate.Enabled = false;
+                button2.Enabled = false;
 
-            if (comboBoxPayMode.Text == "Cheque" && loadStatus == false)
-            {
-                comboBoxBank.Enabled = true;
-                textBoxChequeNo.Enabled = true;
-                dateTimePickerChqExpDate.Enabled = true;
+                if (comboBoxPayMode.Text == "Cheque" && loadStatus == false)
+                {
+                    comboBoxBank.Enabled = true;
+                    textBoxChequeNo.Enabled = true;
+                    dateTimePickerChqExpDate.Enabled = true;
+                }
+                else if (comboBoxPayMode.Text == "Bank Transfer" && loadStatus == false)
+                {
+                    comboBoxBank.Enabled = true;
+                    //textBoxChequeNo.Enabled = true;
+                    //dateTimePickerChqExpDate.Enabled = true;
+                }
+                else if (comboBoxPayMode.Text == "Cash" && loadStatus == false)
+                {
+                    button2.Enabled = true;
+                }
+                else if (comboBoxPayMode.Text == "Credit" && loadStatus == false)
+                {
+                    button2.Enabled = true;
+                }
+                textBoxCash.Text = "0.00";
             }
-            else if (comboBoxPayMode.Text == "Bank Transfer" && loadStatus == false)
-            {
-                comboBoxBank.Enabled = true;
-                //textBoxChequeNo.Enabled = true;
-                //dateTimePickerChqExpDate.Enabled = true;
-            }
-            else if (comboBoxPayMode.Text == "Cash" && loadStatus == false)
-            {
-                button2.Enabled = true;
-            }
-            else if (comboBoxPayMode.Text == "Credit" && loadStatus == false)
-            {
-                button2.Enabled = true;
-            }
-            textBoxCash.Text = "0.00";
+            
         }
 
         private void textBoxPOID_TextChanged(object sender, EventArgs e)

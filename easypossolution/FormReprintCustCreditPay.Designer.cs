@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReprintCustCreditPay));
             this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -173,9 +173,9 @@
             // 
             this.gridControl1.Cursor = System.Windows.Forms.Cursors.Default;
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridLevelNode2.RelationName = "Level1";
+            gridLevelNode1.RelationName = "Level1";
             this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
             this.gridControl1.Location = new System.Drawing.Point(3, 18);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
@@ -199,7 +199,7 @@
             // ToolStripStatusLabel3
             // 
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(782, 17);
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(606, 17);
             this.ToolStripStatusLabel3.Spring = true;
             // 
             // ToolStripStatusLabel1
@@ -241,6 +241,7 @@
             this.lblUserId.Size = new System.Drawing.Size(145, 17);
             this.lblUserId.Text = "ToolStripStatusLabel2";
             this.lblUserId.Visible = false;
+            this.lblUserId.TextChanged += new System.EventHandler(this.lblUserId_TextChanged);
             // 
             // allCustomerInvoiceBindingSource
             // 

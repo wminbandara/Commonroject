@@ -416,6 +416,7 @@ namespace easyPOSSolution
             tileItemEmployeeAttendance.Visible = false;
             tileItemNewItemNotification.Visible = false;
             tileItemLatePaymentSMS.Visible = false;
+            tileItemReprintPurchaseReturn.Visible = false;
         }
 
         private void userPermission()
@@ -763,7 +764,11 @@ namespace easyPOSSolution
                             tileItemLatePaymentSMS.Visible = true;
 
                         }
+                        if (alistForm[i].ToString().Trim() == "Reprint Purchase Return")
+                        {
+                            tileItemReprintPurchaseReturn.Visible = true;
 
+                        }
                         
                     }
                 }
@@ -2991,6 +2996,31 @@ namespace easyPOSSolution
                 foreach (Form f in Application.OpenForms)
                 {
                     if (f.Name.Equals("FormEmployeeLeave"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemReprintPurchaseReturn_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormReprintPurchaseReturn frm = new FormReprintPurchaseReturn();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormReprintPurchaseReturn");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormReprintPurchaseReturn"))
                     {
                         f.WindowState = FormWindowState.Normal;
                         f.BringToFront();

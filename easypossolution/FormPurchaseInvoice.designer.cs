@@ -688,6 +688,7 @@
             this.checkBoxReturn.Size = new System.Drawing.Size(15, 14);
             this.checkBoxReturn.TabIndex = 722;
             this.checkBoxReturn.UseVisualStyleBackColor = false;
+            this.checkBoxReturn.CheckedChanged += new System.EventHandler(this.checkBoxReturn_CheckedChanged);
             // 
             // buttonNew1
             // 

@@ -124,6 +124,7 @@ namespace easyPOSSolution
             PrintPI();
             frm.Reset();
             frm.textBoxPOID.Text = dr.Cells["PIHDId"].Value.ToString();
+            frm.button2.Enabled = false;
             this.Close();
 
             //DataGridViewRow dr = DataGridView1.SelectedRows[0];
@@ -142,6 +143,7 @@ namespace easyPOSSolution
             PrintPI();
             frm.Reset();
             frm.textBoxPOID.Text = dr.Cells["PIHDId"].Value.ToString();
+            frm.button2.Enabled = false;
             //frm.ButtonSave.Enabled = false;
             //frm.existPOStatus = true;
             this.Close();

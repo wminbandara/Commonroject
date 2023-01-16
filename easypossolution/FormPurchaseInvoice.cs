@@ -624,6 +624,7 @@ namespace easyPOSSolution
             dgView1.Rows.Clear();
             Reset();
             ButtonSave.Enabled = true;
+            button2.Enabled = true;
             textBoxItemCode.Select();
             //if (textBoxPOID.Text == "")
             //{
@@ -706,6 +707,7 @@ namespace easyPOSSolution
             textBoxItemCode.Select();
             textBoxFromBranchId.Text = "0";
             TransferHDIdNew = 0;
+            button2.Enabled = true;
             ButtonSave.Enabled = true;
         }
 
@@ -2833,6 +2835,7 @@ namespace easyPOSSolution
                 dgView.Rows.Clear();
                 fillPIDtRec();
                 ButtonSave.Enabled = false;
+                button2.Enabled = false;
             }
         }
 
@@ -3170,7 +3173,14 @@ namespace easyPOSSolution
                 textBoxItemCode.Focus();
                 return;
             }
-            else if ((comboBoxSupplier.SelectedIndex == -1) && ((comboBoxPayMode.Text == "Credit") || (comboBoxPayMode.Text == "Cheque")))
+            else if (((comboBoxPayMode.Text == "Cheque") || (comboBoxPayMode.Text == "Card") || (comboBoxPayMode.Text == "CheckInHand") || (comboBoxPayMode.Text == "Advance") || (comboBoxPayMode.Text == "Bank Transfer") || (comboBoxPayMode.Text == "Loyalty Point") || (comboBoxPayMode.Text == "Return Note")))
+            {
+                MessageBox.Show("Please Select Correct payment mode.", "Invalid Payment mode", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                comboBoxSupplier.Focus();
+                comboBoxSupplier.Select();
+                return;
+            }
+            else if ((comboBoxSupplier.SelectedIndex == -1) && ((comboBoxPayMode.Text == "Credit")))
             {
                 MessageBox.Show("Please Select Supplier.", "Invalid Null", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 comboBoxSupplier.Focus();
@@ -3284,6 +3294,22 @@ namespace easyPOSSolution
             {
                 MessageBox.Show(ex.Message, "Import CSV File", MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+            }
+        }
+
+        private void checkBoxReturn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxReturn.Checked == true)
+            {
+                button2.Enabled = false;
+            }
+            else if (checkBoxReturn.Checked == false)
+            {
+                if (dgView.RowCount < 1)
+                {
+                    button2.Enabled = true;
+                }
+                
             }
         }
         

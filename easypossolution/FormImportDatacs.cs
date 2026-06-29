@@ -191,7 +191,6 @@ namespace easyPOSSolution
                     itemsToImport.Add(objPOBAL);
                 }
 
-                insertDTStatus = false;
                 await Task.Run(() =>
                 {
                     insertItemCategory(itemsToImport);
@@ -200,19 +199,12 @@ namespace easyPOSSolution
                     ClassPODAL objPODAL = new ClassPODAL();
                     foreach (var objPOBAL in itemsToImport)
                     {
-                        int count = objPODAL.ImportStock(objPOBAL);
-                        if (count != 0)
-                        {
-                            insertDTStatus = true;
-                        }
+                        objPODAL.ImportStock(objPOBAL);
                     }
                 });
 
-                if (insertDTStatus == true)
-                {
-                    MessageBox.Show("Items Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView1.DataSource = null;
-                }
+                MessageBox.Show("Items Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataGridView1.DataSource = null;
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -267,25 +259,17 @@ namespace easyPOSSolution
                     listToImport.Add(objBAL);
                 }
 
-                insertDTStatus = false;
                 await Task.Run(() =>
                 {
                     ClassMasterDAL objDAL = new ClassMasterDAL();
                     foreach (var objBAL in listToImport)
                     {
-                        int count = objDAL.InsertCustomer(objBAL);
-                        if (count != 0)
-                        {
-                            insertDTStatus = true;
-                        }
+                        objDAL.InsertCustomer(objBAL);
                     }
                 });
 
-                if (insertDTStatus == true)
-                {
-                    MessageBox.Show("Customers Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView1.DataSource = null;
-                }
+                MessageBox.Show("Customers Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataGridView1.DataSource = null;
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -455,8 +439,6 @@ namespace easyPOSSolution
                     itemsToImport.Add(objPOBAL);
                 }
 
-                // 2. Perform DB operations on a background thread
-                insertDTStatus = false;
                 await Task.Run(() =>
                 {
                     insertItemCategory(itemsToImport);
@@ -465,19 +447,12 @@ namespace easyPOSSolution
                     ClassPODAL objPODAL = new ClassPODAL();
                     foreach (var objPOBAL in itemsToImport)
                     {
-                        int count = objPODAL.ImportVarientStock(objPOBAL);
-                        if (count != 0)
-                        {
-                            insertDTStatus = true;
-                        }
+                        objPODAL.ImportVarientStock(objPOBAL);
                     }
                 });
 
-                if (insertDTStatus == true)
-                {
-                    MessageBox.Show("Varient Items Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView1.DataSource = null;
-                }
+                MessageBox.Show("Varient Items Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataGridView1.DataSource = null;
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -518,25 +493,17 @@ namespace easyPOSSolution
                     listToImport.Add(objBAL);
                 }
 
-                insertDTStatus = false;
                 await Task.Run(() =>
                 {
                     ClassMasterDAL objDAL = new ClassMasterDAL();
                     foreach (var objBAL in listToImport)
                     {
-                        int count = objDAL.InsertSupplier(objBAL);
-                        if (count != 0)
-                        {
-                            insertDTStatus = true;
-                        }
+                        objDAL.InsertSupplier(objBAL);
                     }
                 });
 
-                if (insertDTStatus == true)
-                {
-                    MessageBox.Show("Suppliers Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView1.DataSource = null;
-                }
+                MessageBox.Show("Suppliers Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataGridView1.DataSource = null;
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -552,6 +519,18 @@ namespace easyPOSSolution
 
         private void FormImportDatacs_Load(object sender, EventArgs e)
         {
+            try
+            {
+                ClassPOBAL objPOBAL = new ClassPOBAL();
+                ClassPODAL objPODAL = new ClassPODAL();
+                comboBoxBranch.DataSource = objPODAL.retreiveAllBranches(objPOBAL).Tables[0];
+                comboBoxBranch.DisplayMember = "BranchName";
+                comboBoxBranch.ValueMember = "BranchId";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void fillImage()
@@ -575,32 +554,6 @@ namespace easyPOSSolution
 
         private void simpleButton7_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    Cursor.Current = Cursors.WaitCursor;
-            //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //    {
-            //        ClassCommonBAL objBAL = new ClassCommonBAL();
-            //        objBAL.CustomerCode = dataGridView1.Rows[i].Cells["supname"].Value.ToString().Trim();
-            //        objBAL.BalanceAmount = Convert.ToDecimal(dataGridView1.Rows[i].Cells["total"].Value); ;
-            //        ClassMasterDAL objDAL = new ClassMasterDAL();
-            //        int count = objDAL.ImportTempSupCredit(objBAL);
-            //        if (count != 0)
-            //        {
-            //            insertDTStatus = true;
-            //        }
-            //    }
-            //    if (insertDTStatus == true)
-            //    {
-            //        MessageBox.Show("Supplier Credit Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        dataGridView1.DataSource = null;
-            //    }
-            //    Cursor.Current = Cursors.Default;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
 
         private async void simpleButton6_Click(object sender, EventArgs e)
@@ -648,25 +601,17 @@ namespace easyPOSSolution
                     listToImport.Add(objPOBAL);
                 }
 
-                insertDTStatus = false;
                 await Task.Run(() =>
                 {
                     ClassPODAL objPODAL = new ClassPODAL();
                     foreach (var objPOBAL in listToImport)
                     {
-                        int count = objPODAL.UpdateImportStock(objPOBAL);
-                        if (count != 0)
-                        {
-                            insertDTStatus = true;
-                        }
+                        objPODAL.UpdateImportStock(objPOBAL);
                     }
                 });
 
-                if (insertDTStatus == true)
-                {
-                    MessageBox.Show("Items Prices Updated Successfully.", "Update Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView1.DataSource = null;
-                }
+                MessageBox.Show("Items Prices Updated Successfully.", "Update Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataGridView1.DataSource = null;
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -696,25 +641,17 @@ namespace easyPOSSolution
                     listToImport.Add(objPOBAL);
                 }
 
-                insertDTStatus = false;
                 await Task.Run(() =>
                 {
                     ClassPODAL objPODAL = new ClassPODAL();
                     foreach (var objPOBAL in listToImport)
                     {
-                        int count = objPODAL.ImportStockQty(objPOBAL);
-                        if (count != 0)
-                        {
-                            insertDTStatus = true;
-                        }
+                        objPODAL.ImportStockQty(objPOBAL);
                     }
                 });
 
-                if (insertDTStatus == true)
-                {
-                    MessageBox.Show("Items Qty Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView1.DataSource = null;
-                }
+                MessageBox.Show("Items Qty Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dataGridView1.DataSource = null;
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)

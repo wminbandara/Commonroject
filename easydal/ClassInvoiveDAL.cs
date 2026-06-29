@@ -1,4 +1,4 @@
-﻿using easyBAL;
+using easyBAL;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -1116,6 +1116,20 @@ namespace easyDAL
                 param = new MySqlParameter[0];
                 //param[0] = new MySqlParameter("Action", "SelectDepartment");
                 obj.DtDataSet = objDataAccess.executeReturnDataset("SelectItemNamesInvoice", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveCustomerAutocomplete(ClassInvoiceBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectCustomerAutocompleteData", param);
             }
             catch (Exception ex)
             {

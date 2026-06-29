@@ -3995,6 +3995,7 @@ namespace easyPOSSolution
             txtItemName.AutoCompleteMode = AutoCompleteMode.None;
             txtItemCode.AutoCompleteMode = AutoCompleteMode.None;
 
+            activeTextBox = txtItemName;
             suggestBoxInitialized = true;
         }
 
@@ -4036,9 +4037,11 @@ namespace easyPOSSolution
 
         private void TextBox_Leave(object sender, EventArgs e)
         {
+            if (!this.IsHandleCreated) return;
+
             this.BeginInvoke(new Action(() =>
             {
-                if (this.ActiveControl != listSuggest && this.ActiveControl != txtItemCode && this.ActiveControl != txtItemName)
+                if (listSuggest != null && this.ActiveControl != listSuggest && this.ActiveControl != txtItemCode && this.ActiveControl != txtItemName)
                 {
                     listSuggest.Visible = false;
                 }
@@ -4065,18 +4068,22 @@ namespace easyPOSSolution
 
             if (matches.Count > 0)
             {
+                listSuggest.DataSource = null;
                 listSuggest.DataSource = matches;
 
-                if (listSuggest.Parent != tb.Parent)
+                if (listSuggest.Parent != this)
                 {
                     if (listSuggest.Parent != null)
                         listSuggest.Parent.Controls.Remove(listSuggest);
-                    tb.Parent.Controls.Add(listSuggest);
+                    this.Controls.Add(listSuggest);
                 }
 
-                listSuggest.Left = tb.Left;
-                listSuggest.Top = tb.Bottom;
-                listSuggest.Width = tb.Width;
+                Point screenPoint = tb.PointToScreen(new Point(0, 0));
+                Point clientPoint = this.PointToClient(screenPoint);
+
+                listSuggest.Left = clientPoint.X;
+                listSuggest.Top = clientPoint.Y + tb.Height;
+                listSuggest.Width = Math.Max(tb.Width, 350);
                 listSuggest.Height = Math.Min(150, matches.Count * 22 + 5);
                 listSuggest.Visible = true;
                 listSuggest.BringToFront();
@@ -4101,7 +4108,6 @@ namespace easyPOSSolution
                 isUpdatingText = true;
                 txtItemCode.Text = code;
                 txtItemName.Text = name;
-                isUpdatingText = false;
 
                 listSuggest.Visible = false;
 
@@ -4126,6 +4132,7 @@ namespace easyPOSSolution
                     calculateTotal();
                     txtSellingPrice.Select();
                 }
+                isUpdatingText = false;
             }
         }
 
@@ -4153,6 +4160,176 @@ namespace easyPOSSolution
                 }
                 Cursor.Current = Cursors.Default;
                 txtItemName.Select();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private ListBox listSuggestCust;
+        private List<string> allCustomers = new List<string>();
+        private bool suggestBoxCustInitialized = false;
+
+        private void InitializeSuggestBoxCust()
+        {
+            if (suggestBoxCustInitialized) return;
+
+            listSuggestCust = new ListBox();
+            listSuggestCust.Visible = false;
+            listSuggestCust.Height = 150;
+            listSuggestCust.SelectionMode = SelectionMode.One;
+            listSuggestCust.Font = new Font("Cambria", 11.25F, FontStyle.Bold);
+            listSuggestCust.DoubleClick += ListSuggestCust_DoubleClick;
+            listSuggestCust.KeyDown += ListSuggestCust_KeyDown;
+
+            textBoxCustCode.TextChanged += TextBoxCust_TextChanged;
+            textBoxCustCode.Enter += TextBoxCust_Enter;
+            textBoxCustCode.Leave += TextBoxCust_Leave;
+
+            textBoxCustCode.AutoCompleteMode = AutoCompleteMode.None;
+
+            suggestBoxCustInitialized = true;
+        }
+
+        private void ListSuggestCust_DoubleClick(object sender, EventArgs e)
+        {
+            SelectSuggestedCust(textBoxCustCode);
+        }
+
+        private void ListSuggestCust_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SelectSuggestedCust(textBoxCustCode);
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                listSuggestCust.Visible = false;
+                textBoxCustCode.Focus();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Up && listSuggestCust.SelectedIndex == 0)
+            {
+                textBoxCustCode.Focus();
+                e.Handled = true;
+            }
+        }
+
+        private void TextBoxCust_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void TextBoxCust_Leave(object sender, EventArgs e)
+        {
+            if (!this.IsHandleCreated) return;
+
+            this.BeginInvoke(new Action(() =>
+            {
+                if (listSuggestCust != null && this.ActiveControl != listSuggestCust && this.ActiveControl != textBoxCustCode)
+                {
+                    listSuggestCust.Visible = false;
+                }
+            }));
+        }
+
+        private void TextBoxCust_TextChanged(object sender, EventArgs e)
+        {
+            if (isUpdatingText) return;
+
+            TextBox tb = sender as TextBox;
+            if (tb == null) return;
+
+            string query = tb.Text;
+            if (string.IsNullOrEmpty(query))
+            {
+                listSuggestCust.Visible = false;
+                return;
+            }
+
+            var matches = allCustomers
+                .Where(item => item.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList();
+
+            if (matches.Count > 0)
+            {
+                listSuggestCust.DataSource = null;
+                listSuggestCust.DataSource = matches;
+
+                if (listSuggestCust.Parent != this)
+                {
+                    if (listSuggestCust.Parent != null)
+                        listSuggestCust.Parent.Controls.Remove(listSuggestCust);
+                    this.Controls.Add(listSuggestCust);
+                }
+
+                Point screenPoint = tb.PointToScreen(new Point(0, 0));
+                Point clientPoint = this.PointToClient(screenPoint);
+
+                listSuggestCust.Left = clientPoint.X;
+                listSuggestCust.Top = clientPoint.Y + tb.Height;
+                listSuggestCust.Width = Math.Max(tb.Width, 400);
+                listSuggestCust.Height = Math.Min(150, matches.Count * 22 + 5);
+                listSuggestCust.Visible = true;
+                listSuggestCust.BringToFront();
+            }
+            else
+            {
+                listSuggestCust.Visible = false;
+            }
+        }
+
+        private void SelectSuggestedCust(TextBox tb)
+        {
+            if (listSuggestCust.SelectedItem == null) return;
+
+            string selected = listSuggestCust.SelectedItem.ToString();
+            int closeBracket = selected.IndexOf(']');
+            if (selected.StartsWith("[") && closeBracket > 0)
+            {
+                string code = selected.Substring(1, closeBracket - 1).Trim();
+
+                isUpdatingText = true;
+                textBoxCustCode.Text = code;
+
+                listSuggestCust.Visible = false;
+
+                searchCustomer();
+                if (SelectItemName == true)
+                {
+                    txtItemName.Select();
+                }
+                else
+                {
+                    txtItemCode.Select();
+                }
+
+                isUpdatingText = false;
+            }
+        }
+
+        private void CustomerAutoComplete()
+        {
+            try
+            {
+                InitializeSuggestBoxCust();
+
+                objInvBAL = new ClassInvoiceBAL();
+                objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveCustomerAutocomplete(objInvBAL);
+
+                allCustomers.Clear();
+                if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        string code = dRow["CustomerCode"].ToString().Trim();
+                        string name = dRow["CustomerName"].ToString().Trim();
+                        string formatted = string.Format("[{0}] - {1}", code, name);
+                        allCustomers.Add(formatted);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -10332,7 +10509,7 @@ namespace easyPOSSolution
             if (autocomplete == true)
             {
                 ItemAutoComplete();
-                
+                CustomerAutoComplete();
             }
 
             SelectFormHelp();
@@ -10637,6 +10814,22 @@ namespace easyPOSSolution
 
         private void textBoxCustCode_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Down && listSuggestCust != null && listSuggestCust.Visible)
+            {
+                listSuggestCust.Focus();
+                if (listSuggestCust.Items.Count > 0)
+                    listSuggestCust.SelectedIndex = 0;
+                e.Handled = true;
+                return;
+            }
+            if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab) && listSuggestCust != null && listSuggestCust.Visible && listSuggestCust.Items.Count > 0)
+            {
+                SelectSuggestedCust(sender as TextBox);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                return;
+            }
+
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 if (textBoxCustCode.Text != "")

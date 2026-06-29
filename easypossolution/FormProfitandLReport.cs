@@ -44,35 +44,41 @@ namespace easyPOSSolution
         {
             try
             {
-                if (comboBoxBranch.SelectedIndex == -1)
-                {
+                //if (comboBoxBranch.SelectedIndex == -1)
+                //{
                     Cursor.Current = Cursors.WaitCursor;
                     CrystalReportPandL rpt = new CrystalReportPandL();
                     ClassPOBAL objBAL = new ClassPOBAL();
                     objBAL.date1 = dateTimePickerFrom.Value;
                     objBAL.date2 = dateTimePickerTo.Value;
+                    if (comboBoxBranch.SelectedIndex == -1)
+                    {
+                        comboBoxBranch.SelectedValue = 0;
+                    }
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue);
+                    objBAL.IsLPP = true;
                     ClassPODAL objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDate(objBAL);
+                    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateCommon(objBAL);
                     rpt.SetDataSource(objBAL.DtDataSet);
                     crystalReportViewer1.ReportSource = rpt;
                     crystalReportViewer1.Refresh();
                     Cursor.Current = Cursors.Default;
-                }
-                else
-                {
-                    Cursor.Current = Cursors.WaitCursor;
-                    CrystalReportPandL rpt = new CrystalReportPandL();
-                    ClassPOBAL objBAL = new ClassPOBAL();
-                    objBAL.date1 = dateTimePickerFrom.Value;
-                    objBAL.date2 = dateTimePickerTo.Value;
-                    objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
-                    ClassPODAL objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateBranch(objBAL);
-                    rpt.SetDataSource(objBAL.DtDataSet);
-                    crystalReportViewer1.ReportSource = rpt;
-                    crystalReportViewer1.Refresh();
-                    Cursor.Current = Cursors.Default;
-                }
+                //}
+                //else
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportPandL rpt = new CrystalReportPandL();
+                //    ClassPOBAL objBAL = new ClassPOBAL();
+                //    objBAL.date1 = dateTimePickerFrom.Value;
+                //    objBAL.date2 = dateTimePickerTo.Value;
+                //    objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                //    ClassPODAL objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateBranch(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    Cursor.Current = Cursors.Default;
+                //}
                 
             }
             catch (Exception ex)
@@ -100,35 +106,53 @@ namespace easyPOSSolution
         {
             try
             {
+                Cursor.Current = Cursors.WaitCursor;
+                CrystalReportPandL rpt = new CrystalReportPandL();
+                ClassPOBAL objBAL = new ClassPOBAL();
+                objBAL.date1 = dateTimePickerFrom.Value;
+                objBAL.date2 = dateTimePickerTo.Value;
                 if (comboBoxBranch.SelectedIndex == -1)
                 {
-                    Cursor.Current = Cursors.WaitCursor;
-                    CrystalReportPandL rpt = new CrystalReportPandL();
-                    ClassPOBAL objBAL = new ClassPOBAL();
-                    objBAL.date1 = dateTimePickerFrom.Value;
-                    objBAL.date2 = dateTimePickerTo.Value;
-                    ClassPODAL objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateAvgCost(objBAL);
-                    rpt.SetDataSource(objBAL.DtDataSet);
-                    crystalReportViewer1.ReportSource = rpt;
-                    crystalReportViewer1.Refresh();
-                    Cursor.Current = Cursors.Default;
+                    comboBoxBranch.SelectedValue = 0;
                 }
-                else
-                {
-                    Cursor.Current = Cursors.WaitCursor;
-                    CrystalReportPandL rpt = new CrystalReportPandL();
-                    ClassPOBAL objBAL = new ClassPOBAL();
-                    objBAL.date1 = dateTimePickerFrom.Value;
-                    objBAL.date2 = dateTimePickerTo.Value;
-                    objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
-                    ClassPODAL objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateBranchAvgCost(objBAL);
-                    rpt.SetDataSource(objBAL.DtDataSet);
-                    crystalReportViewer1.ReportSource = rpt;
-                    crystalReportViewer1.Refresh();
-                    Cursor.Current = Cursors.Default;
-                }
+                objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue);
+                objBAL.IsLPP = false;
+                ClassPODAL objDAL = new ClassPODAL();
+                objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateCommon(objBAL);
+                rpt.SetDataSource(objBAL.DtDataSet);
+                crystalReportViewer1.ReportSource = rpt;
+                crystalReportViewer1.Refresh();
+                Cursor.Current = Cursors.Default;
+
+                //if (comboBoxBranch.SelectedIndex == -1)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportPandL rpt = new CrystalReportPandL();
+                //    ClassPOBAL objBAL = new ClassPOBAL();
+                //    objBAL.date1 = dateTimePickerFrom.Value;
+                //    objBAL.date2 = dateTimePickerTo.Value;
+                //    ClassPODAL objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateAvgCost(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    Cursor.Current = Cursors.Default;
+                //}
+                //else
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportPandL rpt = new CrystalReportPandL();
+                //    ClassPOBAL objBAL = new ClassPOBAL();
+                //    objBAL.date1 = dateTimePickerFrom.Value;
+                //    objBAL.date2 = dateTimePickerTo.Value;
+                //    objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                //    ClassPODAL objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveProfitLostbyDateBranchAvgCost(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    Cursor.Current = Cursors.Default;
+                //}
 
             }
             catch (Exception ex)

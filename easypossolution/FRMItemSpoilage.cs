@@ -75,6 +75,30 @@ namespace easyPOSSolution
 
         }
 
+        private void printSpoilage()
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                CrystalReportSpoilage3in3ex rpt = new CrystalReportSpoilage3in3ex();
+                ClassPOBAL objBAL = new ClassPOBAL();
+                objBAL.SOHDId = Convert.ToInt32(textBoxId.Text);
+                ClassPODAL objDAL = new ClassPODAL();
+                objBAL.DtDataSet = objDAL.retreiveTAWSpoilageData(objBAL);
+                rpt.SetDataSource(objBAL.DtDataSet);
+                crystalReportViewer1.ReportSource = rpt;
+                crystalReportViewer1.Refresh();
+                rpt.PrintOptions.PrinterName = "";
+                rpt.PrintToPrinter(1, false, 0, 0);
+                Cursor.Current = Cursors.Default;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void buttonSave_Click(object sender, EventArgs e)
         {
             try
@@ -92,20 +116,55 @@ namespace easyPOSSolution
                     objPOBAL.Qty = Convert.ToDecimal(textBoxQty.Text);
                     objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
                     objPOBAL.Remarks = textBoxRemarks.Text.Trim();
+                    objPOBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
                     objPODAL = new ClassPODAL();
-                    int count1 = objPODAL.InsertSpoilage(objPOBAL);
-                    if (count1 != 0)
+                    string count = objPODAL.InsertNewSpoilage(objPOBAL);
+                    textBoxId.Text = count.ToString();
+                    if (count != "")
                     {
-                       MessageBox.Show("Item Spoilage Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                       textBoxItemId.Text = "0";
-                       textBoxItemCode.Text = "";
-                       comboBoxItemCategory.SelectedIndex = -1;
-                       textBoxQty.Text = "";
-                       comboBoxBranch.SelectedIndex = 0;
-                       textBoxRemarks.Text = "";
-                       textBoxItemCode.Select();
+                        //int count1 = objPODAL.InsertSpoilage(objPOBAL);
+                        //if (count1 != 0)
+                        //{
+                        MessageBox.Show("Item Spoilage Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        DialogResult result = MessageBox.Show("Do you want to Print this Damage Record?", "Printing Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            printSpoilage();
+                        }
+
+                        textBoxItemId.Text = "0";
+                        textBoxItemCode.Text = "";
+                        textBoxItemName.Text = "";
+                        comboBoxItemCategory.SelectedIndex = -1;
+                        textBoxQty.Text = "";
+                        //comboBoxBranch.SelectedIndex = 0;
+                        textBoxRemarks.Text = "";
+                        textBoxItemCode.Select();
+                        textBoxId.Text = "0";
 
                     }
+
+                    //objPOBAL = new ClassPOBAL();
+                    //objPOBAL.ItemsId = Convert.ToInt32(textBoxItemId.Text.Trim());
+                    //objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
+                    //objPOBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+                    //objPOBAL.Qty = Convert.ToDecimal(textBoxQty.Text);
+                    //objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                    //objPOBAL.Remarks = textBoxRemarks.Text.Trim();
+                    //objPODAL = new ClassPODAL();
+                    //int count1 = objPODAL.InsertSpoilage(objPOBAL);
+                    //if (count1 != 0)
+                    //{
+                    //   MessageBox.Show("Item Spoilage Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //   textBoxItemId.Text = "0";
+                    //   textBoxItemCode.Text = "";
+                    //   comboBoxItemCategory.SelectedIndex = -1;
+                    //   textBoxQty.Text = "";
+                    //   comboBoxBranch.SelectedIndex = 0;
+                    //   textBoxRemarks.Text = "";
+                    //   textBoxItemCode.Select();
+
+                    //}
                 }
             }
             catch (Exception ex)
@@ -144,10 +203,10 @@ namespace easyPOSSolution
                     //objPOBAL.Wharehouse = "Wharehouse1";
                     ClassPODAL objPODAL = new ClassPODAL();
                     objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                    if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                    if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                     {
                         List<ArrayList> newval = new List<ArrayList>();
-                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                         {
                             ArrayList values = new ArrayList();
                             values.Clear();

@@ -136,5 +136,10 @@ namespace easyPOSSolution
         {
             fillGridAllEmployee();
         }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://youtu.be/hdH3pIy6hqM");
+        }
     }
 }

@@ -745,6 +745,10 @@ namespace easyPOSSolution {
             
             private global::System.Data.DataColumn columnBranchId;
             
+            private global::System.Data.DataColumn columnFromDate;
+            
+            private global::System.Data.DataColumn columnToDate;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DataTableGrossProfitDataDataTable() {
@@ -876,6 +880,22 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FromDateColumn {
+                get {
+                    return this.columnFromDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ToDateColumn {
+                get {
+                    return this.columnToDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -911,7 +931,7 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTableGrossProfitDataRow AddDataTableGrossProfitDataRow(System.DateTime SODate, string ItemCode, string ItemName, decimal SalesQty, decimal SalesPrice, decimal SalesAmount, decimal CostPrice, decimal PurchaseCost, decimal NetSale, int ItemCatId, string DocStatus, int BranchId) {
+            public DataTableGrossProfitDataRow AddDataTableGrossProfitDataRow(System.DateTime SODate, string ItemCode, string ItemName, decimal SalesQty, decimal SalesPrice, decimal SalesAmount, decimal CostPrice, decimal PurchaseCost, decimal NetSale, int ItemCatId, string DocStatus, int BranchId, System.DateTime FromDate, System.DateTime ToDate) {
                 DataTableGrossProfitDataRow rowDataTableGrossProfitDataRow = ((DataTableGrossProfitDataRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SODate,
@@ -925,7 +945,9 @@ namespace easyPOSSolution {
                         NetSale,
                         ItemCatId,
                         DocStatus,
-                        BranchId};
+                        BranchId,
+                        FromDate,
+                        ToDate};
                 rowDataTableGrossProfitDataRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTableGrossProfitDataRow);
                 return rowDataTableGrossProfitDataRow;
@@ -960,6 +982,8 @@ namespace easyPOSSolution {
                 this.columnItemCatId = base.Columns["ItemCatId"];
                 this.columnDocStatus = base.Columns["DocStatus"];
                 this.columnBranchId = base.Columns["BranchId"];
+                this.columnFromDate = base.Columns["FromDate"];
+                this.columnToDate = base.Columns["ToDate"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -989,6 +1013,10 @@ namespace easyPOSSolution {
                 base.Columns.Add(this.columnDocStatus);
                 this.columnBranchId = new global::System.Data.DataColumn("BranchId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBranchId);
+                this.columnFromDate = new global::System.Data.DataColumn("FromDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFromDate);
+                this.columnToDate = new global::System.Data.DataColumn("ToDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnToDate);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2641,6 +2669,38 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime FromDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableDataTableGrossProfitData.FromDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FromDate\' in table \'DataTableGrossProfitData\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTableGrossProfitData.FromDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime ToDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableDataTableGrossProfitData.ToDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ToDate\' in table \'DataTableGrossProfitData\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTableGrossProfitData.ToDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsSODateNull() {
                 return this.IsNull(this.tableDataTableGrossProfitData.SODateColumn);
             }
@@ -2781,6 +2841,30 @@ namespace easyPOSSolution {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetBranchIdNull() {
                 this[this.tableDataTableGrossProfitData.BranchIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFromDateNull() {
+                return this.IsNull(this.tableDataTableGrossProfitData.FromDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFromDateNull() {
+                this[this.tableDataTableGrossProfitData.FromDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsToDateNull() {
+                return this.IsNull(this.tableDataTableGrossProfitData.ToDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetToDateNull() {
+                this[this.tableDataTableGrossProfitData.ToDateColumn] = global::System.Convert.DBNull;
             }
         }
         

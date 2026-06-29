@@ -1453,6 +1453,16 @@ namespace easyPOSSolution.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap umlogo {
+            get {
+                object obj = ResourceManager.GetObject("umlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap unnamed__1_ {
             get {
                 object obj = ResourceManager.GetObject("unnamed__1_", resourceCulture);
@@ -1476,6 +1486,16 @@ namespace easyPOSSolution.Properties {
         internal static System.Drawing.Bitmap Untitled_1 {
             get {
                 object obj = ResourceManager.GetObject("Untitled-1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UpdateInvoice {
+            get {
+                object obj = ResourceManager.GetObject("UpdateInvoice", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPriceUpdate));
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBoxItemId = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -73,6 +73,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -97,7 +98,7 @@
             this.panel2.Controls.Add(this.comboBoxItemMode);
             this.panel2.Location = new System.Drawing.Point(7, 7);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1014, 40);
+            this.panel2.Size = new System.Drawing.Size(904, 40);
             this.panel2.TabIndex = 165;
             // 
             // textBoxItemId
@@ -404,7 +405,7 @@
             // ToolStripStatusLabel3
             // 
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(611, 17);
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(787, 17);
             this.ToolStripStatusLabel3.Spring = true;
             // 
             // errorProvider1
@@ -565,11 +566,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridControl1.Cursor = System.Windows.Forms.Cursors.Default;
-            gridLevelNode3.RelationName = "Level1";
-            gridLevelNode4.RelationName = "Level2";
+            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level2";
             this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode3,
-            gridLevelNode4});
+            gridLevelNode1,
+            gridLevelNode2});
             this.gridControl1.Location = new System.Drawing.Point(652, 205);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
@@ -588,12 +589,28 @@
             this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridView1.OptionsView.ShowFooter = true;
             // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Appearance.BackColor = System.Drawing.Color.RoyalBlue;
+            this.simpleButton9.Appearance.BackColor2 = System.Drawing.Color.MediumSlateBlue;
+            this.simpleButton9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simpleButton9.Appearance.Options.UseBackColor = true;
+            this.simpleButton9.Appearance.Options.UseFont = true;
+            this.simpleButton9.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
+            this.simpleButton9.Location = new System.Drawing.Point(919, 7);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(96, 41);
+            this.simpleButton9.TabIndex = 733;
+            this.simpleButton9.Text = "Help";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
+            // 
             // FormPriceUpdate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(1033, 561);
+            this.Controls.Add(this.simpleButton9);
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.StatusStrip1);
@@ -676,5 +693,6 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         public System.Windows.Forms.TextBox textBoxPricePercentage;
         private System.Windows.Forms.Label label2;
+        private DevExpress.XtraEditors.SimpleButton simpleButton9;
     }
 }

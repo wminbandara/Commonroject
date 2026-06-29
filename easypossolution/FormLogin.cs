@@ -63,18 +63,28 @@ namespace easyPOSSolution
                         ActStatus = Convert.ToBoolean(values[4]);
                     }
 
-                    if (Sohdid >= 1000000)
-                    {
-                        txtUserName.ReadOnly = true;
-                        txtUserName.Text = "Activation Required.";
-                        txtPassword.ReadOnly = true;
-                        txtPassword.Text = "Contact Software Vendors.";
-                        FrmSystemActivation frm = new FrmSystemActivation();
-                        this.Hide();
-                        frm.Show();
-                    }
+                    //if (Sohdid >= 200000)
+                    //{
+                    //    txtUserName.ReadOnly = true;
+                    //    txtUserName.Text = "Database Full.";
+                    //    txtPassword.ReadOnly = true;
+                    //    txtPassword.Text = "Contact Software Vendors.";
+                    //    FrmSystemActivation frm = new FrmSystemActivation();
+                    //    this.Hide();
+                    //    frm.Show();
+                    //}
+                    //if (Convert.ToDateTime("2024-12-01") <= DateTime.Today)
+                    //{
+                    //    txtUserName.ReadOnly = true;
+                    //    txtUserName.Text = "Database Full.";
+                    //    txtPassword.ReadOnly = true;
+                    //    txtPassword.Text = "Contact Software Vendors.";
+                    //    FrmSystemActivation frm = new FrmSystemActivation();
+                    //    this.Hide();
+                    //    frm.Show();
+                    //}
 
-                    if ((SellerCode != DevKey) && (Convert.ToDateTime("2023-02-10") <= DateTime.Today))
+                    if ((SellerCode != DevKey) && (Convert.ToDateTime("2026-12-01") <= DateTime.Today))
                     {
                         txtUserName.ReadOnly = true;
                         txtUserName.Text = "Activation Required.";

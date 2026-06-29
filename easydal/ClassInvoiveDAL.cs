@@ -16,6 +16,37 @@ namespace easyDAL
         ClassDataAccess objDataAccess = new ClassDataAccess();
         MySqlParameter[] param;
 
+        public int UpdateSystemUserInfo(ClassInvoiceBAL obj)
+        {
+
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[10];
+                param[0] = new MySqlParameter("SellerName1", obj.PCSellerName);
+                param[1] = new MySqlParameter("CustomerNo1", obj.PCCustomerNo);
+                param[2] = new MySqlParameter("CustomerName1", obj.PCCustomerName);
+                param[3] = new MySqlParameter("CompanyName1", obj.PCCompanyName);
+                param[4] = new MySqlParameter("CompanyAddress11", obj.PCCompanyAddress1);
+                param[5] = new MySqlParameter("CompanyAddress21", obj.PCCompanyAddress2);
+                param[6] = new MySqlParameter("ContactNo11", obj.PCContactNo1);
+                param[7] = new MySqlParameter("ContactNo21", obj.PCContactNo2);
+                param[8] = new MySqlParameter("LastInvoiceNo1", obj.PCLastInvoiceNo);
+                param[9] = new MySqlParameter("ActivationPassword1", obj.PCActivationPassword);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnIntOnline("InsertUpdateposcustomers", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
         public int InsertCustomerChequeCreditPay(ClassInvoiceBAL obj)
         {
             int count = 0;
@@ -602,6 +633,33 @@ namespace easyDAL
             return count;
         }
 
+
+        public int UpdateInvoice(ClassInvoiceBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[6];
+                param[0] = new MySqlParameter("SOHDId1", obj.SOHDId);
+                param[1] = new MySqlParameter("SOGrossTotal1", obj.SOGrossTotal);
+                param[2] = new MySqlParameter("SODiscount1", obj.SODiscount);
+                param[3] = new MySqlParameter("Charges1", obj.Charges);
+                param[4] = new MySqlParameter("SONetTotal1", obj.SONetTotal);
+                param[5] = new MySqlParameter("CreatedBy1", obj.CreatedBy);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("UpdateInvoice", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
         public DataSet retreiveInvDisc(ClassInvoiceBAL obj)
         {
             try
@@ -788,7 +846,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[8];
+                param = new MySqlParameter[9];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
                 param[1] = new MySqlParameter("ItemName1", obj.ItemName);
                 param[2] = new MySqlParameter("InternalNo1", obj.InternalNo);
@@ -797,6 +855,7 @@ namespace easyDAL
                 param[5] = new MySqlParameter("BCStart1", obj.BCStart);
                 param[6] = new MySqlParameter("BCEnd1", obj.BCEnd);
                 param[7] = new MySqlParameter("ItemsId1", obj.ItemsId);
+                param[8] = new MySqlParameter("SerialNo1", obj.SerialNo);
 
 
                 objDataAccess.beginTransaction();
@@ -1035,6 +1094,21 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveItemRackNo(ClassInvoiceBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("Action", "SelectDepartment");
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAutocompleteRackNo", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveItemNameInvoice(ClassInvoiceBAL obj)
         {
             try
@@ -1190,8 +1264,9 @@ namespace easyDAL
         {
             try
             {
-                param = new MySqlParameter[1];
+                param = new MySqlParameter[2];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[1] = new MySqlParameter("BranchId1", obj.BranchId);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("ItemInvData", param);
             }
             catch (Exception ex)
@@ -1528,6 +1603,36 @@ namespace easyDAL
             }
         }
 
+        public string InsertGINhdNew(ClassInvoiceBAL obj)
+        {
+            try
+            {
+                MySqlParameter outParam = new MySqlParameter
+                {
+                    ParameterName = "TransferHDId1",
+                    MySqlDbType = MySqlDbType.Int32,
+                    Direction = ParameterDirection.Output
+                };
+                MySqlParameter[] sqlParams = new MySqlParameter[] {
+                    new MySqlParameter("FromBranchId1", obj.FromBranchId),
+                    new MySqlParameter("ToBranchId1", obj.ToBranchId),
+                    new MySqlParameter("CreatedBy1", obj.CreatedBy),
+                    new MySqlParameter("TotalCost1", obj.TotalCost),
+
+                    outParam };
+
+                objDataAccess.beginTransaction();
+                objDataAccess.executeReturnInt("InsertGINHDNew", sqlParams);
+                objDataAccess.commitTransaction();
+                return Convert.ToString(outParam.Value, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+        }
+
         public string InsertNewsohdReturn(ClassInvoiceBAL obj)
         {
             try
@@ -1623,6 +1728,11 @@ namespace easyDAL
                     new MySqlParameter("ReturnNoteNo1", obj.ReturnNoteNo),
                     new MySqlParameter("ReturnNoteAmount1", obj.ReturnNoteAmount),
                     new MySqlParameter("CashBalance1", obj.CashBalance),
+                    new MySqlParameter("TotDiscPer1", obj.TotDiscPer),
+                    new MySqlParameter("VATPer1", obj.VATPer),
+                    new MySqlParameter("NBTPer1", obj.NBTPer),
+                    new MySqlParameter("ChargesPer1", obj.ChargesPer),
+                    new MySqlParameter("AdvanceAmount1", obj.AdvanceAmount),
 
                     outParam };
 
@@ -1672,6 +1782,22 @@ namespace easyDAL
                     new MySqlParameter("VoucherNo1", obj.VoucherNo),
                     new MySqlParameter("VoucherAmount1", obj.VoucherAmount),
                     new MySqlParameter("ReceivableAmount1", obj.ReceivableAmount),
+                    new MySqlParameter("CustomerName1", obj.CustomerName),
+                    new MySqlParameter("Charges1", obj.Charges),
+                    new MySqlParameter("CreditDueDays1", obj.CreditDueDays),
+                    new MySqlParameter("CompletedDate1", obj.CompletedDate),
+                    new MySqlParameter("InvoiceStatusId1", obj.InvoiceStatusId),
+                    new MySqlParameter("RepairBill1", obj.RepairBill),
+                    new MySqlParameter("LoyaltyPoints1", obj.LoyaltyPoints),
+                    new MySqlParameter("LoyaltyBalance1", obj.LoyaltyBalance),
+                    new MySqlParameter("ReturnNoteNo1", obj.ReturnNoteNo),
+                    new MySqlParameter("ReturnNoteAmount1", obj.ReturnNoteAmount),
+                    new MySqlParameter("CashBalance1", obj.CashBalance),
+                    new MySqlParameter("TotDiscPer1", obj.TotDiscPer),
+                    new MySqlParameter("VATPer1", obj.VATPer),
+                    new MySqlParameter("NBTPer1", obj.NBTPer),
+                    new MySqlParameter("ChargesPer1", obj.ChargesPer),
+                    new MySqlParameter("AdvanceAmount1", obj.AdvanceAmount),
 
                     outParam };
 
@@ -1718,6 +1844,8 @@ namespace easyDAL
                     new MySqlParameter("CompletedDate1", obj.CompletedDate),
                     new MySqlParameter("InvoiceStatusId1", obj.InvoiceStatusId),
                     new MySqlParameter("RepairBill1", obj.RepairBill),
+                    new MySqlParameter("AdvanceAmount1", obj.AdvanceAmount),
+                    new MySqlParameter("ReferanceNo1", obj.ReferanceNo),
 
                     outParam };
 
@@ -1938,7 +2066,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[17];
+                param = new MySqlParameter[18];
                 param[0] = new MySqlParameter("SOHDId1", obj.SOHDId);
                 param[1] = new MySqlParameter("ItemCode1", obj.ItemCode);
                 param[2] = new MySqlParameter("SalesQty1", obj.SalesQty);
@@ -1956,6 +2084,7 @@ namespace easyDAL
                 param[14] = new MySqlParameter("SerialNo1", obj.SerialNo);
                 param[15] = new MySqlParameter("PriceMethod1", obj.PriceMethod);
                 param[16] = new MySqlParameter("DiscPer1", obj.DiscPer);
+                param[17] = new MySqlParameter("OurPrice1", obj.OurPrice);
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertInvoiceSODT", param);
@@ -2081,7 +2210,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[17];
+                param = new MySqlParameter[18];
                 param[0] = new MySqlParameter("SOHDId1", obj.SOHDId);
                 param[1] = new MySqlParameter("ItemCode1", obj.ItemCode);
                 param[2] = new MySqlParameter("SalesQty1", obj.SalesQty);
@@ -2099,6 +2228,7 @@ namespace easyDAL
                 param[14] = new MySqlParameter("SerialNo1", obj.SerialNo);
                 param[15] = new MySqlParameter("PriceMethod1", obj.PriceMethod);
                 param[16] = new MySqlParameter("DiscPer1", obj.DiscPer);
+                param[17] = new MySqlParameter("OurPrice1", obj.OurPrice);
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertInvoiceReturn", param);

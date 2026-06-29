@@ -4,76 +4,9 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="easybookshopsolutionConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="easybookshopsolutionConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.easyPOSSolution.Properties.Settings.GlobalReference.Default.easybookshopsolutionConnectionString" Provider="MySql.Data.MySqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="easybookshopsolutionConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="easybookshopsolutionConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.easyPOSSolution.Properties.Settings.GlobalReference.Default.easybookshopsolutionConnectionString" Provider="MySql.Data.MySqlClient" />
         </Connections>
-        <Tables>
-          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TKAInvoiceTableAdapter" GeneratorDataComponentClassName="TKAInvoiceTableAdapter" Name="TKAInvoice" UserDataComponentName="TKAInvoiceTableAdapter">
-            <MainSource>
-              <DbSource ConnectionRef="easybookshopsolutionConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
-                <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT        A.SOHDId AS BillNo, A.SODate, B.ItemCode, C.ItemName, B.SalesQty, B.SalesPrice, B.SalesQty * B.SalesPrice AS GrossAmount, B.Discount, B.NetAmount, A.SOGrossTotal, A.AdditionalChgs, A.SODiscount, 
-                         A.SONetTotal, F.PayMode, A.Cash, E.CustomerName, G.CompanyName, G.CompanyAddress1, G.CompanyAddress2, G.ContactNo1, G.ContactNo2, G.CompanyLogo, C.SItemName, G.FooterMsg, B.FreeIssue, 
-                         G.FooterMsg2, D.UserName, B.SODTId, B.Warranty, G.VATNo, G.CompRegNo, G.Web, G.Email, H.BranchName, A.ReturnTotal, E.CustomerAddress, E.CustomerTelNo, E.CustomerFaxNo, E.CustomerEmail, 
-                         E.ContactPerson
-FROM            salesorderhd A INNER JOIN
-                         salesorderdt B ON A.SOHDId = B.SOHDId INNER JOIN
-                         itemsummary C ON B.ItemsId = C.ItemsId INNER JOIN
-                         useraccount D ON A.CreatedBy = D.UserID INNER JOIN
-                         branch H ON A.BranchId = H.BranchId LEFT OUTER JOIN
-                         customer E ON A.CustomerId = E.CustomerId LEFT OUTER JOIN
-                         paymentmode F ON A.PayModeId = F.PayModeId, companyinfo G
-ORDER BY B.SODTId</CommandText>
-                    <Parameters />
-                  </DbCommand>
-                </SelectCommand>
-              </DbSource>
-            </MainSource>
-            <Mappings>
-              <Mapping SourceColumn="BillNo" DataSetColumn="BillNo" />
-              <Mapping SourceColumn="SODate" DataSetColumn="SODate" />
-              <Mapping SourceColumn="ItemName" DataSetColumn="ItemName" />
-              <Mapping SourceColumn="SalesQty" DataSetColumn="SalesQty" />
-              <Mapping SourceColumn="NetAmount" DataSetColumn="NetAmount" />
-              <Mapping SourceColumn="SOGrossTotal" DataSetColumn="SOGrossTotal" />
-              <Mapping SourceColumn="SODiscount" DataSetColumn="SODiscount" />
-              <Mapping SourceColumn="SONetTotal" DataSetColumn="SONetTotal" />
-              <Mapping SourceColumn="SalesPrice" DataSetColumn="SalesPrice" />
-              <Mapping SourceColumn="Discount" DataSetColumn="Discount" />
-              <Mapping SourceColumn="ItemCode" DataSetColumn="ItemCode" />
-              <Mapping SourceColumn="GrossAmount" DataSetColumn="GrossAmount" />
-              <Mapping SourceColumn="PayMode" DataSetColumn="PayMode" />
-              <Mapping SourceColumn="Cash" DataSetColumn="Cash" />
-              <Mapping SourceColumn="CustomerName" DataSetColumn="CustomerName" />
-              <Mapping SourceColumn="CompanyName" DataSetColumn="CompanyName" />
-              <Mapping SourceColumn="CompanyAddress1" DataSetColumn="CompanyAddress1" />
-              <Mapping SourceColumn="CompanyAddress2" DataSetColumn="CompanyAddress2" />
-              <Mapping SourceColumn="ContactNo1" DataSetColumn="ContactNo1" />
-              <Mapping SourceColumn="ContactNo2" DataSetColumn="ContactNo2" />
-              <Mapping SourceColumn="CompanyLogo" DataSetColumn="CompanyLogo" />
-              <Mapping SourceColumn="SItemName" DataSetColumn="SItemName" />
-              <Mapping SourceColumn="AdditionalChgs" DataSetColumn="AdditionalChgs" />
-              <Mapping SourceColumn="FooterMsg" DataSetColumn="FooterMsg" />
-              <Mapping SourceColumn="FreeIssue" DataSetColumn="FreeIssue" />
-              <Mapping SourceColumn="FooterMsg2" DataSetColumn="FooterMsg2" />
-              <Mapping SourceColumn="UserName" DataSetColumn="UserName" />
-              <Mapping SourceColumn="SODTId" DataSetColumn="SODTId" />
-              <Mapping SourceColumn="Warranty" DataSetColumn="Warranty" />
-              <Mapping SourceColumn="VATNo" DataSetColumn="VATNo" />
-              <Mapping SourceColumn="CompRegNo" DataSetColumn="CompRegNo" />
-              <Mapping SourceColumn="Web" DataSetColumn="Web" />
-              <Mapping SourceColumn="Email" DataSetColumn="Email" />
-              <Mapping SourceColumn="BranchName" DataSetColumn="BranchName" />
-              <Mapping SourceColumn="ReturnTotal" DataSetColumn="ReturnTotal" />
-              <Mapping SourceColumn="CustomerAddress" DataSetColumn="CustomerAddress" />
-              <Mapping SourceColumn="CustomerTelNo" DataSetColumn="CustomerTelNo" />
-              <Mapping SourceColumn="CustomerFaxNo" DataSetColumn="CustomerFaxNo" />
-              <Mapping SourceColumn="CustomerEmail" DataSetColumn="CustomerEmail" />
-              <Mapping SourceColumn="ContactPerson" DataSetColumn="ContactPerson" />
-            </Mappings>
-            <Sources />
-          </TableAdapter>
-        </Tables>
+        <Tables />
         <Sources />
       </DataSource>
     </xs:appinfo>
@@ -295,6 +228,31 @@ ORDER BY B.SODTId</CommandText>
               <xs:element name="LoyaltyPoints" msprop:Generator_ColumnVarNameInTable="columnLoyaltyPoints" msprop:Generator_ColumnPropNameInRow="LoyaltyPoints" msprop:Generator_ColumnPropNameInTable="LoyaltyPointsColumn" msprop:Generator_UserColumnName="LoyaltyPoints" type="xs:decimal" minOccurs="0" />
               <xs:element name="LoyaltyBalance" msprop:Generator_ColumnVarNameInTable="columnLoyaltyBalance" msprop:Generator_ColumnPropNameInRow="LoyaltyBalance" msprop:Generator_ColumnPropNameInTable="LoyaltyBalanceColumn" msprop:Generator_UserColumnName="LoyaltyBalance" type="xs:decimal" minOccurs="0" />
               <xs:element name="TotalPoints" msprop:Generator_ColumnVarNameInTable="columnTotalPoints" msprop:Generator_ColumnPropNameInRow="TotalPoints" msprop:Generator_ColumnPropNameInTable="TotalPointsColumn" msprop:Generator_UserColumnName="TotalPoints" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCode" msprop:Generator_ColumnPropNameInRow="CurrencyCode" msprop:Generator_ColumnPropNameInTable="CurrencyCodeColumn" msprop:Generator_UserColumnName="CurrencyCode" type="xs:string" minOccurs="0" />
+              <xs:element name="ShowCreditBalance" msprop:Generator_ColumnVarNameInTable="columnShowCreditBalance" msprop:Generator_ColumnPropNameInRow="ShowCreditBalance" msprop:Generator_ColumnPropNameInTable="ShowCreditBalanceColumn" msprop:Generator_UserColumnName="ShowCreditBalance" type="xs:int" minOccurs="0" />
+              <xs:element name="ItemUnit" msprop:Generator_ColumnVarNameInTable="columnItemUnit" msprop:Generator_ColumnPropNameInRow="ItemUnit" msprop:Generator_ColumnPropNameInTable="ItemUnitColumn" msprop:Generator_UserColumnName="ItemUnit" type="xs:string" minOccurs="0" />
+              <xs:element name="VAT" msprop:Generator_ColumnVarNameInTable="columnVAT" msprop:Generator_ColumnPropNameInRow="VAT" msprop:Generator_ColumnPropNameInTable="VATColumn" msprop:Generator_UserColumnName="VAT" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NBT" msprop:Generator_ColumnVarNameInTable="columnNBT" msprop:Generator_ColumnPropNameInRow="NBT" msprop:Generator_ColumnPropNameInTable="NBTColumn" msprop:Generator_UserColumnName="NBT" type="xs:decimal" minOccurs="0" />
+              <xs:element name="TotDiscPer" msprop:Generator_ColumnVarNameInTable="columnTotDiscPer" msprop:Generator_ColumnPropNameInRow="TotDiscPer" msprop:Generator_ColumnPropNameInTable="TotDiscPerColumn" msprop:Generator_UserColumnName="TotDiscPer" type="xs:decimal" minOccurs="0" />
+              <xs:element name="VATPer" msprop:Generator_ColumnVarNameInTable="columnVATPer" msprop:Generator_ColumnPropNameInRow="VATPer" msprop:Generator_ColumnPropNameInTable="VATPerColumn" msprop:Generator_UserColumnName="VATPer" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NBTPer" msprop:Generator_ColumnVarNameInTable="columnNBTPer" msprop:Generator_ColumnPropNameInRow="NBTPer" msprop:Generator_ColumnPropNameInTable="NBTPerColumn" msprop:Generator_UserColumnName="NBTPer" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ChargesPer" msprop:Generator_ColumnVarNameInTable="columnChargesPer" msprop:Generator_ColumnPropNameInRow="ChargesPer" msprop:Generator_ColumnPropNameInTable="ChargesPerColumn" msprop:Generator_UserColumnName="ChargesPer" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DailyId" msprop:Generator_ColumnVarNameInTable="columnDailyId" msprop:Generator_ColumnPropNameInRow="DailyId" msprop:Generator_ColumnPropNameInTable="DailyIdColumn" msprop:Generator_UserColumnName="DailyId" type="xs:int" minOccurs="0" />
+              <xs:element name="AdvanceAmount" msprop:Generator_ColumnVarNameInTable="columnAdvanceAmount" msprop:Generator_ColumnPropNameInRow="AdvanceAmount" msprop:Generator_ColumnPropNameInTable="AdvanceAmountColumn" msprop:Generator_UserColumnName="AdvanceAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OurPrice" msprop:Generator_ColumnVarNameInTable="columnOurPrice" msprop:Generator_ColumnPropNameInRow="OurPrice" msprop:Generator_ColumnPropNameInTable="OurPriceColumn" msprop:Generator_UserColumnName="OurPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="CustomerVATNo" msprop:Generator_ColumnVarNameInTable="columnCustomerVATNo" msprop:Generator_ColumnPropNameInRow="CustomerVATNo" msprop:Generator_ColumnPropNameInTable="CustomerVATNoColumn" msprop:Generator_UserColumnName="CustomerVATNo" type="xs:string" minOccurs="0" />
+              <xs:element name="InvoiceNo" msprop:Generator_ColumnVarNameInTable="columnInvoiceNo" msprop:Generator_ColumnPropNameInRow="InvoiceNo" msprop:Generator_ColumnPropNameInTable="InvoiceNoColumn" msprop:Generator_UserColumnName="InvoiceNo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="POSummaryPrint" msprop:Generator_TableClassName="POSummaryPrintDataTable" msprop:Generator_TableVarName="tablePOSummaryPrint" msprop:Generator_TablePropName="POSummaryPrint" msprop:Generator_RowDeletingName="POSummaryPrintRowDeleting" msprop:Generator_RowChangingName="POSummaryPrintRowChanging" msprop:Generator_RowEvHandlerName="POSummaryPrintRowChangeEventHandler" msprop:Generator_RowDeletedName="POSummaryPrintRowDeleted" msprop:Generator_UserTableName="POSummaryPrint" msprop:Generator_RowChangedName="POSummaryPrintRowChanged" msprop:Generator_RowEvArgName="POSummaryPrintRowChangeEvent" msprop:Generator_RowClassName="POSummaryPrintRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="POHDId" msprop:Generator_ColumnVarNameInTable="columnPOHDId" msprop:Generator_ColumnPropNameInRow="POHDId" msprop:Generator_ColumnPropNameInTable="POHDIdColumn" msprop:Generator_UserColumnName="POHDId" type="xs:int" minOccurs="0" />
+              <xs:element name="PONo" msprop:Generator_ColumnVarNameInTable="columnPONo" msprop:Generator_ColumnPropNameInRow="PONo" msprop:Generator_ColumnPropNameInTable="PONoColumn" msprop:Generator_UserColumnName="PONo" type="xs:string" minOccurs="0" />
+              <xs:element name="PODate" msprop:Generator_ColumnVarNameInTable="columnPODate" msprop:Generator_ColumnPropNameInRow="PODate" msprop:Generator_ColumnPropNameInTable="PODateColumn" msprop:Generator_UserColumnName="PODate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SupplierName" msprop:Generator_ColumnVarNameInTable="columnSupplierName" msprop:Generator_ColumnPropNameInRow="SupplierName" msprop:Generator_ColumnPropNameInTable="SupplierNameColumn" msprop:Generator_UserColumnName="SupplierName" type="xs:string" minOccurs="0" />
+              <xs:element name="CompanyName" msprop:Generator_ColumnVarNameInTable="columnCompanyName" msprop:Generator_ColumnPropNameInRow="CompanyName" msprop:Generator_ColumnPropNameInTable="CompanyNameColumn" msprop:Generator_UserColumnName="CompanyName" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

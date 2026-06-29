@@ -35,6 +35,20 @@ namespace easyPOSSolution
 
         #endregion
 
+        private void ResetNew()
+        {
+            textBoxItemId.Text = "0";
+            textBoxSearchItemCode.Text = "";
+            textBoxItemName.Text = "";
+            textBoxQty.Text = "0";
+            textBoxSystemQty.Text = "0";
+            textBoxRate.Text = "0.00";
+            dataGridView3.DataSource = null;
+            dataGridView3.Rows.Clear();
+            textBoxAdjustmentNo.Clear();
+            textBoxVarianceTotal.Text = "0.00";
+        }
+
         private void userPermission()
         {
             try
@@ -94,7 +108,7 @@ namespace easyPOSSolution
                             values.Add(value);
                         newval.Add(values);
                         textBoxSearchItemCode.AutoCompleteCustomSource.Add(values[1].ToString());
-                        //textBoxItemName.AutoCompleteCustomSource.Add(values[2].ToString());
+                        textBoxItemName.AutoCompleteCustomSource.Add(values[2].ToString());
                     }
                 }
                 Cursor.Current = Cursors.Default;
@@ -109,12 +123,40 @@ namespace easyPOSSolution
         {
             if (e.KeyCode == Keys.F2)
             {
-                textBoxFromItemCode.Select();
+                textBoxSearchItemCode.Select();
                 FormItemSearch frm14 = new FormItemSearch();
                 frm14.frm14 = this;
                 frm14.form = 14;
                 frm14.wh = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
                 frm14.ShowDialog(this);
+                textBoxSearchItemCode.Select();
+            }
+            if (e.KeyCode == Keys.Delete)
+            {
+                DialogResult result = MessageBox.Show("Do you want to Delete this Selected Record?", "Delete Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    RemoveItem();
+                }
+            }
+        }
+
+        void RemoveItem()
+        {
+            try
+            {
+                if (dataGridView3.SelectedRows.Count > 0)
+                {
+                    dataGridView3.Rows.RemoveAt(dataGridView3.SelectedRows[0].Index);
+                }
+                else
+                {
+                    MessageBox.Show("Select one item to remove!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -129,13 +171,14 @@ namespace easyPOSSolution
                 comboBoxBranch.DisplayMember = "BranchName";
                 comboBoxBranch.ValueMember = "BranchId";
                 comboBoxBranch.SelectedValue = lblBranchID.Text;
+                textBoxSearchItemCode.Select();
 
-                ClassPOBAL objPOBAL = new ClassPOBAL();
-                ClassPODAL objPODAL = new ClassPODAL();
-                comboBoxCategorySearch.DataSource = objPODAL.retreiveAllCategoryData(objPOBAL).Tables[0];
-                comboBoxCategorySearch.DisplayMember = "ItemCatName";
-                comboBoxCategorySearch.ValueMember = "ItemCatId";
-                comboBoxCategorySearch.SelectedIndex = -1;
+                //ClassPOBAL objPOBAL = new ClassPOBAL();
+                //ClassPODAL objPODAL = new ClassPODAL();
+                //comboBoxCategorySearch.DataSource = objPODAL.retreiveAllCategoryData(objPOBAL).Tables[0];
+                //comboBoxCategorySearch.DisplayMember = "ItemCatName";
+                //comboBoxCategorySearch.ValueMember = "ItemCatId";
+                //comboBoxCategorySearch.SelectedIndex = -1;
                 loadStatus = false;
             }
             catch (Exception ex)
@@ -232,6 +275,7 @@ namespace easyPOSSolution
                     {
                         printInvoice();
                     }
+                    ResetNew();
                 }
 
             }
@@ -351,7 +395,7 @@ namespace easyPOSSolution
                 textBoxVariance.Text = "0";
                 textBoxFromItemName.Clear();
                 textBoxFromNewQty.Text = "0";
-                textBoxFromItemCode.Select();
+                textBoxSearchItemCode.Select();
             }
             catch (Exception ex)
             {
@@ -453,49 +497,49 @@ namespace easyPOSSolution
 
         private void textBoxSearchItemCode_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                Cursor.Current = Cursors.WaitCursor;
-                objPOBAL = new ClassPOBAL();
-                objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
-                objPOBAL.ItemCode = textBoxSearchItemCode.Text.Trim();
-                objPODAL = new ClassPODAL();
-                dataGridView3.DataSource = null;
-                dataGridView3.Rows.Clear();
-                objPOBAL.DtDataSet = objPODAL.retreiveStockAdjByBranchItmCode(objPOBAL);
-                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
-                {
-                    List<ArrayList> newval = new List<ArrayList>();
-                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
-                    {
-                        ArrayList values = new ArrayList();
-                        values.Clear();
-                        foreach (object value in dRow.ItemArray)
-                            values.Add(value);
-                        newval.Add(values);
-                        int n = dataGridView3.Rows.Add();
+            //try
+            //{
+            //    Cursor.Current = Cursors.WaitCursor;
+            //    objPOBAL = new ClassPOBAL();
+            //    objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+            //    objPOBAL.ItemCode = textBoxSearchItemCode.Text.Trim();
+            //    objPODAL = new ClassPODAL();
+            //    dataGridView3.DataSource = null;
+            //    dataGridView3.Rows.Clear();
+            //    objPOBAL.DtDataSet = objPODAL.retreiveStockAdjByBranchItmCode(objPOBAL);
+            //    if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
+            //    {
+            //        List<ArrayList> newval = new List<ArrayList>();
+            //        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
+            //        {
+            //            ArrayList values = new ArrayList();
+            //            values.Clear();
+            //            foreach (object value in dRow.ItemArray)
+            //                values.Add(value);
+            //            newval.Add(values);
+            //            int n = dataGridView3.Rows.Add();
 
-                        dataGridView3.Rows[n].Cells["ItemCode"].Value = (values[0].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["ItemName"].Value = (values[1].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["AvailableQty"].Value = (values[2].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["PhisicalQty"].Value = (values[3].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["VarrienceQty"].Value = (values[4].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["AvgCost"].Value = (values[5].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["VarrienceValue"].Value = (values[6].ToString().Trim());
-                        dataGridView3.Rows[n].Cells["ItemsId"].Value = (values[7].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["ItemCode"].Value = (values[0].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["ItemName"].Value = (values[1].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["AvailableQty"].Value = (values[2].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["PhisicalQty"].Value = (values[3].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["VarrienceQty"].Value = (values[4].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["AvgCost"].Value = (values[5].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["VarrienceValue"].Value = (values[6].ToString().Trim());
+            //            dataGridView3.Rows[n].Cells["ItemsId"].Value = (values[7].ToString().Trim());
 
-                        //dataGridView3.Rows[n].Cells["PhisicalQty"].ReadOnly = false;
-                        dataGridView3.FirstDisplayedScrollingRowIndex = n;
-                        dataGridView3.CurrentCell = dataGridView3.Rows[n].Cells[0];
-                        dataGridView3.Rows[n].Selected = true;
-                    }
-                }
-                Cursor.Current = Cursors.Default;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //            //dataGridView3.Rows[n].Cells["PhisicalQty"].ReadOnly = false;
+            //            dataGridView3.FirstDisplayedScrollingRowIndex = n;
+            //            dataGridView3.CurrentCell = dataGridView3.Rows[n].Cells[0];
+            //            dataGridView3.Rows[n].Selected = true;
+            //        }
+            //    }
+            //    Cursor.Current = Cursors.Default;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void simpleButton2_Click(object sender, EventArgs e)
@@ -537,6 +581,186 @@ namespace easyPOSSolution
             if (autocomplete == true)
             {
                 ItemAutoComplete();
+                textBoxSearchItemCode.Select();
+            }
+        }
+
+        private void textBoxItemName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (textBoxItemName.Text != "")
+                {
+                    SearchItemByName();
+                    textBoxSearchItemCode_KeyDown(sender, e);
+                }
+            }
+        }
+
+        void SearchItemByName()
+        {
+            try
+            {
+                textBoxSearchItemCode.Clear();
+                ClassInvoiceBAL objInvBAL = new ClassInvoiceBAL();
+                objInvBAL.ItemName = textBoxItemName.Text.Trim();
+                ClassInvoiveDAL objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveItemsDataByName(objInvBAL);
+                if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        textBoxSearchItemCode.Text = (values[0].ToString().Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void textBoxSearchItemCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (textBoxSearchItemCode.Text != "")
+                {
+                    try
+                    {
+                        textBoxItemId.Text = "0";
+                        //textBoxSearchItemCode.Text = "";
+                        textBoxItemName.Text = "";
+                        textBoxQty.Text = "0";
+                        textBoxSystemQty.Text = "0";
+                        textBoxRate.Text = "0.00";
+
+                        ClassPOBAL objPOBAL = new ClassPOBAL();
+                        objPOBAL.ItemCode = textBoxSearchItemCode.Text.Trim();
+                        ClassPODAL objPODAL = new ClassPODAL();
+                        objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
+                        if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                        {
+                            List<ArrayList> newval = new List<ArrayList>();
+                            foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
+                            {
+                                ArrayList values = new ArrayList();
+                                values.Clear();
+                                foreach (object value in dRow.ItemArray)
+                                    values.Add(value);
+                                newval.Add(values);
+
+                                textBoxItemName.Text = (values[1].ToString().Trim());
+                                textBoxRate.Text = (values[4].ToString().Trim());
+                                textBoxItemId.Text = (values[7].ToString().Trim());
+
+                                SearchBranchQty();
+                            }
+                            textBoxQty.Select();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void SearchBranchQty()
+        {
+            try
+            {
+                textBoxQty.Text = "0.00";
+                textBoxSystemQty.Text = "0.00";
+                ClassInvoiceBAL objInvBAL = new ClassInvoiceBAL();
+                objInvBAL.ItemsId = Convert.ToInt32(textBoxItemId.Text);
+                objInvBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                ClassInvoiveDAL objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveBranchQty(objInvBAL);
+                if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+
+                        textBoxQty.Text = (values[0].ToString().Trim());
+                        textBoxSystemQty.Text = (values[0].ToString().Trim());
+
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void textBoxQty_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (textBoxSearchItemCode.Text != "")
+                {
+                    AddtoGrid();
+                }
+                
+            }
+        }
+
+        private void AddtoGrid()
+        {
+            try
+            {
+                int n = dataGridView3.Rows.Add();
+
+                dataGridView3.Rows[n].Cells["ItemsId"].Value = textBoxItemId.Text;
+                dataGridView3.Rows[n].Cells["ItemCode"].Value = textBoxSearchItemCode.Text;
+                dataGridView3.Rows[n].Cells["ItemName"].Value = textBoxItemName.Text;
+                dataGridView3.Rows[n].Cells["VarrienceQty"].Value = "0";
+                dataGridView3.Rows[n].Cells["VarrienceValue"].Value = "0";
+                dataGridView3.Rows[n].Cells["AvailableQty"].Value = textBoxSystemQty.Text;
+                dataGridView3.Rows[n].Cells["AvgCost"].Value = textBoxRate.Text;
+                dataGridView3.Rows[n].Cells["PhisicalQty"].Value = textBoxQty.Text;
+
+
+
+                dataGridView3.FirstDisplayedScrollingRowIndex = n;
+                dataGridView3.CurrentCell = dataGridView3.Rows[n].Cells[0];
+                dataGridView3.Rows[n].Selected = true;
+
+                textBoxItemId.Text = "0";
+                textBoxSearchItemCode.Text = "";
+                textBoxItemName.Text = "";
+                textBoxQty.Text = "0";
+                textBoxSystemQty.Text = "0";
+                textBoxRate.Text = "0.00";
+                textBoxSearchItemCode.Select();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void simpleButton3_Click(object sender, EventArgs e)
+        {
+            if (textBoxSearchItemCode.Text != "")
+            {
+                AddtoGrid();
             }
         }
 

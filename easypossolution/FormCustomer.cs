@@ -762,15 +762,15 @@ namespace easyPOSSolution
 
         private void FormCustomer_Load(object sender, EventArgs e)
         {
-            loadStatus = true;
-            fillGridAllCustomers();
-            loadArea();
-            loadNewArea();
-            fillImage();
-            loadCustomerType();
-            loadCustomercontact();
-            SelectCompanyData();
-            loadStatus = false;
+            //loadStatus = true;
+            //fillGridAllCustomers();
+            //loadArea();
+            //loadNewArea();
+            //fillImage();
+            //loadCustomerType();
+            //loadCustomercontact();
+            //SelectCompanyData();
+            //loadStatus = false;
         }
 
         private void ButtonNew_Click(object sender, EventArgs e)
@@ -1230,6 +1230,19 @@ namespace easyPOSSolution
                 ResetAllCustomerLoyalty();
                 fillGridAllCustomers();
             }
+        }
+
+        private void lblUserId_TextChanged(object sender, EventArgs e)
+        {
+            loadStatus = true;
+            fillGridAllCustomers();
+            loadArea();
+            loadNewArea();
+            fillImage();
+            loadCustomerType();
+            loadCustomercontact();
+            SelectCompanyData();
+            loadStatus = false;
         }
 
        

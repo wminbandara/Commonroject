@@ -77,10 +77,10 @@ namespace easyPOSSolution
                 objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
                 objPODAL = new ClassPODAL();
                 objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
                     List<ArrayList> newval = new List<ArrayList>();
-                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                     {
                         ArrayList values = new ArrayList();
                         values.Clear();

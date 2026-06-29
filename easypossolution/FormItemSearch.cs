@@ -37,6 +37,7 @@ namespace easyPOSSolution
         public FormStockAdjustment frm14 { set; get; }
         public FormInvoiceTuch frm15 { set; get; }
         public StockDetails frm16 { set; get; }
+        public FormGINNew frm17 { set; get; }
 
         public int form;
         public int wh = 1;
@@ -150,6 +151,38 @@ namespace easyPOSSolution
                     //if (lblUserId.Text != "3")
                     //{
                         //gridView1.Columns["BranchQty"].FilterInfo = new ColumnFilterInfo("[BranchQty] > '1'");
+                    //}
+                    gridView1.Columns["ItemsId"].Visible = false;
+                    gridView1.Columns["PurchasePrice"].Visible = false;
+                    gridView1.OptionsView.ColumnAutoWidth = false;
+                    gridView1.BestFitColumns();
+                }
+
+                Cursor.Current = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void fillGriStockBySearchText()
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                ClassPOBAL objPOBAL = new ClassPOBAL();
+                objPOBAL.ItemName = textBoxSearchText.Text;
+                objPOBAL.BranchId = Convert.ToInt32(wh.ToString());
+                ClassPODAL objPODAL = new ClassPODAL();
+                gridControl1.DataSource = null;
+                objPOBAL.DtDataSet = objPODAL.retreiveSearchStockBySearchText(objPOBAL);
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    gridControl1.DataSource = objPOBAL.DtDataSet.Tables[0];
+                    //if (lblUserId.Text != "3")
+                    //{
+                    //gridView1.Columns["BranchQty"].FilterInfo = new ColumnFilterInfo("[BranchQty] > '1'");
                     //}
                     gridView1.Columns["ItemsId"].Visible = false;
                     gridView1.Columns["PurchasePrice"].Visible = false;
@@ -316,7 +349,7 @@ namespace easyPOSSolution
                     frm14.textBoxSearchItemCode.Text = this.gridView1.GetFocusedRowCellValue("ItemCode").ToString();
                     frm14.textBoxFromItemName.Text = this.gridView1.GetFocusedRowCellValue("ItemName").ToString();
                     frm14.textBoxAvailableQty.Text = this.gridView1.GetFocusedRowCellValue("BranchQty").ToString();
-                    frm14.textBoxFromNewQty.Select();
+                    frm14.textBoxSearchItemCode.Select();
                 }
                 else if (form == 15)
                 {
@@ -329,6 +362,11 @@ namespace easyPOSSolution
                     frm16.textBoxItemCode.Text = this.gridView1.GetFocusedRowCellValue("ItemCode").ToString();
                     //frm.ItemcodeKeyDown();
                     frm16.textBoxItemCode.Select();
+                }
+                else if (form == 17)
+                {
+                    frm17.textBoxItemCode.Text = this.gridView1.GetFocusedRowCellValue("ItemCode").ToString();
+                    frm17.ItemcodeKeyDown();
                 }
                 else
                 {
@@ -377,6 +415,10 @@ namespace easyPOSSolution
             else if (e.KeyCode == Keys.F3)
             {
                 comboBoxCategorySearch.Select();
+            }
+            else if (e.KeyCode == Keys.F4)
+            {
+                textBoxSearchText.Select();
             }
         }
 
@@ -767,6 +809,16 @@ namespace easyPOSSolution
             }
 
             this.Close();
+        }
+
+        private void textBoxSearchText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                fillGriStockBySearchText();
+
+                gridControl1.Select();
+            }
         }
     }
 }

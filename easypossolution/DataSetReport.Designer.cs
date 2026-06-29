@@ -4752,6 +4752,8 @@ namespace easyPOSSolution {
             
             private global::System.Data.DataColumn columnFooterMsg4;
             
+            private global::System.Data.DataColumn columnCurrencyCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public TKAInvoiceDataTable() {
@@ -5299,6 +5301,14 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CurrencyCodeColumn {
+                get {
+                    return this.columnCurrencyCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5397,7 +5407,8 @@ namespace easyPOSSolution {
                         decimal DiscPer, 
                         string RackNo, 
                         string FooterMsg3, 
-                        string FooterMsg4) {
+                        string FooterMsg4, 
+                        string CurrencyCode) {
                 TKAInvoiceRow rowTKAInvoiceRow = ((TKAInvoiceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         BillNo,
@@ -5463,7 +5474,8 @@ namespace easyPOSSolution {
                         DiscPer,
                         RackNo,
                         FooterMsg3,
-                        FooterMsg4};
+                        FooterMsg4,
+                        CurrencyCode};
                 rowTKAInvoiceRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTKAInvoiceRow);
                 return rowTKAInvoiceRow;
@@ -5557,6 +5569,7 @@ namespace easyPOSSolution {
                 this.columnRackNo = base.Columns["RackNo"];
                 this.columnFooterMsg3 = base.Columns["FooterMsg3"];
                 this.columnFooterMsg4 = base.Columns["FooterMsg4"];
+                this.columnCurrencyCode = base.Columns["CurrencyCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5690,6 +5703,8 @@ namespace easyPOSSolution {
                 base.Columns.Add(this.columnFooterMsg3);
                 this.columnFooterMsg4 = new global::System.Data.DataColumn("FooterMsg4", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFooterMsg4);
+                this.columnCurrencyCode = new global::System.Data.DataColumn("CurrencyCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencyCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnBillNo}, true));
                 this.columnBillNo.AllowDBNull = false;
@@ -11619,6 +11634,22 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CurrencyCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableTKAInvoice.CurrencyCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CurrencyCode\' in table \'TKAInvoice\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTKAInvoice.CurrencyCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsSODateNull() {
                 return this.IsNull(this.tableTKAInvoice.SODateColumn);
             }
@@ -12359,6 +12390,18 @@ namespace easyPOSSolution {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFooterMsg4Null() {
                 this[this.tableTKAInvoice.FooterMsg4Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCurrencyCodeNull() {
+                return this.IsNull(this.tableTKAInvoice.CurrencyCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCurrencyCodeNull() {
+                this[this.tableTKAInvoice.CurrencyCodeColumn] = global::System.Convert.DBNull;
             }
         }
         

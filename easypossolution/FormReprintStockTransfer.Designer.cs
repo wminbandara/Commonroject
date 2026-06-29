@@ -49,7 +49,7 @@
             this.txtReprint = new System.Windows.Forms.TextBox();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
+            //this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -253,7 +253,7 @@
             // 
             // allCustomerInvoiceTableAdapter
             // 
-            this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
+            //this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
             // 
             // label1
             // 
@@ -361,7 +361,7 @@
         internal System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox4;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
+        //private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox5;

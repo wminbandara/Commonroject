@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
 using easyBAL;
 using easyDAL;
 using System;
@@ -20,7 +21,7 @@ namespace easyPOSSolution
         ClassSOBAL objBAL = new ClassSOBAL();
         ClassSODAL objDAL = new ClassSODAL();
 
-        bool Option1, Option2, Option3, Option4, Option5, Option6, Option7, Option8, Option9, Option10, Option11, Option12, Option13, Option14, Option15, Option16, Option17, Option18, Option19, Option20, Option21, Option22;
+        bool Option1, Option2, Option3, Option4, Option5, Option6, Option7, Option8, Option9, Option10, Option11, Option12, Option13, Option14, Option15, Option16, Option17, Option18, Option19, Option20, Option21, Option22, Option23, Option24, Option25, Option26, Option27, Option28, Option29, Option30, Option31;
         ArrayList alistOption = new ArrayList();
         int InvoiceNo = 0;
 
@@ -193,6 +194,42 @@ namespace easyPOSSolution
                         if (alistOption[i].ToString().Trim() == "22")
                         {
                             Option22 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "23")
+                        {
+                            Option23 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "24")
+                        {
+                            Option24 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "25")
+                        {
+                            Option25 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "26")
+                        {
+                            Option26 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "27")
+                        {
+                            Option27 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "28")
+                        {
+                            Option28 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "29")
+                        {
+                            Option29 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "30")
+                        {
+                            Option30 = true;
+                        }
+                        if (alistOption[i].ToString().Trim() == "31")
+                        {
+                            Option31 = true;
                         }
                     }
                 }
@@ -510,6 +547,136 @@ namespace easyPOSSolution
                     crystalReportViewer1.Refresh();
                     Cursor.Current = Cursors.Default;
                 }
+                else if (Option23 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exNew rpt = new CrystalReportInvoice3in3exNew();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option24 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exDP rpt = new CrystalReportInvoice3in3exDP();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option25 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exsDP rpt = new CrystalReportInvoice3in3exsDP();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option26 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exDPDisc rpt = new CrystalReportInvoice3in3exDPDisc();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option27 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exsDPDisc rpt = new CrystalReportInvoice3in3exsDPDisc();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option28 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exSimple rpt = new CrystalReportInvoice3in3exSimple();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option29 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exsSimple rpt = new CrystalReportInvoice3in3exsSimple();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option30 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportA4InvoiceTax rpt = new CrystalReportA4InvoiceTax();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else if (Option31 == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3exTax rpt = new CrystalReportInvoice3in3exTax();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportInvoice3in3ex rpt = new CrystalReportInvoice3in3ex();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
             }
             catch (Exception ex)
             {
@@ -536,7 +703,7 @@ namespace easyPOSSolution
                 gridControl1.DataSource = objBAL.DtDataSet.Tables[0];
                 gridView1.Columns["CreatedDate"].DisplayFormat.FormatString = "yyyy/MM/dd hh:mm tt";
                 //gridView1.Columns["Status"].FilterInfo = new ColumnFilterInfo("[Status] = '1'");
-                //gridView1.Columns["CustAccountId"].Visible = false;
+                gridView1.Columns["InvoiceStatusId"].Visible = false;
                 //gridView1.Columns["BranchId"].Visible = false;
                 //gridView1.Columns["Status"].Visible = false;
                 gridView1.OptionsView.ColumnAutoWidth = false;
@@ -673,11 +840,11 @@ namespace easyPOSSolution
         {
             // TODO: This line of code loads data into the 'easyposelpitiyaDataSet.AllCustomerInvoice' table. You can move, or remove it, as needed.
             //this.allCustomerInvoiceTableAdapter.Fill(this.easyposelpitiyaDataSet.AllCustomerInvoice);
-            Cursor.Current = Cursors.WaitCursor;
-            fillGrid();
-            loadInvoiceStatus();
-            //fillOptions();
-            Cursor.Current = Cursors.Default;
+            //Cursor.Current = Cursors.WaitCursor;
+            //fillGrid();
+            //loadInvoiceStatus();
+            ////fillOptions();
+            //Cursor.Current = Cursors.Default;
             //fillCustomerGrid();
         }
 
@@ -710,7 +877,13 @@ namespace easyPOSSolution
 
         private void lblUserId_TextChanged(object sender, EventArgs e)
         {
+            
+            Cursor.Current = Cursors.WaitCursor;
             fillOptions();
+            fillGrid();
+            loadInvoiceStatus();
+            //fillOptions();
+            Cursor.Current = Cursors.Default;
         }
 
         private void txtReprint_TextChanged(object sender, EventArgs e)
@@ -835,6 +1008,51 @@ namespace easyPOSSolution
         private void button2_Click(object sender, EventArgs e)
         {
             UpdateInvoiceStatus();
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://youtu.be/ZGXEX0IR430");
+        }
+
+        private void gridView1_RowStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs e)
+        {
+            try
+            {
+                GridView View = sender as GridView;
+                if (e.RowHandle >= 0)
+                {
+                    int stats = Convert.ToInt32(View.GetRowCellDisplayText(e.RowHandle, View.Columns["InvoiceStatusId"]));
+                    if (stats == 1)
+                    {
+                        e.Appearance.BackColor = Color.LightBlue;
+                        //e.Appearance.BackColor2 = Color.White;
+                    }
+                    if (stats == 2)
+                    {
+                        e.Appearance.BackColor = Color.CornflowerBlue;
+                    }
+                    if (stats == 3)
+                    {
+                        e.Appearance.BackColor = Color.LightCoral;
+                    }
+                    if (stats == 4)
+                    {
+                        e.Appearance.BackColor = Color.LightGreen;
+                    }
+                    if (stats == 5)
+                    {
+                        e.Appearance.BackColor = Color.HotPink;
+                    }
+                    //if (deletestatus == 1)
+                    //{
+                    //    e.Appearance.BackColor = Color.YellowGreen;
+                    //}
+                }
+            }
+            catch
+            {
+            }
         }
 
         #region Events

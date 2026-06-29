@@ -42,6 +42,7 @@ namespace easyPOSSolution
         public decimal CreditPay = 0;
         decimal purchasePrice, DiscRate;
         bool AllowSMS, autocomplete;
+        string FormURL;
 
         string to, apitoken, fromval, apikey, companyname, SMSUrl;
 
@@ -58,6 +59,201 @@ namespace easyPOSSolution
         #endregion
 
         #region Methods
+
+        void SearchItemByName()
+        {
+            try
+            {
+                txtItemCode.Clear();
+                objInvBAL = new ClassInvoiceBAL();
+                objInvBAL.ItemName = txtItemName.Text.Trim();
+                objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveItemsDataByName(objInvBAL);
+                if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        txtItemCode.Text = (values[0].ToString().Trim());
+                    }
+                }
+                txtSellingPrice.Select();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SelectFormHelp()
+        {
+            try
+            {
+                FormURL = "";
+                BALUser objUser = new BALUser();
+                objUser.FormId = 5;
+                DALUser dalUser = new DALUser();
+                objUser.DtDataSet = dalUser.retreiveFormHelpURL(objUser);
+                if (objUser.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objUser.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        FormURL = (values[0].ToString().Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PrintOrder()
+        {
+            try
+            {
+                if (checkBoxA4Print.Checked)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportA4SOCr rpt = new CrystalReportA4SOCr();
+                    objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtInvoiceNo.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWSOData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    rpt.PrintOptions.PrinterName = "";
+                    rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSOrder3in3ex rpt = new CrystalReportSOrder3in3ex();
+                    objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtInvoiceNo.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWSOData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    rpt.PrintOptions.PrinterName = "";
+                    rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                //if (Option2 == true)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportA4SOCr rpt = new CrystalReportA4SOCr();
+                //    objBAL = new ClassPOBAL();
+                //    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                //    objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    rpt.PrintOptions.PrinterName = "";
+                //    rpt.PrintToPrinter(1, false, 0, 0);
+                //    Cursor.Current = Cursors.Default;
+                //}
+                //else if (Option3 == true)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportA4InvoiceSCr rpt = new CrystalReportA4InvoiceSCr();
+                //    objBAL = new ClassPOBAL();
+                //    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                //    objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    rpt.PrintOptions.PrinterName = "";
+                //    rpt.PrintToPrinter(1, false, 0, 0);
+                //    Cursor.Current = Cursors.Default;
+                //}
+                //else if (Option4 == true)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportInvoice5in3 rpt = new CrystalReportInvoice5in3();
+                //    //CrystalReportInvoice3inLogo rpt = new CrystalReportInvoice3inLogo();
+                //    objBAL = new ClassPOBAL();
+                //    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                //    objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    rpt.PrintOptions.PrinterName = "";
+                //    rpt.PrintToPrinter(1, false, 0, 0);
+                //    Cursor.Current = Cursors.Default;
+
+                //}
+                //else if (Option5 == true)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportInvoice5in3S rpt = new CrystalReportInvoice5in3S();
+                //    //CrystalReportInvoice3inLogo rpt = new CrystalReportInvoice3inLogo();
+                //    objBAL = new ClassPOBAL();
+                //    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                //    objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    rpt.PrintOptions.PrinterName = "";
+                //    rpt.PrintToPrinter(1, false, 0, 0);
+                //    Cursor.Current = Cursors.Default;
+                //}
+                //else if (Option6 == true)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportInvoice2inLogoE rpt = new CrystalReportInvoice2inLogoE();
+                //    //CrystalReportInvoice3inLogo rpt = new CrystalReportInvoice3inLogo();
+                //    objBAL = new ClassPOBAL();
+                //    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                //    objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    rpt.PrintOptions.PrinterName = "";
+                //    rpt.PrintToPrinter(1, false, 0, 0);
+                //    Cursor.Current = Cursors.Default;
+                //}
+                //else if (Option7 == true)
+                //{
+                //    Cursor.Current = Cursors.WaitCursor;
+                //    CrystalReportInvoice2inLogoS rpt = new CrystalReportInvoice2inLogoS();
+                //    //CrystalReportInvoice3inLogo rpt = new CrystalReportInvoice3inLogo();
+                //    objBAL = new ClassPOBAL();
+                //    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                //    objDAL = new ClassPODAL();
+                //    objBAL.DtDataSet = objDAL.retreiveTAWInvoiceData(objBAL);
+                //    rpt.SetDataSource(objBAL.DtDataSet);
+                //    crystalReportViewer1.ReportSource = rpt;
+                //    crystalReportViewer1.Refresh();
+                //    rpt.PrintOptions.PrinterName = "";
+                //    rpt.PrintToPrinter(1, false, 0, 0);
+                //    Cursor.Current = Cursors.Default;
+                //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void SelectCompanyData()
         {
@@ -485,6 +681,7 @@ namespace easyPOSSolution
             //textBoxCustCredit.Text = "0.00";
             comboBoxWarranty.Text = "No Warranty";
             checkBoxReturn.Checked = false;
+            textBoxAdvanceAmount.Text = "0.00";
             DiscRate = 0;
             CreditPay = 0;
         }
@@ -927,7 +1124,7 @@ namespace easyPOSSolution
                 textBoxPriceDisc.Text = PriceDisc.ToString("0.00");
                 textBoxReturn.Text = RtnTot.ToString("0.00");
                 lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text))).ToString("0.00");
-                textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text))).ToString("0.00");
+                textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text))).ToString("0.00");
 
 
                 calcNet();
@@ -1014,6 +1211,8 @@ namespace easyPOSSolution
                 {
                     objInvBAL.RepairBill = false;
                 }
+                objInvBAL.AdvanceAmount = Convert.ToDecimal(textBoxAdvanceAmount.Text);
+                objInvBAL.ReferanceNo = textBoxRefNo.Text;  
 
                 objInvDAL = new ClassInvoiveDAL();
                 string count = objInvDAL.Insertsorderhd(objInvBAL);
@@ -1109,6 +1308,12 @@ namespace easyPOSSolution
                             sendCustomerMessage();
                         }
                     }
+                    DialogResult result = MessageBox.Show("Do you want to Print this Order? ", "Printing Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        PrintOrder();
+                    }
+
                     
                     ResetEntry();
                     blnPaid = false;
@@ -1278,7 +1483,7 @@ namespace easyPOSSolution
                 {
                     textBoxVAT.Text = ((((Convert.ToDecimal(lblGrossTot.Text)) - Convert.ToDecimal(txtTotDiscRate.Text)) * 11) / 100).ToString("0.00");
                     lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
-                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
+                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                     //lblCashTender.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                 }
                 else if (checkBoxVAT.Checked == false && checkBoxNBT.Checked == true)
@@ -1286,7 +1491,7 @@ namespace easyPOSSolution
                     textBoxNBT.Text = ((((Convert.ToDecimal(lblGrossTot.Text)) - Convert.ToDecimal(txtTotDiscRate.Text)) * 2) / 100).ToString("0.00");
                     //lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                     lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
-                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + +Convert.ToDecimal(textBoxReturn.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
+                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                     //lblCashTender.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                 }
                 else if (checkBoxVAT.Checked == true && checkBoxNBT.Checked == true)
@@ -1295,14 +1500,14 @@ namespace easyPOSSolution
                     textBoxVAT.Text = ((((Convert.ToDecimal(lblGrossTot.Text)) - Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxNBT.Text)) * 11) / 100).ToString("0.00");
                     //lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                     lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
-                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
+                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                     //lblCashTender.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                 }
                 else if (checkBoxVAT.Checked == false && checkBoxNBT.Checked == false)
                 {
                     //lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text)) + Convert.ToDecimal(textBoxVAT.Text) + Convert.ToDecimal(textBoxNBT.Text)).ToString("0.00");
                     lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
-                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text))).ToString("0.00");
+                    textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text))).ToString("0.00");
                     //lblCashTender.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
                 }
 
@@ -1541,6 +1746,7 @@ namespace easyPOSSolution
                 fillImage();
                 loadInvoiceStatus();
                 SelectCompanyData();
+                checkBoxA4Print.Checked = true;
                 txtItemCode.Select();
             }
             catch (Exception ex)
@@ -1598,7 +1804,7 @@ namespace easyPOSSolution
                 //grossTot = Convert.ToDecimal(lblGrossTot.Text) + Convert.ToDecimal(textBoxAddChgs.Text);
                 //lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) + Convert.ToDecimal(textBoxAddChgs.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
                 lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
-                textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text))).ToString("0.00");
+                textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text))).ToString("0.00");
 
                 //lblCashTender.Text = (Convert.ToDecimal(lblGrossTot.Text) + Convert.ToDecimal(textBoxAddChgs.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
                 calcNet();
@@ -1867,6 +2073,7 @@ namespace easyPOSSolution
                 ItemAutoComplete();
 
             }
+            SelectFormHelp();
         }
 
         private void txtSellingPrice_Validating(object sender, CancelEventArgs e)
@@ -1948,18 +2155,36 @@ namespace easyPOSSolution
         {
             try
             {
-                Cursor.Current = Cursors.WaitCursor;
-                CrystalReportA4SOCr rpt = new CrystalReportA4SOCr();
-                objBAL = new ClassPOBAL();
-                objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
-                objDAL = new ClassPODAL();
-                objBAL.DtDataSet = objDAL.retreiveTAWSOData(objBAL);
-                rpt.SetDataSource(objBAL.DtDataSet);
-                crystalReportViewer1.ReportSource = rpt;
-                crystalReportViewer1.Refresh();
-                rpt.PrintOptions.PrinterName = "";
-                rpt.PrintToPrinter(1, false, 0, 0);
-                Cursor.Current = Cursors.Default;
+                if (checkBoxA4Print.Checked)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportA4SOCr rpt = new CrystalReportA4SOCr();
+                    objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWSOData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    rpt.PrintOptions.PrinterName = "";
+                    rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSOrder3in3ex rpt = new CrystalReportSOrder3in3ex();
+                    objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWSOData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    rpt.PrintOptions.PrinterName = "";
+                    rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
                 //if (Option2 == true)
                 //{
                 //    Cursor.Current = Cursors.WaitCursor;
@@ -2087,9 +2312,32 @@ namespace easyPOSSolution
 
         private void txtItemName_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                txtSellingPrice.Select();
+                if (txtItemName.Text != "")
+                {
+                    txtSellingPrice.Select();
+                    SearchItemByName();
+                    if (Convert.ToDecimal(txtQuantity.Text) <= 0)
+                    {
+                        txtQuantity.Text = "1";
+                    }
+                    txtDisc.Text = "0";
+                    textBoxLDiscAmt.Text = "0.00";
+                    //lblCashTender.Text = "0.00";
+
+                    SearchItem();
+                    addStatus = true;
+                    calculateTotal();
+                    //txtQuantity.Select();
+                    txtSellingPrice.Select();
+                }
+                else if (txtItemName.Text == "" && dgView.Rows.Count > 0)
+                {
+                    textBoxAdvanceAmount.Select();
+                }
+
+
             }
         }
 
@@ -2118,6 +2366,156 @@ namespace easyPOSSolution
                     txtItemCode.Select();
                 }
 
+            }
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(FormURL.ToString());
+        }
+
+        private void textBoxAdvanceAmount_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if ((string.IsNullOrEmpty(textBoxAdvanceAmount.Text)) || (textBoxAdvanceAmount.Text.Trim().Equals(string.Empty)))
+                {
+                    textBoxAdvanceAmount.Text = "0.00";
+                }
+                //grossTot = Convert.ToDecimal(lblGrossTot.Text) + Convert.ToDecimal(textBoxAddChgs.Text);
+                //lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) + Convert.ToDecimal(textBoxAddChgs.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
+                lblNetTotal.Text = (Convert.ToDecimal(lblGrossTot.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
+                textBoxReceivable.Text = (Convert.ToDecimal(lblGrossTot.Text) - (Convert.ToDecimal(txtTotDiscRate.Text) + Convert.ToDecimal(textBoxReturn.Text) + Convert.ToDecimal(textBoxAdvanceAmount.Text))).ToString("0.00");
+
+                //lblCashTender.Text = (Convert.ToDecimal(lblGrossTot.Text) + Convert.ToDecimal(textBoxAddChgs.Text) - Convert.ToDecimal(txtTotDiscRate.Text)).ToString("0.00");
+                calcNet();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void textBoxRefNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (textBoxRefNo.Text != "")
+                {
+                    DialogResult result = MessageBox.Show("Do you want to Get this Order Details?", "Get Order Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        SearchOrderHeader();
+                        SearchOrderDetail();
+                    }
+                }
+            }
+        }
+
+        private void SearchOrderHeader()
+        {
+            try
+            {
+                textBoxCustCode.Clear();
+                objInvBAL = new ClassInvoiceBAL();
+                objInvBAL.SOHDId = Convert.ToInt32(textBoxRefNo.Text);
+                objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveSOrderHeader(objInvBAL);
+                if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        textBoxCustCode.Text = (values[0].ToString().Trim());
+                        cmbSalesRep.SelectedValue = (values[1].ToString().Trim());
+                        dateTimePickerCompletedDate.Value = Convert.ToDateTime(values[2]);
+                        comboBoxInvoiceStatus.SelectedValue = (values[3].ToString().Trim());
+                        checkBoxIsRepair.Checked = false;
+                        if (Convert.ToBoolean(values[4]) == true)
+                        {
+                            checkBoxIsRepair.Checked = true;
+                        }
+                        txtComment.Text = (values[5].ToString().Trim());
+                        searchCustomer();
+                    }
+                }
+                textBoxCustCode.Select();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SearchOrderDetail()
+        {
+            try
+            {
+                txtItemCode.Text = "";
+                txtItemName.Text = "";
+                dateTimePickerFrom.Value = DateTime.Today;
+                dateTimePickerTo.Value = DateTime.Today;
+                textBoxInternalNo.Text = "";
+                textBoxItemSinhala.Clear();
+                txtQuantity.Text = "1";
+                //textBoxFree.Text = "0";
+                txtSellingPrice.Text = "0.00";
+                txtGross.Text = "0.00";
+                txtDisc.Text = "0";
+                textBoxLDiscAmt.Text = "0.00";
+                //textBoxUnitDisc.Text = "0.00";
+                txtSubtotals.Text = "0.00";
+                txtItemId.Text = "0";
+                SelPriceDisc = 0;
+                comboBoxItemCat.SelectedIndex = -1;
+                comboBoxWarranty.Text = "No Warranty";
+                textBoxAdvanceAmount.Text = "0.00";
+
+                objInvBAL = new ClassInvoiceBAL();
+                objInvBAL.SOHDId = Convert.ToInt32(textBoxRefNo.Text);
+                objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveSOrderHeader(objInvBAL);
+                if (objInvBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[1].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        txtItemCode.Text = (values[0].ToString().Trim());
+                        txtItemName.Text = (values[1].ToString().Trim());
+                        textBoxInternalNo.Text = (values[2].ToString().Trim());
+                        textBoxItemSinhala.Text = (values[3].ToString().Trim());
+                        txtQuantity.Text = (values[4].ToString().Trim());
+                        txtSellingPrice.Text = (values[5].ToString().Trim());
+                        txtGross.Text = (values[6].ToString().Trim());
+                        textBoxLDiscAmt.Text = (values[7].ToString().Trim());
+                        txtSubtotals.Text = (values[8].ToString().Trim());
+                        txtItemId.Text = (values[9].ToString().Trim());
+                        comboBoxItemCat.SelectedValue = (values[10].ToString().Trim());
+                        FreeIssueQty = 0;
+                        //textBoxFree.Text = "0";
+                        SelPriceDisc = 0;
+                        comboBoxWarranty.Text = (values[12].ToString().Trim());
+                        textBoxSerial.Text = (values[13].ToString().Trim());
+                        checkBoxReturn.Checked = false;
+                        AddtoGrid();
+                        textBoxAdvanceAmount.Text = (values[14].ToString().Trim());
+                    }
+                }
+                    txtItemCode.Select();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

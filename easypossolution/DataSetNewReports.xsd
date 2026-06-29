@@ -741,6 +741,8 @@ ORDER BY A.SODate</CommandText>
               <xs:element name="SupplierId" msprop:Generator_ColumnVarNameInTable="columnSupplierId" msprop:Generator_ColumnPropNameInRow="SupplierId" msprop:Generator_ColumnPropNameInTable="SupplierIdColumn" msprop:Generator_UserColumnName="SupplierId" type="xs:int" minOccurs="0" />
               <xs:element name="DirectPurchaseReturnTotal" msprop:Generator_ColumnVarNameInTable="columnDirectPurchaseReturnTotal" msprop:Generator_ColumnPropNameInRow="DirectPurchaseReturnTotal" msprop:Generator_ColumnPropNameInTable="DirectPurchaseReturnTotalColumn" msprop:Generator_UserColumnName="DirectPurchaseReturnTotal" type="xs:decimal" minOccurs="0" />
               <xs:element name="DirectCashPurchaseReturnTotal" msprop:Generator_ColumnVarNameInTable="columnDirectCashPurchaseReturnTotal" msprop:Generator_ColumnPropNameInRow="DirectCashPurchaseReturnTotal" msprop:Generator_ColumnPropNameInTable="DirectCashPurchaseReturnTotalColumn" msprop:Generator_UserColumnName="DirectCashPurchaseReturnTotal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="TotalCharges" msprop:Generator_ColumnVarNameInTable="columnTotalCharges" msprop:Generator_ColumnPropNameInRow="TotalCharges" msprop:Generator_ColumnPropNameInTable="TotalChargesColumn" msprop:Generator_UserColumnName="TotalCharges" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AdvanceAmount" msprop:Generator_ColumnVarNameInTable="columnAdvanceAmount" msprop:Generator_ColumnPropNameInRow="AdvanceAmount" msprop:Generator_ColumnPropNameInTable="AdvanceAmountColumn" msprop:Generator_UserColumnName="AdvanceAmount" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

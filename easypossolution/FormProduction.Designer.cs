@@ -40,7 +40,10 @@
             this.lblUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblUserId = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblBranchID = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.comboBoxContactPerson = new System.Windows.Forms.ComboBox();
             this.dgView = new System.Windows.Forms.DataGridView();
             this.ItemCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,7 +92,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.ButtonSave = new System.Windows.Forms.Button();
-            this.lblBranchID = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
@@ -175,6 +177,7 @@
             this.lblUserId.Size = new System.Drawing.Size(145, 17);
             this.lblUserId.Text = "ToolStripStatusLabel2";
             this.lblUserId.Visible = false;
+            this.lblUserId.TextChanged += new System.EventHandler(this.lblUserId_TextChanged);
             // 
             // ToolStripStatusLabel3
             // 
@@ -182,8 +185,17 @@
             this.ToolStripStatusLabel3.Size = new System.Drawing.Size(167, 17);
             this.ToolStripStatusLabel3.Spring = true;
             // 
+            // lblBranchID
+            // 
+            this.lblBranchID.Name = "lblBranchID";
+            this.lblBranchID.Size = new System.Drawing.Size(68, 17);
+            this.lblBranchID.Text = "lblBranchID";
+            this.lblBranchID.TextChanged += new System.EventHandler(this.lblBranchID_TextChanged);
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label27);
+            this.groupBox1.Controls.Add(this.comboBoxContactPerson);
             this.groupBox1.Controls.Add(this.textBoxTotGrosse);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.dgView);
@@ -194,6 +206,26 @@
             this.groupBox1.TabIndex = 203;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "RAW METERIALS";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(6, 267);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(111, 14);
+            this.label27.TabIndex = 219;
+            this.label27.Text = "Responsible Person:";
+            // 
+            // comboBoxContactPerson
+            // 
+            this.comboBoxContactPerson.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBoxContactPerson.Font = new System.Drawing.Font("Cambria", 9F);
+            this.comboBoxContactPerson.FormattingEnabled = true;
+            this.comboBoxContactPerson.Location = new System.Drawing.Point(123, 263);
+            this.comboBoxContactPerson.Name = "comboBoxContactPerson";
+            this.comboBoxContactPerson.Size = new System.Drawing.Size(263, 22);
+            this.comboBoxContactPerson.TabIndex = 218;
             // 
             // dgView
             // 
@@ -738,13 +770,6 @@
             this.ButtonSave.UseVisualStyleBackColor = false;
             this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
-            // lblBranchID
-            // 
-            this.lblBranchID.Name = "lblBranchID";
-            this.lblBranchID.Size = new System.Drawing.Size(68, 17);
-            this.lblBranchID.Text = "lblBranchID";
-            this.lblBranchID.TextChanged += new System.EventHandler(this.lblBranchID_TextChanged);
-            // 
             // FormProduction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -842,5 +867,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemsId;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitQty;
         public System.Windows.Forms.ToolStripStatusLabel lblBranchID;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.ComboBox comboBoxContactPerson;
     }
 }

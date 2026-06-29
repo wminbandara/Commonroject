@@ -47,10 +47,10 @@ namespace easyPOSSolution
                 //objPOBAL.Wharehouse = "Wharehouse1";
                 ClassPODAL objPODAL = new ClassPODAL();
                 objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
                     List<ArrayList> newval = new List<ArrayList>();
-                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                     {
                         ArrayList values = new ArrayList();
                         values.Clear();
@@ -235,10 +235,57 @@ namespace easyPOSSolution
 
                 if (insertDTStatus == true)
                 {
-                    resetDetail();
                     MessageBox.Show("Purchasing Order Details Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult result = MessageBox.Show("Do you want to Print this Invoice?", "Printing Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        printpo();
+                    }
+                    resetDetail();
                     ButtonSave.Enabled = false;
                     Reset();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void printpo()
+        {
+            try
+            {
+                if (checkBoxPrint.Checked == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportPO3in3ex rpt = new CrystalReportPO3in3ex();
+                    objBAL = new ClassPOBAL();
+                    objBAL.POHDId = Convert.ToInt32(textBoxPOID.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreivePOSummaryData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    rpt.PrintOptions.PrinterName = "";
+                    rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    FormReport REPORT = new FormReport();
+                    REPORT.Show();
+                    CrystalReportPOrder rpt = new CrystalReportPOrder();
+                    objBAL = new ClassPOBAL();
+                    objBAL.POHDId = Convert.ToInt32(textBoxPOID.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreivePOData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    REPORT.crystalReportViewer1.ReportSource = rpt;
+                    REPORT.crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
                 }
 
             }
@@ -725,6 +772,7 @@ namespace easyPOSSolution
                // comboBoxCategorySearch.SelectedIndex = -1;
 
                 //ItemAutoComplete();
+                checkBoxPrint.Checked = true;
 
                 loadStatus = false;
             }
@@ -789,10 +837,10 @@ namespace easyPOSSolution
                     //objPOBAL.Wharehouse = "Wharehouse1";
                     ClassPODAL objPODAL = new ClassPODAL();
                     objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                    if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                    if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                     {
                         List<ArrayList> newval = new List<ArrayList>();
-                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                         {
                             ArrayList values = new ArrayList();
                             values.Clear();
@@ -943,18 +991,37 @@ namespace easyPOSSolution
         {
             try
             {
-                Cursor.Current = Cursors.WaitCursor;
-                FormReport REPORT = new FormReport();
-                REPORT.Show();
-                CrystalReportPOrder rpt = new CrystalReportPOrder();
-                objBAL = new ClassPOBAL();
-                objBAL.POHDId = Convert.ToInt32(textBoxPOID.Text);
-                objDAL = new ClassPODAL();
-                objBAL.DtDataSet = objDAL.retreivePOData(objBAL);
-                rpt.SetDataSource(objBAL.DtDataSet);
-                REPORT.crystalReportViewer1.ReportSource = rpt;
-                REPORT.crystalReportViewer1.Refresh();
-                Cursor.Current = Cursors.Default;
+                if (checkBoxPrint.Checked == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportPO3in3ex rpt = new CrystalReportPO3in3ex();
+                    objBAL = new ClassPOBAL();
+                    objBAL.POHDId = Convert.ToInt32(textBoxPOID.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreivePOSummaryData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    rpt.PrintOptions.PrinterName = "";
+                    rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    FormReport REPORT = new FormReport();
+                    REPORT.Show();
+                    CrystalReportPOrder rpt = new CrystalReportPOrder();
+                    objBAL = new ClassPOBAL();
+                    objBAL.POHDId = Convert.ToInt32(textBoxPOID.Text);
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreivePOData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    REPORT.crystalReportViewer1.ReportSource = rpt;
+                    REPORT.crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                
             }
             catch (Exception ex)
             {

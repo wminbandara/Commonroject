@@ -47,253 +47,322 @@ namespace easyPOSSolution
             DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (comboBoxPayMode.SelectedIndex == -1)
+                try
                 {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom.Value;
+                    objBAL.date2 = dateTimePickerTo.Value;
                     if (comboBoxBranchReport.SelectedIndex == -1)
                     {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDate(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        comboBoxBranchReport.SelectedValue = 0;
                     }
-                    else
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                    if (comboBoxPayMode.SelectedIndex == -1)
                     {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateBranch(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        comboBoxPayMode.SelectedValue = 0;
                     }
-                    
+                    objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
                 }
-                else
+                catch (Exception ex)
                 {
-                    if (comboBoxBranchReport.SelectedIndex == -1)
-                    {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymode(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                            objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeBranch(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
             {
-                if (comboBoxPayMode.SelectedIndex == -1)
+                try
                 {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom.Value;
+                    objBAL.date2 = dateTimePickerTo.Value;
                     if (comboBoxBranchReport.SelectedIndex == -1)
                     {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDate(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        comboBoxBranchReport.SelectedValue = 0;
                     }
-                    else
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                    if (comboBoxPayMode.SelectedIndex == -1)
                     {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateBranch(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        comboBoxPayMode.SelectedValue = 0;
                     }
-                    
+                    objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+
                 }
-                else
+                catch (Exception ex)
                 {
-                    if (comboBoxBranchReport.SelectedIndex == -1)
-                    {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymode(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            Cursor.Current = Cursors.WaitCursor;
-                            //FormReport REPORT = new FormReport();
-                            //REPORT.Show();
-                            CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
-                            objBAL = new ClassPOBAL();
-                            objBAL.date1 = dateTimePickerFrom.Value;
-                            objBAL.date2 = dateTimePickerTo.Value;
-                            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                            objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
-                            objDAL = new ClassPODAL();
-                            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeBranch(objBAL);
-                            rpt.SetDataSource(objBAL.DtDataSet);
-                            crystalReportViewer1.ReportSource = rpt;
-                            crystalReportViewer1.Refresh();
-                            Cursor.Current = Cursors.Default;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    
+                    MessageBox.Show(ex.Message);
                 }
             }
+
+            //DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            //    if (comboBoxPayMode.SelectedIndex == -1)
+            //    {
+            //        if (comboBoxBranchReport.SelectedIndex == -1)
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDate(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateBranch(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+                    
+            //    }
+            //    else
+            //    {
+            //        if (comboBoxBranchReport.SelectedIndex == -1)
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymode(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+            //                objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeBranch(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+                    
+            //    }
+            //}
+            //else
+            //{
+            //    if (comboBoxPayMode.SelectedIndex == -1)
+            //    {
+            //        if (comboBoxBranchReport.SelectedIndex == -1)
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDate(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateBranch(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+                    
+            //    }
+            //    else
+            //    {
+            //        if (comboBoxBranchReport.SelectedIndex == -1)
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymode(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            try
+            //            {
+            //                Cursor.Current = Cursors.WaitCursor;
+            //                //FormReport REPORT = new FormReport();
+            //                //REPORT.Show();
+            //                CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+            //                objBAL = new ClassPOBAL();
+            //                objBAL.date1 = dateTimePickerFrom.Value;
+            //                objBAL.date2 = dateTimePickerTo.Value;
+            //                objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+            //                objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue.ToString());
+            //                objDAL = new ClassPODAL();
+            //                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeBranch(objBAL);
+            //                rpt.SetDataSource(objBAL.DtDataSet);
+            //                crystalReportViewer1.ReportSource = rpt;
+            //                crystalReportViewer1.Refresh();
+            //                Cursor.Current = Cursors.Default;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                MessageBox.Show(ex.Message);
+            //            }
+            //        }
+                    
+            //    }
+            //}
             
             
-            //try
-            //{
-            //    Cursor = Cursors.WaitCursor;
-            //    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-            //    //The report you created.
-            //    MySqlConnection myConnection = default(MySqlConnection);
-            //    MySqlCommand MyCommand = new MySqlCommand();
-            //    MySqlDataAdapter myDA = new MySqlDataAdapter();
-            //    TransportationFacility_DBDataSet myDS = new TransportationFacility_DBDataSet();
-            //    //The DataSet you created.
+            ////try
+            ////{
+            ////    Cursor = Cursors.WaitCursor;
+            ////    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            ////    //The report you created.
+            ////    MySqlConnection myConnection = default(MySqlConnection);
+            ////    MySqlCommand MyCommand = new MySqlCommand();
+            ////    MySqlDataAdapter myDA = new MySqlDataAdapter();
+            ////    TransportationFacility_DBDataSet myDS = new TransportationFacility_DBDataSet();
+            ////    //The DataSet you created.
 
 
-            //    myConnection = new SqlConnection("Data Source=(localDB)\\v11.0; Integrated Security=True; AttachDbFilename=|DataDirectory|\\CMS_DB.mdf;");
-            //    MyCommand.Connection = myConnection;
-            //    MyCommand.CommandText = "select *  from BusFeePayment,Student,Transportation,BusHolders where Student.scholarNo=BusHolders.ScholarNo and BusFeePayment.ScholarNo=Student.ScholarNo and Transportation.SourceLocation=BusHolders.SourceLocation and DateOfPayment between @date1 and @date2 and Course= '" + Course.Text + "'and branch='" + Branch.Text + "' order by DateOfPayment";
-            //    MyCommand.Parameters.Add("@date1", SqlDbType.DateTime, 30, "DateOfPayment").Value = Date_from.Value.Date;
-            //    MyCommand.Parameters.Add("@date2", SqlDbType.DateTime, 30, "DateOfPayment").Value = Date_to.Value.Date;
+            ////    myConnection = new SqlConnection("Data Source=(localDB)\\v11.0; Integrated Security=True; AttachDbFilename=|DataDirectory|\\CMS_DB.mdf;");
+            ////    MyCommand.Connection = myConnection;
+            ////    MyCommand.CommandText = "select *  from BusFeePayment,Student,Transportation,BusHolders where Student.scholarNo=BusHolders.ScholarNo and BusFeePayment.ScholarNo=Student.ScholarNo and Transportation.SourceLocation=BusHolders.SourceLocation and DateOfPayment between @date1 and @date2 and Course= '" + Course.Text + "'and branch='" + Branch.Text + "' order by DateOfPayment";
+            ////    MyCommand.Parameters.Add("@date1", SqlDbType.DateTime, 30, "DateOfPayment").Value = Date_from.Value.Date;
+            ////    MyCommand.Parameters.Add("@date2", SqlDbType.DateTime, 30, "DateOfPayment").Value = Date_to.Value.Date;
 
-            //    MyCommand.CommandType = CommandType.Text;
-            //    myDA.SelectCommand = MyCommand;
-            //    myDA.Fill(myDS, "BusFeePayment");
-            //    myDA.Fill(myDS, "Transportation");
-            //    myDA.Fill(myDS, "BusHolders");
-            //    myDA.Fill(myDS, "Student");
-            //    rpt.SetDataSource(myDS);
+            ////    MyCommand.CommandType = CommandType.Text;
+            ////    myDA.SelectCommand = MyCommand;
+            ////    myDA.Fill(myDS, "BusFeePayment");
+            ////    myDA.Fill(myDS, "Transportation");
+            ////    myDA.Fill(myDS, "BusHolders");
+            ////    myDA.Fill(myDS, "Student");
+            ////    rpt.SetDataSource(myDS);
 
-            //    crystalReportViewer1.ReportSource = rpt;
+            ////    crystalReportViewer1.ReportSource = rpt;
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ////}
         }
 
         private void ButtonExit1_Click(object sender, EventArgs e)
@@ -350,16 +419,98 @@ namespace easyPOSSolution
 
         private void buttonViewReport2_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom2.Value;
+                    objBAL.date2 = dateTimePickerTo2.Value;
+                    objBAL.BranchId = 0;
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = textBoxItemCode.Text.Trim();
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer2.ReportSource = rpt;
+                    crystalReportViewer2.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom2.Value;
+                    objBAL.date2 = dateTimePickerTo2.Value;
+                    objBAL.BranchId = 0;
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = textBoxItemCode.Text.Trim();
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer2.ReportSource = rpt;
+                    crystalReportViewer2.Refresh();
+                    Cursor.Current = Cursors.Default;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            //try
+            //{
+            //    Cursor.Current = Cursors.WaitCursor;
+            //    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            //    objBAL = new ClassPOBAL();
+            //    objBAL.date1 = dateTimePickerFrom2.Value;
+            //    objBAL.date2 = dateTimePickerTo2.Value;
+            //    objBAL.ItemCode = textBoxItemCode.Text.Trim();
+            //    objDAL = new ClassPODAL();
+            //    objBAL.DtDataSet = objDAL.retreiveSalesDatabyItemCode(objBAL);
+            //    rpt.SetDataSource(objBAL.DtDataSet);
+            //    crystalReportViewer2.ReportSource = rpt;
+            //    crystalReportViewer2.Refresh();
+            //    Cursor.Current = Cursors.Default;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+        }
+
+        private void buttonExit2_Click(object sender, EventArgs e)
+        {
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
-                CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+                CrystalReportSalesByDateCustomer rpt = new CrystalReportSalesByDateCustomer();
                 objBAL = new ClassPOBAL();
                 objBAL.date1 = dateTimePickerFrom2.Value;
                 objBAL.date2 = dateTimePickerTo2.Value;
+                objBAL.BranchId = 0;
+                objBAL.PayModeId = 0;
                 objBAL.ItemCode = textBoxItemCode.Text.Trim();
+                objBAL.CustomerId = 0;
+                objBAL.ItemCatId = 0;
                 objDAL = new ClassPODAL();
-                objBAL.DtDataSet = objDAL.retreiveSalesDatabyItemCode(objBAL);
+                objBAL.DtDataSet = objDAL.retreiveSalesWithCustomerCommon(objBAL);
                 rpt.SetDataSource(objBAL.DtDataSet);
                 crystalReportViewer2.ReportSource = rpt;
                 crystalReportViewer2.Refresh();
@@ -371,36 +522,86 @@ namespace easyPOSSolution
             }
         }
 
-        private void buttonExit2_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void buttonViewReport3_Click(object sender, EventArgs e)
         {
-            try
+            DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                if (comboBoxItemCategory.SelectedIndex != -1)
+                try
                 {
                     Cursor.Current = Cursors.WaitCursor;
                     CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
                     objBAL = new ClassPOBAL();
                     objBAL.date1 = dateTimePickerFrom3.Value;
                     objBAL.date2 = dateTimePickerTo3.Value;
+                    objBAL.BranchId = 0;
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
                     objBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
                     objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveSalesDatabyItemCategory(objBAL);
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
                     rpt.SetDataSource(objBAL.DtDataSet);
                     crystalReportViewer3.ReportSource = rpt;
                     crystalReportViewer3.Refresh();
                     Cursor.Current = Cursors.Default;
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom3.Value;
+                    objBAL.date2 = dateTimePickerTo3.Value;
+                    objBAL.BranchId = 0;
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer3.ReportSource = rpt;
+                    crystalReportViewer3.Refresh();
+                    Cursor.Current = Cursors.Default;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+
+            //try
+            //{
+            //    if (comboBoxItemCategory.SelectedIndex != -1)
+            //    {
+            //        Cursor.Current = Cursors.WaitCursor;
+            //        CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+            //        objBAL = new ClassPOBAL();
+            //        objBAL.date1 = dateTimePickerFrom3.Value;
+            //        objBAL.date2 = dateTimePickerTo3.Value;
+            //        objBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+            //        objDAL = new ClassPODAL();
+            //        objBAL.DtDataSet = objDAL.retreiveSalesDatabyItemCategory(objBAL);
+            //        rpt.SetDataSource(objBAL.DtDataSet);
+            //        crystalReportViewer3.ReportSource = rpt;
+            //        crystalReportViewer3.Refresh();
+            //        Cursor.Current = Cursors.Default;
+            //    }
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void FormSalesReport_Load(object sender, EventArgs e)
@@ -515,29 +716,62 @@ namespace easyPOSSolution
 
         private void buttonViewCustomer_Click(object sender, EventArgs e)
         {
-            try
+            DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                if (comboBoxCustomer.SelectedIndex != -1)
+                try
                 {
                     Cursor.Current = Cursors.WaitCursor;
                     CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
                     objBAL = new ClassPOBAL();
                     objBAL.date1 = dateTimePickerFromCust.Value;
                     objBAL.date2 = dateTimePickerToCust.Value;
+                    objBAL.BranchId = 0;
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = "";
                     objBAL.CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue.ToString());
+                    objBAL.ItemCatId = 0;
                     objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveSalesDatabyCust(objBAL);
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
                     rpt.SetDataSource(objBAL.DtDataSet);
                     crystalReportViewer5.ReportSource = rpt;
                     crystalReportViewer5.Refresh();
                     Cursor.Current = Cursors.Default;
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFromCust.Value;
+                    objBAL.date2 = dateTimePickerToCust.Value;
+                    objBAL.BranchId = 0;
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue.ToString());
+                    objBAL.ItemCatId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer5.ReportSource = rpt;
+                    crystalReportViewer5.Refresh();
+                    Cursor.Current = Cursors.Default;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+
+           
         }
 
         private void button3inchReport_Click(object sender, EventArgs e)
@@ -566,107 +800,177 @@ namespace easyPOSSolution
 
         private void buttonSummary_Click(object sender, EventArgs e)
         {
-             DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-             if (result == DialogResult.Yes)
-             {
-                 if (comboBoxPayMode.SelectedIndex == -1)
-                 {
-                     try
-                     {
-                         Cursor.Current = Cursors.WaitCursor;
-                         //FormReport REPORT = new FormReport();
-                         //REPORT.Show();
-                         CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-                         objBAL = new ClassPOBAL();
-                         objBAL.date1 = dateTimePickerFrom.Value;
-                         objBAL.date2 = dateTimePickerTo.Value;
-                         objDAL = new ClassPODAL();
-                         objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateWithRtn(objBAL);
-                         rpt.SetDataSource(objBAL.DtDataSet);
-                         crystalReportViewer1.ReportSource = rpt;
-                         crystalReportViewer1.Refresh();
-                         Cursor.Current = Cursors.Default;
-                     }
-                     catch (Exception ex)
-                     {
-                         MessageBox.Show(ex.Message);
-                     }
-                 }
-                 else
-                 {
-                     try
-                     {
-                         Cursor.Current = Cursors.WaitCursor;
-                         //FormReport REPORT = new FormReport();
-                         //REPORT.Show();
-                         CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
-                         objBAL = new ClassPOBAL();
-                         objBAL.date1 = dateTimePickerFrom.Value;
-                         objBAL.date2 = dateTimePickerTo.Value;
-                         objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                         objDAL = new ClassPODAL();
-                         objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeWithRtn(objBAL);
-                         rpt.SetDataSource(objBAL.DtDataSet);
-                         crystalReportViewer1.ReportSource = rpt;
-                         crystalReportViewer1.Refresh();
-                         Cursor.Current = Cursors.Default;
-                     }
-                     catch (Exception ex)
-                     {
-                         MessageBox.Show(ex.Message);
-                     }
-                 }
-             }
-             else
-             {
-                 if (comboBoxPayMode.SelectedIndex == -1)
-                 {
-                     try
-                     {
-                         Cursor.Current = Cursors.WaitCursor;
-                         //FormReport REPORT = new FormReport();
-                         //REPORT.Show();
-                         CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
-                         objBAL = new ClassPOBAL();
-                         objBAL.date1 = dateTimePickerFrom.Value;
-                         objBAL.date2 = dateTimePickerTo.Value;
-                         objDAL = new ClassPODAL();
-                         objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateWithRtn(objBAL);
-                         rpt.SetDataSource(objBAL.DtDataSet);
-                         crystalReportViewer1.ReportSource = rpt;
-                         crystalReportViewer1.Refresh();
-                         Cursor.Current = Cursors.Default;
-                     }
-                     catch (Exception ex)
-                     {
-                         MessageBox.Show(ex.Message);
-                     }
-                 }
-                 else
-                 {
-                     try
-                     {
-                         Cursor.Current = Cursors.WaitCursor;
-                         //FormReport REPORT = new FormReport();
-                         //REPORT.Show();
-                         CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
-                         objBAL = new ClassPOBAL();
-                         objBAL.date1 = dateTimePickerFrom.Value;
-                         objBAL.date2 = dateTimePickerTo.Value;
-                         objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                         objDAL = new ClassPODAL();
-                         objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeWithRtn(objBAL);
-                         rpt.SetDataSource(objBAL.DtDataSet);
-                         crystalReportViewer1.ReportSource = rpt;
-                         crystalReportViewer1.Refresh();
-                         Cursor.Current = Cursors.Default;
-                     }
-                     catch (Exception ex)
-                     {
-                         MessageBox.Show(ex.Message);
-                     }
-                 }
-             }
+            DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom.Value;
+                    objBAL.date2 = dateTimePickerTo.Value;
+                    if (comboBoxBranchReport.SelectedIndex == -1)
+                    {
+                        comboBoxBranchReport.SelectedValue = 0;
+                    }
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                    if (comboBoxPayMode.SelectedIndex == -1)
+                    {
+                        comboBoxPayMode.SelectedValue = 0;
+                    }
+                    objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom.Value;
+                    objBAL.date2 = dateTimePickerTo.Value;
+                    if (comboBoxBranchReport.SelectedIndex == -1)
+                    {
+                        comboBoxBranchReport.SelectedValue = 0;
+                    }
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                    if (comboBoxPayMode.SelectedIndex == -1)
+                    {
+                        comboBoxPayMode.SelectedValue = 0;
+                    }
+                    objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+             //DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+             //if (result == DialogResult.Yes)
+             //{
+             //    if (comboBoxPayMode.SelectedIndex == -1)
+             //    {
+             //        try
+             //        {
+             //            Cursor.Current = Cursors.WaitCursor;
+             //            //FormReport REPORT = new FormReport();
+             //            //REPORT.Show();
+             //            CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+             //            objBAL = new ClassPOBAL();
+             //            objBAL.date1 = dateTimePickerFrom.Value;
+             //            objBAL.date2 = dateTimePickerTo.Value;
+             //            objDAL = new ClassPODAL();
+             //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateWithRtn(objBAL);
+             //            rpt.SetDataSource(objBAL.DtDataSet);
+             //            crystalReportViewer1.ReportSource = rpt;
+             //            crystalReportViewer1.Refresh();
+             //            Cursor.Current = Cursors.Default;
+             //        }
+             //        catch (Exception ex)
+             //        {
+             //            MessageBox.Show(ex.Message);
+             //        }
+             //    }
+             //    else
+             //    {
+             //        try
+             //        {
+             //            Cursor.Current = Cursors.WaitCursor;
+             //            //FormReport REPORT = new FormReport();
+             //            //REPORT.Show();
+             //            CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
+             //            objBAL = new ClassPOBAL();
+             //            objBAL.date1 = dateTimePickerFrom.Value;
+             //            objBAL.date2 = dateTimePickerTo.Value;
+             //            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+             //            objDAL = new ClassPODAL();
+             //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeWithRtn(objBAL);
+             //            rpt.SetDataSource(objBAL.DtDataSet);
+             //            crystalReportViewer1.ReportSource = rpt;
+             //            crystalReportViewer1.Refresh();
+             //            Cursor.Current = Cursors.Default;
+             //        }
+             //        catch (Exception ex)
+             //        {
+             //            MessageBox.Show(ex.Message);
+             //        }
+             //    }
+             //}
+             //else
+             //{
+             //    if (comboBoxPayMode.SelectedIndex == -1)
+             //    {
+             //        try
+             //        {
+             //            Cursor.Current = Cursors.WaitCursor;
+             //            //FormReport REPORT = new FormReport();
+             //            //REPORT.Show();
+             //            CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+             //            objBAL = new ClassPOBAL();
+             //            objBAL.date1 = dateTimePickerFrom.Value;
+             //            objBAL.date2 = dateTimePickerTo.Value;
+             //            objDAL = new ClassPODAL();
+             //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateWithRtn(objBAL);
+             //            rpt.SetDataSource(objBAL.DtDataSet);
+             //            crystalReportViewer1.ReportSource = rpt;
+             //            crystalReportViewer1.Refresh();
+             //            Cursor.Current = Cursors.Default;
+             //        }
+             //        catch (Exception ex)
+             //        {
+             //            MessageBox.Show(ex.Message);
+             //        }
+             //    }
+             //    else
+             //    {
+             //        try
+             //        {
+             //            Cursor.Current = Cursors.WaitCursor;
+             //            //FormReport REPORT = new FormReport();
+             //            //REPORT.Show();
+             //            CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+             //            objBAL = new ClassPOBAL();
+             //            objBAL.date1 = dateTimePickerFrom.Value;
+             //            objBAL.date2 = dateTimePickerTo.Value;
+             //            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+             //            objDAL = new ClassPODAL();
+             //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeWithRtn(objBAL);
+             //            rpt.SetDataSource(objBAL.DtDataSet);
+             //            crystalReportViewer1.ReportSource = rpt;
+             //            crystalReportViewer1.Refresh();
+             //            Cursor.Current = Cursors.Default;
+             //        }
+             //        catch (Exception ex)
+             //        {
+             //            MessageBox.Show(ex.Message);
+             //        }
+             //    }
+             //}
             
             //try
             //{
@@ -692,29 +996,84 @@ namespace easyPOSSolution
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                if (comboBoxBranch.SelectedIndex != -1)
+                try
                 {
                     Cursor.Current = Cursors.WaitCursor;
-                    CrystalReportSalesByDateBranch rpt = new CrystalReportSalesByDateBranch();
+                    CrystalReportSalesByDate rpt = new CrystalReportSalesByDate();
                     objBAL = new ClassPOBAL();
                     objBAL.date1 = dateTimePicker2.Value;
                     objBAL.date2 = dateTimePicker1.Value;
                     objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = 0;
                     objDAL = new ClassPODAL();
-                    objBAL.DtDataSet = objDAL.retreiveSalesDatabyBranch(objBAL);
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
                     rpt.SetDataSource(objBAL.DtDataSet);
                     crystalReportViewer6.ReportSource = rpt;
                     crystalReportViewer6.Refresh();
                     Cursor.Current = Cursors.Default;
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummary rpt = new CrystalReportSalesSummary();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePicker2.Value;
+                    objBAL.date2 = dateTimePicker1.Value;
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                    objBAL.PayModeId = 0;
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objBAL.ItemCatId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer6.ReportSource = rpt;
+                    crystalReportViewer6.Refresh();
+                    Cursor.Current = Cursors.Default;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+
+            //try
+            //{
+            //    if (comboBoxBranch.SelectedIndex != -1)
+            //    {
+            //        Cursor.Current = Cursors.WaitCursor;
+            //        CrystalReportSalesByDateBranch rpt = new CrystalReportSalesByDateBranch();
+            //        objBAL = new ClassPOBAL();
+            //        objBAL.date1 = dateTimePicker2.Value;
+            //        objBAL.date2 = dateTimePicker1.Value;
+            //        objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+            //        objDAL = new ClassPODAL();
+            //        objBAL.DtDataSet = objDAL.retreiveSalesDatabyBranch(objBAL);
+            //        rpt.SetDataSource(objBAL.DtDataSet);
+            //        crystalReportViewer6.ReportSource = rpt;
+            //        crystalReportViewer6.Refresh();
+            //        Cursor.Current = Cursors.Default;
+            //    }
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -745,104 +1104,173 @@ namespace easyPOSSolution
             DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (comboBoxPayMode.SelectedIndex == -1)
+                try
                 {
-                    try
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesByDateReturn rpt = new CrystalReportSalesByDateReturn();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom.Value;
+                    objBAL.date2 = dateTimePickerTo.Value;
+                    if (comboBoxBranchReport.SelectedIndex == -1)
                     {
-                        Cursor.Current = Cursors.WaitCursor;
-                        //FormReport REPORT = new FormReport();
-                        //REPORT.Show();
-                        CrystalReportSalesByDateRtn rpt = new CrystalReportSalesByDateRtn();
-                        objBAL = new ClassPOBAL();
-                        objBAL.date1 = dateTimePickerFrom.Value;
-                        objBAL.date2 = dateTimePickerTo.Value;
-                        objDAL = new ClassPODAL();
-                        objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateRtn(objBAL);
-                        rpt.SetDataSource(objBAL.DtDataSet);
-                        crystalReportViewer1.ReportSource = rpt;
-                        crystalReportViewer1.Refresh();
-                        Cursor.Current = Cursors.Default;
+                        comboBoxBranchReport.SelectedValue = 0;
                     }
-                    catch (Exception ex)
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                    if (comboBoxPayMode.SelectedIndex == -1)
                     {
-                        MessageBox.Show(ex.Message);
+                        comboBoxPayMode.SelectedValue = 0;
                     }
+                    objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
                 }
-                else
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        Cursor.Current = Cursors.WaitCursor;
-                        //FormReport REPORT = new FormReport();
-                        //REPORT.Show();
-                        CrystalReportSalesByDateRtn rpt = new CrystalReportSalesByDateRtn();
-                        objBAL = new ClassPOBAL();
-                        objBAL.date1 = dateTimePickerFrom.Value;
-                        objBAL.date2 = dateTimePickerTo.Value;
-                        objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                        objDAL = new ClassPODAL();
-                        objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeRtn(objBAL);
-                        rpt.SetDataSource(objBAL.DtDataSet);
-                        crystalReportViewer1.ReportSource = rpt;
-                        crystalReportViewer1.Refresh();
-                        Cursor.Current = Cursors.Default;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
             {
-                if (comboBoxPayMode.SelectedIndex == -1)
+                try
                 {
-                    try
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportSalesSummaryReturn rpt = new CrystalReportSalesSummaryReturn();
+                    objBAL = new ClassPOBAL();
+                    objBAL.date1 = dateTimePickerFrom.Value;
+                    objBAL.date2 = dateTimePickerTo.Value;
+                    if (comboBoxBranchReport.SelectedIndex == -1)
                     {
-                        Cursor.Current = Cursors.WaitCursor;
-                        //FormReport REPORT = new FormReport();
-                        //REPORT.Show();
-                        CrystalReportSalesSummaryRtn rpt = new CrystalReportSalesSummaryRtn();
-                        objBAL = new ClassPOBAL();
-                        objBAL.date1 = dateTimePickerFrom.Value;
-                        objBAL.date2 = dateTimePickerTo.Value;
-                        objDAL = new ClassPODAL();
-                        objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateRtn(objBAL);
-                        rpt.SetDataSource(objBAL.DtDataSet);
-                        crystalReportViewer1.ReportSource = rpt;
-                        crystalReportViewer1.Refresh();
-                        Cursor.Current = Cursors.Default;
+                        comboBoxBranchReport.SelectedValue = 0;
                     }
-                    catch (Exception ex)
+                    objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                    if (comboBoxPayMode.SelectedIndex == -1)
                     {
-                        MessageBox.Show(ex.Message);
+                        comboBoxPayMode.SelectedValue = 0;
                     }
+                    objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                    objBAL.ItemCode = "";
+                    objBAL.CustomerId = 0;
+                    objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveSalesReturnCommon(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+
                 }
-                else
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        Cursor.Current = Cursors.WaitCursor;
-                        //FormReport REPORT = new FormReport();
-                        //REPORT.Show();
-                        CrystalReportSalesSummaryRtn rpt = new CrystalReportSalesSummaryRtn();
-                        objBAL = new ClassPOBAL();
-                        objBAL.date1 = dateTimePickerFrom.Value;
-                        objBAL.date2 = dateTimePickerTo.Value;
-                        objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                        objDAL = new ClassPODAL();
-                        objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeRtn(objBAL);
-                        rpt.SetDataSource(objBAL.DtDataSet);
-                        crystalReportViewer1.ReportSource = rpt;
-                        crystalReportViewer1.Refresh();
-                        Cursor.Current = Cursors.Default;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    MessageBox.Show(ex.Message);
                 }
             }
+
+            //DialogResult result = MessageBox.Show("If you want to view Detail report press Yes, If Summary Report press No", "Report Option", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            //    if (comboBoxPayMode.SelectedIndex == -1)
+            //    {
+            //        try
+            //        {
+            //            Cursor.Current = Cursors.WaitCursor;
+            //            //FormReport REPORT = new FormReport();
+            //            //REPORT.Show();
+            //            CrystalReportSalesByDateRtn rpt = new CrystalReportSalesByDateRtn();
+            //            objBAL = new ClassPOBAL();
+            //            objBAL.date1 = dateTimePickerFrom.Value;
+            //            objBAL.date2 = dateTimePickerTo.Value;
+            //            objDAL = new ClassPODAL();
+            //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateRtn(objBAL);
+            //            rpt.SetDataSource(objBAL.DtDataSet);
+            //            crystalReportViewer1.ReportSource = rpt;
+            //            crystalReportViewer1.Refresh();
+            //            Cursor.Current = Cursors.Default;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show(ex.Message);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        try
+            //        {
+            //            Cursor.Current = Cursors.WaitCursor;
+            //            //FormReport REPORT = new FormReport();
+            //            //REPORT.Show();
+            //            CrystalReportSalesByDateRtn rpt = new CrystalReportSalesByDateRtn();
+            //            objBAL = new ClassPOBAL();
+            //            objBAL.date1 = dateTimePickerFrom.Value;
+            //            objBAL.date2 = dateTimePickerTo.Value;
+            //            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+            //            objDAL = new ClassPODAL();
+            //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeRtn(objBAL);
+            //            rpt.SetDataSource(objBAL.DtDataSet);
+            //            crystalReportViewer1.ReportSource = rpt;
+            //            crystalReportViewer1.Refresh();
+            //            Cursor.Current = Cursors.Default;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show(ex.Message);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (comboBoxPayMode.SelectedIndex == -1)
+            //    {
+            //        try
+            //        {
+            //            Cursor.Current = Cursors.WaitCursor;
+            //            //FormReport REPORT = new FormReport();
+            //            //REPORT.Show();
+            //            CrystalReportSalesSummaryRtn rpt = new CrystalReportSalesSummaryRtn();
+            //            objBAL = new ClassPOBAL();
+            //            objBAL.date1 = dateTimePickerFrom.Value;
+            //            objBAL.date2 = dateTimePickerTo.Value;
+            //            objDAL = new ClassPODAL();
+            //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDateRtn(objBAL);
+            //            rpt.SetDataSource(objBAL.DtDataSet);
+            //            crystalReportViewer1.ReportSource = rpt;
+            //            crystalReportViewer1.Refresh();
+            //            Cursor.Current = Cursors.Default;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show(ex.Message);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        try
+            //        {
+            //            Cursor.Current = Cursors.WaitCursor;
+            //            //FormReport REPORT = new FormReport();
+            //            //REPORT.Show();
+            //            CrystalReportSalesSummaryRtn rpt = new CrystalReportSalesSummaryRtn();
+            //            objBAL = new ClassPOBAL();
+            //            objBAL.date1 = dateTimePickerFrom.Value;
+            //            objBAL.date2 = dateTimePickerTo.Value;
+            //            objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+            //            objDAL = new ClassPODAL();
+            //            objBAL.DtDataSet = objDAL.retreiveSalesDatabyDatePaymodeRtn(objBAL);
+            //            rpt.SetDataSource(objBAL.DtDataSet);
+            //            crystalReportViewer1.ReportSource = rpt;
+            //            crystalReportViewer1.Refresh();
+            //            Cursor.Current = Cursors.Default;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show(ex.Message);
+            //        }
+            //    }
+            //}
             
         }
 
@@ -1041,24 +1469,57 @@ namespace easyPOSSolution
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
-                //FormReport REPORT = new FormReport();
-                //REPORT.Show();
-                CrystalReportSalesWithDate rpt = new CrystalReportSalesWithDate();
-                //CrystalReportNewSalesByDate rpt = new CrystalReportNewSalesByDate();
+                CrystalReportSalesSummaryDate rpt = new CrystalReportSalesSummaryDate();
                 objBAL = new ClassPOBAL();
                 objBAL.date1 = dateTimePickerFrom.Value;
                 objBAL.date2 = dateTimePickerTo.Value;
+                if (comboBoxBranchReport.SelectedIndex == -1)
+                {
+                    comboBoxBranchReport.SelectedValue = 0;
+                }
+                objBAL.BranchId = Convert.ToInt32(comboBoxBranchReport.SelectedValue);
+                if (comboBoxPayMode.SelectedIndex == -1)
+                {
+                    comboBoxPayMode.SelectedValue = 0;
+                }
+                objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue);
+                objBAL.ItemCode = "";
+                objBAL.CustomerId = 0;
+                objBAL.ItemCatId = 0;
                 objDAL = new ClassPODAL();
-                objBAL.DtDataSet = objDAL.retreiveSalesDatabyDate(objBAL);
+                objBAL.DtDataSet = objDAL.retreiveSalesWithReturnCommon(objBAL);
                 rpt.SetDataSource(objBAL.DtDataSet);
                 crystalReportViewer1.ReportSource = rpt;
                 crystalReportViewer1.Refresh();
                 Cursor.Current = Cursors.Default;
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
+            //try
+            //{
+            //    Cursor.Current = Cursors.WaitCursor;
+            //    //FormReport REPORT = new FormReport();
+            //    //REPORT.Show();
+            //    CrystalReportSalesWithDate rpt = new CrystalReportSalesWithDate();
+            //    //CrystalReportNewSalesByDate rpt = new CrystalReportNewSalesByDate();
+            //    objBAL = new ClassPOBAL();
+            //    objBAL.date1 = dateTimePickerFrom.Value;
+            //    objBAL.date2 = dateTimePickerTo.Value;
+            //    objDAL = new ClassPODAL();
+            //    objBAL.DtDataSet = objDAL.retreiveSalesDatabyDate(objBAL);
+            //    rpt.SetDataSource(objBAL.DtDataSet);
+            //    crystalReportViewer1.ReportSource = rpt;
+            //    crystalReportViewer1.Refresh();
+            //    Cursor.Current = Cursors.Default;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void button11_Click(object sender, EventArgs e)

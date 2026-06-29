@@ -355,6 +355,9 @@ namespace easyPOSSolution
                             objPOBAL.AllowInventory = false;
                         }
                     }
+
+                    objPOBAL.SearchText = dataGridView1.Rows[i].Cells["SearchText"].Value.ToString().Trim();
+                    objPOBAL.CostCode = dataGridView1.Rows[i].Cells["CostCode"].Value.ToString().Trim();
                     
                     
                     ClassPODAL objPODAL = new ClassPODAL();
@@ -1190,6 +1193,135 @@ namespace easyPOSSolution
             //{
             //    MessageBox.Show(ex.Message);
             //}
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+
+                    objPOBAL.ItemCode = dataGridView1.Rows[i].Cells["ItemCode"].Value.ToString().Trim();
+                    if (dataGridView1.Rows[i].Cells["CostPrice"].Value.ToString() == "")
+                    {
+                        objPOBAL.CostPrice = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.CostPrice = Convert.ToDecimal(dataGridView1.Rows[i].Cells["CostPrice"].Value);
+                    }
+                    if (dataGridView1.Rows[i].Cells["CostPrice"].Value.ToString() == "")
+                    {
+                        objPOBAL.DefaultCostPrice = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.DefaultCostPrice = Convert.ToDecimal(dataGridView1.Rows[i].Cells["CostPrice"].Value);
+                    }
+                    if (dataGridView1.Rows[i].Cells["RetailPrice"].Value.ToString() == "")
+                    {
+                        objPOBAL.SellingPrice = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.SellingPrice = Convert.ToDecimal(dataGridView1.Rows[i].Cells["RetailPrice"].Value);
+                    }
+                    if (dataGridView1.Rows[i].Cells["WholesalePrice"].Value.ToString() == "")
+                    {
+                        objPOBAL.SellingPrice2 = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.SellingPrice2 = Convert.ToDecimal(dataGridView1.Rows[i].Cells["WholesalePrice"].Value);
+                    }
+
+                    if (dataGridView1.Rows[i].Cells["ShopPrice"].Value.ToString() == "")
+                    {
+                        objPOBAL.ShopPrice = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.ShopPrice = Convert.ToDecimal(dataGridView1.Rows[i].Cells["ShopPrice"].Value);
+                    }
+                    if (dataGridView1.Rows[i].Cells["RetailDiscountAmount"].Value.ToString() == "")
+                    {
+                        objPOBAL.Discount = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.Discount = Convert.ToDecimal(dataGridView1.Rows[i].Cells["RetailDiscountAmount"].Value);
+                    }
+                    if (dataGridView1.Rows[i].Cells["WholesaleDiscountAmount"].Value.ToString() == "")
+                    {
+                        objPOBAL.WholeSaleDiscount = -1;
+                    }
+                    else
+                    {
+                        objPOBAL.WholeSaleDiscount = Convert.ToDecimal(dataGridView1.Rows[i].Cells["WholesaleDiscountAmount"].Value);
+                    }
+
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    int count = objPODAL.UpdateImportStock(objPOBAL);
+
+                    if (count != 0)
+                    {
+                        insertDTStatus = true;
+                    }
+                }
+                if (insertDTStatus == true)
+                {
+                    MessageBox.Show("Items Prices Updated Successfully.", "Update Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dataGridView1.DataSource = null;
+                }
+                Cursor.Current = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void simpleButton10_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.ItemCode = dataGridView1.Rows[i].Cells["ItemCode"].Value.ToString().Trim();
+
+                    if (dataGridView1.Rows[i].Cells["AvailableQty"].Value.ToString() == "")
+                    {
+                        objPOBAL.AvailableQty = 0;
+                    }
+                    else
+                    {
+                        objPOBAL.AvailableQty = Convert.ToDecimal(dataGridView1.Rows[i].Cells["AvailableQty"].Value);
+                    }
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    int count = objPODAL.ImportStockQty(objPOBAL);
+
+                    if (count != 0)
+                    {
+                        insertDTStatus = true;
+                    }
+                }
+                if (insertDTStatus == true)
+                {
+                    MessageBox.Show("Items Qty Imported Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dataGridView1.DataSource = null;
+                }
+                Cursor.Current = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

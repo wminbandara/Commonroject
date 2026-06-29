@@ -36,6 +36,24 @@ namespace easyPOSSolution
 
         #region Methods
 
+        private void loadResponsiblePerson()
+        {
+            try
+            {
+                ClassCommonBAL objBAL = new ClassCommonBAL();
+                ClassMasterDAL objDAL = new ClassMasterDAL();
+                comboBoxContactPerson.DataSource = objDAL.retreiveAllCustomercontactper(objBAL).Tables[0];
+                comboBoxContactPerson.DisplayMember = "EmployeeName";
+                comboBoxContactPerson.ValueMember = "EmployeeID";
+                comboBoxContactPerson.SelectedIndex = -1;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public void formLoad()
         {
             try
@@ -212,10 +230,10 @@ namespace easyPOSSolution
                 //objPOBAL.Wharehouse = "Wharehouse1";
                 ClassPODAL objPODAL = new ClassPODAL();
                 objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
                     List<ArrayList> newval = new List<ArrayList>();
-                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                     {
                         ArrayList values = new ArrayList();
                         values.Clear();
@@ -323,6 +341,7 @@ namespace easyPOSSolution
                 objBAL.Qty = Convert.ToDecimal(textBoxFGQty.Text);
                 objBAL.PurchasePrice = Convert.ToDecimal(textBoxTotGrosse.Text);
                 objBAL.SellingPrice = Convert.ToDecimal(textBoxFGSellingPrice.Text);
+                objBAL.EmployeeID = Convert.ToInt32(comboBoxContactPerson.SelectedValue);
 
                 objDAL = new ClassPODAL();
                 string count = objDAL.InsertNewProductionHD(objBAL);
@@ -433,10 +452,10 @@ namespace easyPOSSolution
                     objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
                     ClassPODAL objPODAL = new ClassPODAL();
                     objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                    if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                    if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                     {
                         List<ArrayList> newval = new List<ArrayList>();
-                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                         {
                             ArrayList values = new ArrayList();
                             values.Clear();
@@ -548,6 +567,11 @@ namespace easyPOSSolution
         private void lblBranchID_TextChanged(object sender, EventArgs e)
         {
             comboBoxBranch.SelectedValue = lblBranchID.Text;
+        }
+
+        private void lblUserId_TextChanged(object sender, EventArgs e)
+        {
+            loadResponsiblePerson();
         }
 
 

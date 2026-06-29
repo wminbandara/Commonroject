@@ -1,4 +1,4 @@
-﻿using easyBAL;
+using easyBAL;
 using easyDAL;
 using MySql.Data.MySqlClient;
 using System;
@@ -414,6 +414,7 @@ namespace easyPOSSolution
                 dgView.Rows[n].Cells["BCStart"].Value = textBoxStart.Text;
                 dgView.Rows[n].Cells["BCEnd"].Value = textBoxEnd.Text;
                 dgView.Rows[n].Cells["ItemsId"].Value = ItemId.ToString();
+                dgView.Rows[n].Cells["SerialNo"].Value = textBox2.Text;
                 dgView.FirstDisplayedScrollingRowIndex = n;
                 dgView.CurrentCell = dgView.Rows[n].Cells[0];
                 dgView.Rows[n].Selected = true;
@@ -472,6 +473,7 @@ namespace easyPOSSolution
                     objInvBAL.BCStart = Convert.ToInt32(dgView.Rows[i].Cells["BCStart"].Value);
                     objInvBAL.BCEnd = Convert.ToInt32(dgView.Rows[i].Cells["BCEnd"].Value);
                     objInvBAL.ItemsId = Convert.ToInt32(dgView.Rows[i].Cells["ItemsId"].Value);
+                    objInvBAL.SerialNo = dgView.Rows[i].Cells["SerialNo"].Value.ToString().Trim();
                     ClassInvoiveDAL objInvDAL = new ClassInvoiveDAL();
                     int count = objInvDAL.InsertBarcodeItem(objInvBAL);
                     if (count != 0)
@@ -523,6 +525,7 @@ namespace easyPOSSolution
                         dgView.Rows[n].Cells["BCStart"].Value = 1;
                         dgView.Rows[n].Cells["BCEnd"].Value = 1;
                         dgView.Rows[n].Cells["ItemsId"].Value = (values[5].ToString().Trim());
+                        dgView.Rows[n].Cells["SerialNo"].Value = (values[6].ToString().Trim());
                         dgView.FirstDisplayedScrollingRowIndex = n;
                         dgView.CurrentCell = dgView.Rows[n].Cells[0];
                         dgView.Rows[n].Selected = true;
@@ -549,16 +552,16 @@ namespace easyPOSSolution
         {
             if (e.KeyCode == Keys.Enter)
             {
-                AddtoGrid();
-                textBoxItemCode1.Clear();
-                textBoxItemName1.Clear();
-                textBoxNoOfPeases1.Text = "0";
-                //InternalCode = "";
-                //SelPrice = 0;
+                //AddtoGrid();
+                //textBoxItemCode1.Clear();
+                //textBoxItemName1.Clear();
                 //textBoxNoOfPeases1.Text = "0";
-                textBoxItemCode1.Select();
-                
-                //textBoxStart.Select();
+                ////InternalCode = "";
+                ////SelPrice = 0;
+                ////textBoxNoOfPeases1.Text = "0";
+                //textBoxItemCode1.Select();
+
+                textBox2.Select();
             }
         }
 
@@ -616,6 +619,7 @@ namespace easyPOSSolution
             DeleteAll();
             textBoxItemCode1.Enabled = true;
             textBoxItemCode1.Select();
+            textBox2.Text = "";
             dgView.Rows.Clear();
         }
 
@@ -756,6 +760,7 @@ namespace easyPOSSolution
                         textBoxNoOfPeases1.Text = "0";
                         textBoxStart.Text = "0";
                         textBoxEnd.Text = "0";
+                        textBox2.Text = "";
 
                         SearchItem();
                     }
@@ -787,6 +792,7 @@ namespace easyPOSSolution
                     textBoxNoOfPeases1.Text = "0";
                     textBoxStart.Text = "0";
                     textBoxEnd.Text = "0";
+                    textBox2.Text = "";
 
                     SearchItem();
                 }
@@ -822,6 +828,7 @@ namespace easyPOSSolution
                     textBoxNoOfPeases1.Text = "0";
                     textBoxStart.Text = "0";
                     textBoxEnd.Text = "0";
+                    textBox2.Text = "";
 
                     SearchItem();
                 }
@@ -892,7 +899,7 @@ namespace easyPOSSolution
         }
 
         // Getting connection string from App.config file
-        string StrCon = ConfigurationManager.ConnectionStrings["easyPOSSolution.Properties.Settings.easybookshopsolutionConnectionString"].ToString();
+        string StrCon = ClassDataAccess.DecryptString(ConfigurationManager.ConnectionStrings["easyPOSSolution.Properties.Settings.easybookshopsolutionConnectionString"].ToString());
 
         private void BulkInsert()
         {
@@ -925,7 +932,7 @@ namespace easyPOSSolution
             string filePath = "C:\\CSV\\salesorderdttest.xml";
             //FileUpload1.SaveAs(filePath);
             string xml = File.ReadAllText(filePath);
-            string constr = ConfigurationManager.ConnectionStrings["easyPOSSolution.Properties.Settings.easybookshopsolutionConnectionString"].ConnectionString;
+            string constr = ClassDataAccess.DecryptString(ConfigurationManager.ConnectionStrings["easyPOSSolution.Properties.Settings.easybookshopsolutionConnectionString"].ConnectionString);
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 using (MySqlCommand cmd = new MySqlCommand("InsertXML"))
@@ -1141,6 +1148,19 @@ namespace easyPOSSolution
             if (autocomplete == true)
             {
                 ItemAutoComplete();
+            }
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddtoGrid();
+                textBoxItemCode1.Clear();
+                textBoxItemName1.Clear();
+                textBoxNoOfPeases1.Text = "0";
+                textBox2.Clear();
+                textBoxItemCode1.Select();
             }
         }
 

@@ -200,6 +200,19 @@ namespace easyPOSSolution
                     crystalReportViewer1.Refresh();
                     Cursor.Current = Cursors.Default;
                 }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportA4QuotationCr rpt = new CrystalReportA4QuotationCr();
+                    ClassPOBAL objBAL = new ClassPOBAL();
+                    objBAL.SOHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objDAL = new ClassPODAL();
+                    objBAL.DtDataSet = objDAL.retreiveTAWQuotationData(objBAL);
+                    rpt.SetDataSource(objBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
                 //else if (Option7 == true)
                 //{
                 //    Cursor.Current = Cursors.WaitCursor;
@@ -310,10 +323,7 @@ namespace easyPOSSolution
 
         private void FormViewQuotation_Load(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
-            fillGrid();
-            fillOptions();
-            Cursor.Current = Cursors.Default;
+            
         }
 
         private void gridView1_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
@@ -333,7 +343,10 @@ namespace easyPOSSolution
 
         private void lblUserId_TextChanged(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+            fillGrid();
             fillOptions();
+            Cursor.Current = Cursors.Default;
         }
 
 

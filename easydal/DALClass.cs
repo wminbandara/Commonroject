@@ -173,7 +173,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[13];
+                param = new MySqlParameter[15];
                 param[0] = new MySqlParameter("EmployeeName1", objApp.EmployeeName);
                 param[1] = new MySqlParameter("Address1", objApp.Address);
                 param[2] = new MySqlParameter("MobileNo1", objApp.MobileNo);
@@ -187,6 +187,8 @@ namespace easyDAL
                 param[10] = new MySqlParameter("OTRate1", objApp.OTRate);
                 param[11] = new MySqlParameter("LeaveDeductionPerDay1", objApp.LeaveDeductionPerDay);
                 param[12] = new MySqlParameter("DOB1", objApp.DOB);
+                param[13] = new MySqlParameter("AllocatedLeaveDays1", objApp.AllocatedLeaveDays);
+                param[14] = new MySqlParameter("WorkingHoursPerDay1", objApp.WorkingHoursPerDay);
                 objclsDataAccess.beginTransaction();
                 count = objclsDataAccess.executeReturnInt("RegisterEmployee", param);
                 objclsDataAccess.commitTransaction();
@@ -300,7 +302,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[14];
+                param = new MySqlParameter[16];
                 param[0] = new MySqlParameter("EmployeeName1", objApp.EmployeeName);
                 param[1] = new MySqlParameter("Address1", objApp.Address);
                 param[2] = new MySqlParameter("MobileNo1", objApp.MobileNo);
@@ -315,6 +317,8 @@ namespace easyDAL
                 param[11] = new MySqlParameter("OTRate1", objApp.OTRate);
                 param[12] = new MySqlParameter("LeaveDeductionPerDay1", objApp.LeaveDeductionPerDay);
                 param[13] = new MySqlParameter("DOB1", objApp.DOB);
+                param[14] = new MySqlParameter("AllocatedLeaveDays1", objApp.AllocatedLeaveDays);
+                param[15] = new MySqlParameter("WorkingHoursPerDay1", objApp.WorkingHoursPerDay);
 
                 objclsDataAccess.beginTransaction();
                 count = objclsDataAccess.executeReturnInt("UpdateEmployee", param);

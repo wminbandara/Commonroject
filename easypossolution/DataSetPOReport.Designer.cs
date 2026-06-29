@@ -6360,6 +6360,14 @@ namespace easyPOSSolution {
             
             private global::System.Data.DataColumn columnSellingPriceValue;
             
+            private global::System.Data.DataColumn columnVATNo;
+            
+            private global::System.Data.DataColumn columnCompRegNo;
+            
+            private global::System.Data.DataColumn columnVATPer;
+            
+            private global::System.Data.DataColumn columnVATAmount;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DataTablePIPrintNewDataTable() {
@@ -6611,6 +6619,38 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VATNoColumn {
+                get {
+                    return this.columnVATNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CompRegNoColumn {
+                get {
+                    return this.columnCompRegNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VATPerColumn {
+                get {
+                    return this.columnVATPer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VATAmountColumn {
+                get {
+                    return this.columnVATAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6673,7 +6713,11 @@ namespace easyPOSSolution {
                         decimal Discount, 
                         decimal PIDiscount, 
                         decimal SellingPrice, 
-                        decimal SellingPriceValue) {
+                        decimal SellingPriceValue, 
+                        string VATNo, 
+                        string CompRegNo, 
+                        decimal VATPer, 
+                        decimal VATAmount) {
                 DataTablePIPrintNewRow rowDataTablePIPrintNewRow = ((DataTablePIPrintNewRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PIHDId,
@@ -6702,7 +6746,11 @@ namespace easyPOSSolution {
                         Discount,
                         PIDiscount,
                         SellingPrice,
-                        SellingPriceValue};
+                        SellingPriceValue,
+                        VATNo,
+                        CompRegNo,
+                        VATPer,
+                        VATAmount};
                 rowDataTablePIPrintNewRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTablePIPrintNewRow);
                 return rowDataTablePIPrintNewRow;
@@ -6752,6 +6800,10 @@ namespace easyPOSSolution {
                 this.columnPIDiscount = base.Columns["PIDiscount"];
                 this.columnSellingPrice = base.Columns["SellingPrice"];
                 this.columnSellingPriceValue = base.Columns["SellingPriceValue"];
+                this.columnVATNo = base.Columns["VATNo"];
+                this.columnCompRegNo = base.Columns["CompRegNo"];
+                this.columnVATPer = base.Columns["VATPer"];
+                this.columnVATAmount = base.Columns["VATAmount"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6811,6 +6863,14 @@ namespace easyPOSSolution {
                 base.Columns.Add(this.columnSellingPrice);
                 this.columnSellingPriceValue = new global::System.Data.DataColumn("SellingPriceValue", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSellingPriceValue);
+                this.columnVATNo = new global::System.Data.DataColumn("VATNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVATNo);
+                this.columnCompRegNo = new global::System.Data.DataColumn("CompRegNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCompRegNo);
+                this.columnVATPer = new global::System.Data.DataColumn("VATPer", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVATPer);
+                this.columnVATAmount = new global::System.Data.DataColumn("VATAmount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVATAmount);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11874,6 +11934,70 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VATNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableDataTablePIPrintNew.VATNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VATNo\' in table \'DataTablePIPrintNew\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTablePIPrintNew.VATNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CompRegNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableDataTablePIPrintNew.CompRegNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CompRegNo\' in table \'DataTablePIPrintNew\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTablePIPrintNew.CompRegNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal VATPer {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableDataTablePIPrintNew.VATPerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VATPer\' in table \'DataTablePIPrintNew\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTablePIPrintNew.VATPerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal VATAmount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableDataTablePIPrintNew.VATAmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VATAmount\' in table \'DataTablePIPrintNew\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTablePIPrintNew.VATAmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsPIHDIdNull() {
                 return this.IsNull(this.tableDataTablePIPrintNew.PIHDIdColumn);
             }
@@ -12194,6 +12318,54 @@ namespace easyPOSSolution {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetSellingPriceValueNull() {
                 this[this.tableDataTablePIPrintNew.SellingPriceValueColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVATNoNull() {
+                return this.IsNull(this.tableDataTablePIPrintNew.VATNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVATNoNull() {
+                this[this.tableDataTablePIPrintNew.VATNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCompRegNoNull() {
+                return this.IsNull(this.tableDataTablePIPrintNew.CompRegNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCompRegNoNull() {
+                this[this.tableDataTablePIPrintNew.CompRegNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVATPerNull() {
+                return this.IsNull(this.tableDataTablePIPrintNew.VATPerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVATPerNull() {
+                this[this.tableDataTablePIPrintNew.VATPerColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVATAmountNull() {
+                return this.IsNull(this.tableDataTablePIPrintNew.VATAmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVATAmountNull() {
+                this[this.tableDataTablePIPrintNew.VATAmountColumn] = global::System.Convert.DBNull;
             }
         }
         

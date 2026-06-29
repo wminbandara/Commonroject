@@ -73,5 +73,9 @@ namespace easyBAL
         public decimal CommissionRate { get; set; }
         public bool AllowSMS { get; set; }
         public string ActivationType { get; set; }
+        public string DevKey { get; set; }
+
+        public int FormId { get; set; }
+        public string QuotationFooter { get; set; }
     }
 }

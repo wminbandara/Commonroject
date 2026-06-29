@@ -53,6 +53,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -80,7 +81,7 @@
             this.panel2.Controls.Add(this.label12);
             this.panel2.Location = new System.Drawing.Point(5, 7);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(563, 40);
+            this.panel2.Size = new System.Drawing.Size(484, 40);
             this.panel2.TabIndex = 190;
             // 
             // label12
@@ -89,7 +90,7 @@
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label12.Location = new System.Drawing.Point(117, 4);
+            this.label12.Location = new System.Drawing.Point(45, 4);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(379, 28);
             this.label12.TabIndex = 50;
@@ -98,12 +99,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.simpleButton9);
             this.groupBox2.Controls.Add(this.buttonCanellation);
             this.groupBox2.Controls.Add(this.buttonExit);
             this.groupBox2.Controls.Add(this.ButtonNew);
-            this.groupBox2.Location = new System.Drawing.Point(594, 0);
+            this.groupBox2.Location = new System.Drawing.Point(495, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(413, 50);
+            this.groupBox2.Size = new System.Drawing.Size(512, 50);
             this.groupBox2.TabIndex = 191;
             this.groupBox2.TabStop = false;
             // 
@@ -112,7 +114,7 @@
             this.buttonCanellation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(160)))));
             this.buttonCanellation.Font = new System.Drawing.Font("Cambria", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCanellation.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonCanellation.Location = new System.Drawing.Point(276, 13);
+            this.buttonCanellation.Location = new System.Drawing.Point(274, 13);
             this.buttonCanellation.Name = "buttonCanellation";
             this.buttonCanellation.Size = new System.Drawing.Size(126, 32);
             this.buttonCanellation.TabIndex = 27;
@@ -125,7 +127,7 @@
             this.buttonExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(160)))));
             this.buttonExit.Font = new System.Drawing.Font("Cambria", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonExit.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonExit.Location = new System.Drawing.Point(144, 12);
+            this.buttonExit.Location = new System.Drawing.Point(143, 12);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(126, 32);
             this.buttonExit.TabIndex = 26;
@@ -164,7 +166,7 @@
             // ToolStripStatusLabel3
             // 
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(785, 17);
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(609, 17);
             this.ToolStripStatusLabel3.Spring = true;
             // 
             // ToolStripStatusLabel1
@@ -206,6 +208,7 @@
             this.lblUserId.Size = new System.Drawing.Size(145, 17);
             this.lblUserId.Text = "ToolStripStatusLabel2";
             this.lblUserId.Visible = false;
+            this.lblUserId.TextChanged += new System.EventHandler(this.lblUserId_TextChanged);
             // 
             // groupBox3
             // 
@@ -310,6 +313,23 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Appearance.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.simpleButton9.Appearance.BackColor2 = System.Drawing.Color.RoyalBlue;
+            this.simpleButton9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simpleButton9.Appearance.ForeColor = System.Drawing.Color.LavenderBlush;
+            this.simpleButton9.Appearance.Options.UseBackColor = true;
+            this.simpleButton9.Appearance.Options.UseFont = true;
+            this.simpleButton9.Appearance.Options.UseForeColor = true;
+            this.simpleButton9.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
+            this.simpleButton9.Location = new System.Drawing.Point(405, 16);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(96, 25);
+            this.simpleButton9.TabIndex = 734;
+            this.simpleButton9.Text = "Help";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
+            // 
             // InvoiceCancellation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,5 +386,6 @@
         private System.Windows.Forms.Button buttonCanellation;
         public System.Windows.Forms.TextBox textBoxRemark;
         private System.Windows.Forms.Label label2;
+        private DevExpress.XtraEditors.SimpleButton simpleButton9;
     }
 }

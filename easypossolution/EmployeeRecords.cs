@@ -152,6 +152,8 @@ namespace easyPOSSolution
                 frm.textBoxOTRate.Text = dr.Cells[11].Value.ToString();
                 frm.textBoxLeaveDeduction.Text = dr.Cells[12].Value.ToString();
                 frm.dateTimePickerDOB.Text = Convert.ToDateTime(dr.Cells[13].Value).ToString("yyyy/MM/dd");
+                frm.textBoxAllocatedLeaveDays.Text = dr.Cells[14].Value.ToString();
+                frm.textBoxWorkingHours.Text = dr.Cells[15].Value.ToString();
 
                 frm.Update_Record.Enabled = true;
                 frm.Delete.Enabled = true;

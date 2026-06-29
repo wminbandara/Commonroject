@@ -44,6 +44,8 @@
             this.textBoxUserName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comboBoxBranch = new System.Windows.Forms.ComboBox();
             this.comboBoxGRNPrint = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBoxPrintOption = new System.Windows.Forms.ComboBox();
@@ -62,8 +64,6 @@
             this.lblUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblUserId = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.comboBoxBranch = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -241,6 +241,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "User Details";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(78, 215);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 18);
+            this.label9.TabIndex = 726;
+            this.label9.Text = "Branch :";
+            // 
+            // comboBoxBranch
+            // 
+            this.comboBoxBranch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBoxBranch.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxBranch.FormattingEnabled = true;
+            this.comboBoxBranch.Location = new System.Drawing.Point(139, 213);
+            this.comboBoxBranch.Name = "comboBoxBranch";
+            this.comboBoxBranch.Size = new System.Drawing.Size(246, 23);
+            this.comboBoxBranch.TabIndex = 725;
+            // 
             // comboBoxGRNPrint
             // 
             this.comboBoxGRNPrint.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -309,6 +329,7 @@
             this.textBoxUserId.ReadOnly = true;
             this.textBoxUserId.Size = new System.Drawing.Size(76, 24);
             this.textBoxUserId.TabIndex = 21;
+            this.textBoxUserId.TextChanged += new System.EventHandler(this.textBoxUserId_TextChanged);
             // 
             // label7
             // 
@@ -416,26 +437,6 @@
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
             this.ToolStripStatusLabel3.Size = new System.Drawing.Size(364, 17);
             this.ToolStripStatusLabel3.Spring = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(78, 215);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 18);
-            this.label9.TabIndex = 726;
-            this.label9.Text = "Branch :";
-            // 
-            // comboBoxBranch
-            // 
-            this.comboBoxBranch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.comboBoxBranch.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxBranch.FormattingEnabled = true;
-            this.comboBoxBranch.Location = new System.Drawing.Point(139, 213);
-            this.comboBoxBranch.Name = "comboBoxBranch";
-            this.comboBoxBranch.Size = new System.Drawing.Size(246, 23);
-            this.comboBoxBranch.TabIndex = 725;
             // 
             // FormUserRegistration
             // 

@@ -50,16 +50,32 @@ namespace easyPOSSolution
         {
             try
             {
-                Cursor.Current = Cursors.WaitCursor;
-                CrystalReportPrintExpenses rpt = new CrystalReportPrintExpenses();
-                ClassPOBAL objPOBAL = new ClassPOBAL();
-                objPOBAL.ExpensesId = Convert.ToInt32(txtReprint.Text);
-                ClassPODAL objPODAL = new ClassPODAL();
-                objPOBAL.DtDataSet = objPODAL.retreiveExpensePrintData(objPOBAL);
-                rpt.SetDataSource(objPOBAL.DtDataSet);
-                crystalReportViewer1.ReportSource = rpt;
-                crystalReportViewer1.Refresh();
-                Cursor.Current = Cursors.Default;
+                if (checkBoxPrint3In.Checked == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportPrintExpenses3In rpt = new CrystalReportPrintExpenses3In();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.ExpensesId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveExpensePrintData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportPrintExpenses rpt = new CrystalReportPrintExpenses();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.ExpensesId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveExpensePrintData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default;
+                }
 
             }
             catch (Exception ex)

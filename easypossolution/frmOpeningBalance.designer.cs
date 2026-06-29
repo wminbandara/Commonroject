@@ -47,9 +47,10 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(8, 70);
+            this.label29.Location = new System.Drawing.Point(11, 86);
+            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(156, 15);
+            this.label29.Size = new System.Drawing.Size(202, 20);
             this.label29.TabIndex = 667;
             this.label29.Text = "Cashier Opening Balance";
             // 
@@ -57,9 +58,11 @@
             // 
             this.textBoxOpeningBalance.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxOpeningBalance.Font = new System.Drawing.Font("Cambria", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxOpeningBalance.Location = new System.Drawing.Point(171, 67);
+            this.textBoxOpeningBalance.Location = new System.Drawing.Point(228, 82);
+            this.textBoxOpeningBalance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxOpeningBalance.MaxLength = 8;
             this.textBoxOpeningBalance.Name = "textBoxOpeningBalance";
-            this.textBoxOpeningBalance.Size = new System.Drawing.Size(109, 25);
+            this.textBoxOpeningBalance.Size = new System.Drawing.Size(144, 29);
             this.textBoxOpeningBalance.TabIndex = 666;
             this.textBoxOpeningBalance.Text = "0.00";
             this.textBoxOpeningBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -68,9 +71,10 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Cambria", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(290, 67);
+            this.button1.Location = new System.Drawing.Point(387, 82);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 25);
+            this.button1.Size = new System.Drawing.Size(164, 31);
             this.button1.TabIndex = 668;
             this.button1.Text = "Save";
             this.button1.UseVisualStyleBackColor = true;
@@ -78,15 +82,17 @@
             // 
             // StatusStrip1
             // 
+            this.StatusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.StatusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripStatusLabel1,
             this.lblUser,
             this.lblUserId,
             this.ToolStripStatusLabel3,
             this.lblBranchID});
-            this.StatusStrip1.Location = new System.Drawing.Point(0, 106);
+            this.StatusStrip1.Location = new System.Drawing.Point(0, 132);
             this.StatusStrip1.Name = "StatusStrip1";
-            this.StatusStrip1.Size = new System.Drawing.Size(456, 22);
+            this.StatusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.StatusStrip1.Size = new System.Drawing.Size(608, 26);
             this.StatusStrip1.TabIndex = 669;
             this.StatusStrip1.Text = "StatusStrip1";
             // 
@@ -94,7 +100,7 @@
             // 
             this.ToolStripStatusLabel1.Font = new System.Drawing.Font("Palatino Linotype", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1";
-            this.ToolStripStatusLabel1.Size = new System.Drawing.Size(86, 17);
+            this.ToolStripStatusLabel1.Size = new System.Drawing.Size(108, 21);
             this.ToolStripStatusLabel1.Text = "Logged in As :";
             // 
             // lblUser
@@ -103,7 +109,7 @@
             this.lblUser.ForeColor = System.Drawing.Color.Red;
             this.lblUser.Image = ((System.Drawing.Image)(resources.GetObject("lblUser.Image")));
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(145, 17);
+            this.lblUser.Size = new System.Drawing.Size(186, 21);
             this.lblUser.Text = "ToolStripStatusLabel2";
             // 
             // lblUserId
@@ -112,20 +118,20 @@
             this.lblUserId.ForeColor = System.Drawing.Color.Red;
             this.lblUserId.Image = ((System.Drawing.Image)(resources.GetObject("lblUserId.Image")));
             this.lblUserId.Name = "lblUserId";
-            this.lblUserId.Size = new System.Drawing.Size(145, 17);
+            this.lblUserId.Size = new System.Drawing.Size(186, 21);
             this.lblUserId.Text = "ToolStripStatusLabel2";
             this.lblUserId.Visible = false;
             // 
             // ToolStripStatusLabel3
             // 
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(1, 17);
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(208, 21);
             this.ToolStripStatusLabel3.Spring = true;
             // 
             // lblBranchID
             // 
             this.lblBranchID.Name = "lblBranchID";
-            this.lblBranchID.Size = new System.Drawing.Size(68, 17);
+            this.lblBranchID.Size = new System.Drawing.Size(86, 21);
             this.lblBranchID.Text = "lblBranchID";
             this.lblBranchID.TextChanged += new System.EventHandler(this.lblBranchID_TextChanged);
             // 
@@ -133,9 +139,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(114, 18);
+            this.label1.Location = new System.Drawing.Point(152, 22);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 15);
+            this.label1.Size = new System.Drawing.Size(65, 20);
             this.label1.TabIndex = 670;
             this.label1.Text = "Branch";
             // 
@@ -144,17 +151,18 @@
             this.comboBoxBranch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.comboBoxBranch.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxBranch.FormattingEnabled = true;
-            this.comboBoxBranch.Location = new System.Drawing.Point(171, 13);
+            this.comboBoxBranch.Location = new System.Drawing.Point(228, 16);
+            this.comboBoxBranch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxBranch.Name = "comboBoxBranch";
-            this.comboBoxBranch.Size = new System.Drawing.Size(242, 22);
+            this.comboBoxBranch.Size = new System.Drawing.Size(321, 25);
             this.comboBoxBranch.TabIndex = 671;
             // 
             // frmOpeningBalance
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.ClientSize = new System.Drawing.Size(456, 128);
+            this.ClientSize = new System.Drawing.Size(608, 158);
             this.Controls.Add(this.comboBoxBranch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.StatusStrip1);
@@ -163,6 +171,7 @@
             this.Controls.Add(this.textBoxOpeningBalance);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmOpeningBalance";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Opening Balance";

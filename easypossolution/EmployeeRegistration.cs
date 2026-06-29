@@ -36,6 +36,8 @@ namespace easyPOSSolution
             textBoxHourlyRate.Text = "0.00";
             textBoxOTRate.Text = "0.00";
             textBoxLeaveDeduction.Text = "0.00";
+            textBoxAllocatedLeaveDays.Text = "0.00";
+            textBoxWorkingHours.Text = "0.00";
             dateTimePickerDOB.Value = DateTime.Today;
             Update_Record.Enabled = false;
             Delete.Enabled = false;
@@ -60,6 +62,8 @@ namespace easyPOSSolution
                 objBAL.HourlyRate = Convert.ToDecimal(textBoxHourlyRate.Text);
                 objBAL.OTRate = Convert.ToDecimal(textBoxOTRate.Text);
                 objBAL.LeaveDeductionPerDay = Convert.ToDecimal(textBoxLeaveDeduction.Text);
+                objBAL.AllocatedLeaveDays = Convert.ToDecimal(textBoxAllocatedLeaveDays.Text);
+                objBAL.WorkingHoursPerDay = Convert.ToDecimal(textBoxWorkingHours.Text);
                 objBAL.DOB = dateTimePickerDOB.Value;
 
                 objDAL = new DALClass();
@@ -95,6 +99,8 @@ namespace easyPOSSolution
                 objBAL.OTRate = Convert.ToDecimal(textBoxOTRate.Text);
                 objBAL.LeaveDeductionPerDay = Convert.ToDecimal(textBoxLeaveDeduction.Text);
                 objBAL.DOB = dateTimePickerDOB.Value;
+                objBAL.AllocatedLeaveDays = Convert.ToDecimal(textBoxAllocatedLeaveDays.Text);
+                objBAL.WorkingHoursPerDay = Convert.ToDecimal(textBoxWorkingHours.Text);
 
                 objDAL = new DALClass();
                 int count = objDAL.UpdateEmployee(objBAL);
@@ -217,7 +223,7 @@ namespace easyPOSSolution
             Designation.DataSource = objDAL.retreiveDesignations(objBAL).Tables[0];
             Designation.DisplayMember = "Designation";
             Designation.ValueMember = "DSId";
-            Designation.SelectedIndex = -1;
+            Designation.SelectedIndex = 0;
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)
@@ -358,6 +364,11 @@ namespace easyPOSSolution
             {
                 Save.Select();
             }
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://youtu.be/MkCuluNuYw8");
         }
     }
 }

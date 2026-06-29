@@ -49,7 +49,7 @@
             this.txtReprint = new System.Windows.Forms.TextBox();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
+            //this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.allCustomerInvoiceBindingSource)).BeginInit();
             this.StatusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -245,7 +245,7 @@
             // 
             // allCustomerInvoiceTableAdapter
             // 
-            this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
+            //this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
             // 
             // FormPrintFG
             // 
@@ -298,6 +298,6 @@
         internal System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox4;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
+        //private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
     }
 }

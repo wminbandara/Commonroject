@@ -16,6 +16,36 @@ namespace easyDAL
 
         #region Select
 
+        public DataSet retreiveAllSupplierGRN(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("BillNo1", obj.BillNo);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("AllSupplierGRN", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllSearchSalesOrders(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("BillNo1", obj.BillNo);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllSalesOrdersReprint", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveStockAdjustmentData(ClassSOBAL obj)
         {
             try
@@ -54,6 +84,21 @@ namespace easyDAL
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("SelectStockTransferData", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllGINByID(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectGINNewData", param);
             }
             catch (Exception ex)
             {
@@ -153,6 +198,21 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveAllDirectSalesReturn(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("BillNo1", obj.BillNo);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("AllCustomerSalesReturn", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveAllCreditPay(ClassSOBAL obj)
         {
             try
@@ -160,6 +220,21 @@ namespace easyDAL
                 param = new MySqlParameter[0];
                 //param[0] = new MySqlParameter("BillNo1", obj.BillNo);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllCustCreditPay", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllPurchaseReturn(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("BillNo1", obj.BillNo);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllPurchaseReturn", param);
             }
             catch (Exception ex)
             {
@@ -213,6 +288,21 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveAllGINNew(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("BillNo1", obj.BillNo);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllGINNew", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveAllCustomers(ClassSOBAL obj)
         {
             try
@@ -250,6 +340,21 @@ namespace easyDAL
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("BillNo1", obj.BillNo);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("SelectBillRecords", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveBillDataForUpdate(ClassSOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("BillNo1", obj.BillNo);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectBillRecordsForUpdate", param);
             }
             catch (Exception ex)
             {

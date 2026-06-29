@@ -51,6 +51,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.allCustomerInvoiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
+            this.checkBoxPrint3In = new System.Windows.Forms.CheckBox();
             this.StatusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
@@ -66,7 +67,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label16.Location = new System.Drawing.Point(550, 19);
+            this.label16.Location = new System.Drawing.Point(409, 20);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(77, 18);
             this.label16.TabIndex = 697;
@@ -208,7 +209,7 @@
             // txtReprint
             // 
             this.txtReprint.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtReprint.Location = new System.Drawing.Point(631, 17);
+            this.txtReprint.Location = new System.Drawing.Point(490, 18);
             this.txtReprint.Name = "txtReprint";
             this.txtReprint.Size = new System.Drawing.Size(89, 22);
             this.txtReprint.TabIndex = 696;
@@ -221,7 +222,7 @@
             this.panel2.Controls.Add(this.label12);
             this.panel2.Location = new System.Drawing.Point(5, 7);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(530, 40);
+            this.panel2.Size = new System.Drawing.Size(400, 40);
             this.panel2.TabIndex = 693;
             // 
             // crystalReportViewer1
@@ -255,11 +256,22 @@
             // 
             this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
             // 
+            // checkBoxPrint3In
+            // 
+            this.checkBoxPrint3In.AutoSize = true;
+            this.checkBoxPrint3In.Location = new System.Drawing.Point(603, 20);
+            this.checkBoxPrint3In.Name = "checkBoxPrint3In";
+            this.checkBoxPrint3In.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxPrint3In.TabIndex = 704;
+            this.checkBoxPrint3In.Text = "3 Inch Print";
+            this.checkBoxPrint3In.UseVisualStyleBackColor = true;
+            // 
             // FormReprintExpenses
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1030, 508);
+            this.Controls.Add(this.checkBoxPrint3In);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.StatusStrip1);
             this.Controls.Add(this.groupBox1);
@@ -309,5 +321,6 @@
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
         private System.Windows.Forms.BindingSource allCustomerInvoiceBindingSource;
         private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
+        private System.Windows.Forms.CheckBox checkBoxPrint3In;
     }
 }

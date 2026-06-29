@@ -123,5 +123,46 @@ namespace easyPOSSolution
                 MessageBox.Show(ex.Message);
             }
         }
+
+        int EmployeeLeaveId = 0;
+
+        private void gridView1_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+        {
+            if (this.gridView1.GetFocusedRowCellValue("EmployeeLeaveId") == null)
+                return;
+
+            EmployeeLeaveId = Convert.ToInt32(this.gridView1.GetFocusedRowCellValue("EmployeeLeaveId"));
+
+            DialogResult result = MessageBox.Show("Do you want Delete this Leave Record?", "Delete Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                DeleteLeaveById();
+            }
+        }
+
+        private void DeleteLeaveById()
+        {
+            try
+            {
+                ClassCommonBAL objBAL = new ClassCommonBAL();
+                objBAL.Id = EmployeeLeaveId;
+
+                ClassMasterDAL objDAL = new ClassMasterDAL();
+
+
+                int count = objDAL.DeleteLeaveRecord(objBAL);
+                if (count != 0)
+                {
+                    MessageBox.Show("Salary Record Deleted Susccessfully.", "Delete Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    fillGridAllLeaves();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
     }
 }

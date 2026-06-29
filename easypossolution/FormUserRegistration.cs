@@ -167,6 +167,10 @@ namespace easyPOSSolution
                     fillGridAllUsers();
                     Reset();
                 }
+                else
+                {
+                    MessageBox.Show("User can not be deleted.", "Delete failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -408,6 +412,31 @@ namespace easyPOSSolution
         }
 
         #endregion       
+
+        private void textBoxUserId_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxUserId.Text != "")
+            {
+                if (Convert.ToInt32(textBoxUserId.Text) > 0)
+                {
+                    btnRegister.Enabled = false;
+                    btnDelete.Enabled = true;
+                    btnUpdate_record.Enabled = true;
+                }
+                else
+                {
+                    btnRegister.Enabled = true;
+                    btnDelete.Enabled = false;
+                    btnUpdate_record.Enabled = false;
+                }
+            }
+            else
+            {
+                btnRegister.Enabled = true;
+                btnDelete.Enabled = false;
+                btnUpdate_record.Enabled = false;
+            }
+        }
 
         
 

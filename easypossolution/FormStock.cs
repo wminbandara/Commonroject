@@ -18,6 +18,8 @@ namespace easyPOSSolution
 {
     public partial class FormStock : Form
     {
+        public frmInvoice frm { set; get; }
+
         #region Local Variables
 
         ClassPOBAL objPOBAL = new ClassPOBAL();
@@ -27,6 +29,9 @@ namespace easyPOSSolution
 
         bool loadStatus;
         int TempId = 0;
+        string AddedItemCode;
+        public bool invoicestatus = false;
+
 
         #endregion
 
@@ -40,6 +45,36 @@ namespace easyPOSSolution
         #endregion
 
         #region Methods
+
+        private void ItemAutoComplete()
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                ClassInvoiceBAL objInvBAL = new ClassInvoiceBAL();
+                ClassInvoiveDAL objInvDAL = new ClassInvoiveDAL();
+                objInvBAL.DtDataSet = objInvDAL.retreiveItemRackNo(objInvBAL);
+
+                if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        textBoxRackNo.AutoCompleteCustomSource.Add(values[0].ToString());
+                    }
+                }
+                Cursor.Current = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void DeleteBarcode()
         {
@@ -309,6 +344,7 @@ namespace easyPOSSolution
             textBoxItemId.Clear();
             textBoxItemName.Clear();
             textBoxItemNameS.Clear();
+            textBoxSearchText.Clear();
             textBoxDiscount.Text = "0.00";
             textBoxWholesaleDisc.Text = "0.00";
             comboBoxUnit.Text = "Nos";
@@ -335,6 +371,7 @@ namespace easyPOSSolution
             textBoxRetailDiscPer.Text = "0";
             textBoxWholesaleDiscPer.Text = "0";
             textBoxItemNameT.Clear();
+            textBoxCostCode.Clear();
             checkBoxBundleItem.Checked = false;
             checkBoxScaleItem.Checked = false;
             checkBoxRawMaterial.Checked = false;
@@ -372,7 +409,10 @@ namespace easyPOSSolution
             textBoxShopPriceV.Text = "0.00";
             textBoxRetailDiscPerV.Text = "0";
             textBoxWholesaleDiscPerV.Text = "0";
-            textBoxConvertionQty.Text = "0.00";
+            textBoxConvertionQty.Text = "0.000000";
+            checkBoxBundleItemV.Checked = false;
+            checkBoxScaleItemV.Checked = false;
+            checkBoxRawMaterialV.Checked = false;
         }
 
 
@@ -658,6 +698,7 @@ namespace easyPOSSolution
             textBoxItemCode.Clear();
             textBoxItemName.Clear();
             textBoxItemNameS.Clear();
+            textBoxSearchText.Clear();
             comboBoxUnit.Text = "Nos";
             textBoxWarranty.Text = "";
             comboBoxItemCategory.SelectedIndex = -1;
@@ -683,6 +724,7 @@ namespace easyPOSSolution
             textBoxRackNo.Text = "0";
             textBoxShopPrice.Text = "0.00";
             textBoxItemNameT.Clear();
+            textBoxCostCode.Clear();
             checkBoxScaleItem.Checked = false;
             checkBoxBundleItem.Checked = false;
             checkBoxRawMaterial.Checked = false;
@@ -720,7 +762,14 @@ namespace easyPOSSolution
             //comboBoxSupplier.SelectedIndex = 0;
             textBoxRackNoV.Text = "0";
             textBoxShopPriceV.Text = "0.00";
-            textBoxConvertionQty.Text = "0.00";
+            textBoxConvertionQty.Text = "0.000000";
+            checkBoxScaleItemV.Checked = false;
+            checkBoxBundleItemV.Checked = false;
+            checkBoxRawMaterialV.Checked = false;
+
+            checkBoxAllowSalesV.Checked = true;
+            checkBoxAllowPurchaseV.Checked = true;
+            checkBoxAllowInventoryV.Checked = true;
         }
 
         private void fillItemNetValue()
@@ -743,7 +792,7 @@ namespace easyPOSSolution
             try
             {
                 objPOBAL = new ClassPOBAL();
-                objPOBAL.ItemStatus = "Open";
+                objPOBAL.ItemStatus = "Adj";
                 objPOBAL.ItemCode = textBoxItemCodeV.Text.Trim();
                 objPOBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategoryV.SelectedValue.ToString());
                 if (comboBoxSubCatV.SelectedIndex == -1)
@@ -777,7 +826,7 @@ namespace easyPOSSolution
                 objPOBAL.OpenBalDate = dateTimePickerTranDate.Value;
                 objPOBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
                 objPOBAL.SupplierId = 1;
-                objPOBAL.WarrantyPeriod = textBoxWarranty.Text.Trim();
+                objPOBAL.WarrantyPeriod = textBoxWarrantyV.Text.Trim();
                 objPOBAL.FreeIssueEffectFrom = Convert.ToInt32(textBoxFreeIssueV.Text);
                 //if (Convert.ToDecimal(labelNetDiff.Text) > 0)
                 //{
@@ -812,14 +861,59 @@ namespace easyPOSSolution
                 objPOBAL.ShopPrice = Convert.ToDecimal(textBoxShopPriceV.Text);
                 objPOBAL.RetailDiscPer = Convert.ToDecimal(textBoxRetailDiscPerV.Text);
                 objPOBAL.WholesaleDiscPer = Convert.ToDecimal(textBoxWholesaleDiscPerV.Text);
-                //if (textBoxItemIdV.Text == "" || Convert.ToInt32(textBoxItemIdV.Text) == 0)
-                //{
-                //    objPOBAL.ItemsId2 = 0;
-                //}
-                //else
-                //{
-                //    objPOBAL.ItemsId2 = Convert.ToInt32(textBoxItemIdV.Text);
-                //}
+                if (checkBoxScaleItemV.Checked == true)
+                {
+                    objPOBAL.ScaleItem = true;
+                }
+                if (checkBoxScaleItemV.Checked == false)
+                {
+                    objPOBAL.ScaleItem = false;
+                }
+                if (checkBoxBundleItemV.Checked == true)
+                {
+                    objPOBAL.BundleItem = true;
+                }
+                if (checkBoxBundleItemV.Checked == false)
+                {
+                    objPOBAL.BundleItem = false;
+                }
+                if (checkBoxRawMaterialV.Checked == true)
+                {
+                    objPOBAL.RawMaterial = true;
+                }
+                if (checkBoxRawMaterialV.Checked == false)
+                {
+                    objPOBAL.RawMaterial = false;
+                }
+
+                if (checkBoxAllowSalesV.Checked == true)
+                {
+                    objPOBAL.AllowSales = true;
+                }
+                if (checkBoxAllowSalesV.Checked == false)
+                {
+                    objPOBAL.AllowSales = false;
+                }
+
+                if (checkBoxAllowPurchaseV.Checked == true)
+                {
+                    objPOBAL.AllowPurchase = true;
+                }
+                if (checkBoxAllowPurchaseV.Checked == false)
+                {
+                    objPOBAL.AllowPurchase = false;
+                }
+
+                if (checkBoxAllowInventoryV.Checked == true)
+                {
+                    objPOBAL.AllowInventory = true;
+                }
+                if (checkBoxAllowInventoryV.Checked == false)
+                {
+                    objPOBAL.AllowInventory = false;
+                }
+                objPOBAL.TItemName = "";
+                //--------------------------
                 objPOBAL.MItemsId = Convert.ToInt32(textBoxItemId.Text);
                 objPOBAL.MItemCode = textBoxItemCode.Text.Trim();
                 objPOBAL.ConvertionQty = Convert.ToDecimal(textBoxConvertionQty.Text);
@@ -951,330 +1045,330 @@ namespace easyPOSSolution
         {
             try
             {
-                if (radioButtonOpen.Checked == true)
-                {
-                    objPOBAL = new ClassPOBAL();
-                    objPOBAL.ItemStatus = "Open";
-                    objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
-                    objPOBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
-                    if (comboBoxSubCat.SelectedIndex == -1)
-                    {
-                        comboBoxSubCat.SelectedValue = 0;
-                    }
-                    objPOBAL.ItemSubCatId = Convert.ToInt32(comboBoxSubCat.SelectedValue);
-                    objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
-                    objPOBAL.ItemName = textBoxItemName.Text.Trim();
-                    objPOBAL.SItemName = textBoxItemNameS.Text.Trim();
-                    objPOBAL.Discount = Convert.ToDecimal(textBoxDiscount.Text);
-                    objPOBAL.WholeSaleDiscount = Convert.ToDecimal(textBoxWholesaleDisc.Text);
-                    objPOBAL.ItemUnit = comboBoxUnit.Text.Trim();
-                    objPOBAL.CostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
-                    if (Convert.ToDecimal(textBoxDefPurchasePrice.Text) == 0)
-                    {
-                        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
-                    }
-                    else
-                    {
-                        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxDefPurchasePrice.Text);
-                    }
+                //if (radioButtonOpen.Checked == true)
+                //{
+                //    objPOBAL = new ClassPOBAL();
+                //    objPOBAL.ItemStatus = "Open";
+                //    objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
+                //    objPOBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+                //    if (comboBoxSubCat.SelectedIndex == -1)
+                //    {
+                //        comboBoxSubCat.SelectedValue = 0;
+                //    }
+                //    objPOBAL.ItemSubCatId = Convert.ToInt32(comboBoxSubCat.SelectedValue);
+                //    objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                //    objPOBAL.ItemName = textBoxItemName.Text.Trim();
+                //    objPOBAL.SItemName = textBoxItemNameS.Text.Trim();
+                //    objPOBAL.Discount = Convert.ToDecimal(textBoxDiscount.Text);
+                //    objPOBAL.WholeSaleDiscount = Convert.ToDecimal(textBoxWholesaleDisc.Text);
+                //    objPOBAL.ItemUnit = comboBoxUnit.Text.Trim();
+                //    objPOBAL.CostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
+                //    if (Convert.ToDecimal(textBoxDefPurchasePrice.Text) == 0)
+                //    {
+                //        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
+                //    }
+                //    else
+                //    {
+                //        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxDefPurchasePrice.Text);
+                //    }
                     
-                    objPOBAL.SellingPrice = Convert.ToDecimal(textBoxSellingPrice.Text);
-                    objPOBAL.SellingPrice2 = Convert.ToDecimal(textBoxPrice2.Text);
-                    objPOBAL.SPPRiceEffectFrom = Convert.ToDecimal(textBoxSPPriceEffectFrom.Text);
-                    objPOBAL.MinQty = Convert.ToDecimal(textBoxMinQty.Text);
-                    objPOBAL.MaintainQty = Convert.ToDecimal(textBoxMaintainQty.Text);
-                    objPOBAL.AvailableQty = Convert.ToDecimal(textBoxQty.Text);
-                    // objPOBAL.ItemMode = comboBoxItemMode.Text.Trim();
-                    objPOBAL.ItemMode = "COMMON STOCK";
-                    objPOBAL.OpenBalDate = dateTimePickerTranDate.Value;
-                    objPOBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
-                    //objPOBAL.Wharehouse = "Wharehouse1";
-                    objPOBAL.SupplierId = Convert.ToInt32(comboBoxSupplier.SelectedValue.ToString());
-                    //objPOBAL.SupplierId = 1;
-                    objPOBAL.WarrantyPeriod = textBoxWarranty.Text.Trim();
-                    objPOBAL.FreeIssueEffectFrom = Convert.ToInt32(textBoxFreeIssue.Text);
-                    if (Convert.ToDecimal(labelNetDiff.Text) > 0)
-                    {
-                        objPOBAL.InValue = Convert.ToDecimal(labelNetDiff.Text);
-                        objPOBAL.OutValue = 0;
-                    }
-                    if (Convert.ToDecimal(labelNetDiff.Text) < 0)
-                    {
-                        objPOBAL.OutValue = (Convert.ToDecimal(labelNetDiff.Text) * -1);
-                        objPOBAL.InValue = 0;
-                    }
-                    if (Convert.ToDecimal(labelQtyDiff.Text) > 0)
-                    {
-                        objPOBAL.InQty = Convert.ToDecimal(labelQtyDiff.Text);
-                        objPOBAL.OutQty = 0;
-                    }
-                    if (Convert.ToDecimal(labelQtyDiff.Text) < 0)
-                    {
-                        objPOBAL.OutQty = (Convert.ToDecimal(labelQtyDiff.Text) * -1);
-                        objPOBAL.InQty = 0;
-                    }
-                    if (radioButtonOpen.Checked == true)
-                    {
-                        objPOBAL.OpenStates = 1;
-                    }
-                    if (radioButtonNew.Checked == true || radioButtonAdjust.Checked == true)
-                    {
-                        objPOBAL.OpenStates = 0;
-                    }
-                    objPOBAL.RackNo = textBoxRackNo.Text;
-                    objPOBAL.MinSellingPrice = Convert.ToDecimal(textBoxMinSellingPrice.Text);
-                    objPOBAL.ShopPrice = Convert.ToDecimal(textBoxShopPrice.Text);
-                    objPOBAL.RetailDiscPer = Convert.ToDecimal(textBoxRetailDiscPer.Text);
-                    objPOBAL.WholesaleDiscPer = Convert.ToDecimal(textBoxWholesaleDiscPer.Text);
-                    if (checkBoxScaleItem.Checked == true)
-                    {
-                        objPOBAL.ScaleItem = true;
-                    }
-                    if (checkBoxScaleItem.Checked == false)
-                    {
-                        objPOBAL.ScaleItem = false;
-                    }
-                    if (checkBoxBundleItem.Checked == true)
-                    {
-                        objPOBAL.BundleItem = true;
-                    }
-                    if (checkBoxBundleItem.Checked == false)
-                    {
-                        objPOBAL.BundleItem = false;
-                    }
-                    if (checkBoxRawMaterial.Checked == true)
-                    {
-                        objPOBAL.RawMaterial = true;
-                    }
-                    if (checkBoxRawMaterial.Checked == false)
-                    {
-                        objPOBAL.RawMaterial = false;
-                    }
+                //    objPOBAL.SellingPrice = Convert.ToDecimal(textBoxSellingPrice.Text);
+                //    objPOBAL.SellingPrice2 = Convert.ToDecimal(textBoxPrice2.Text);
+                //    objPOBAL.SPPRiceEffectFrom = Convert.ToDecimal(textBoxSPPriceEffectFrom.Text);
+                //    objPOBAL.MinQty = Convert.ToDecimal(textBoxMinQty.Text);
+                //    objPOBAL.MaintainQty = Convert.ToDecimal(textBoxMaintainQty.Text);
+                //    objPOBAL.AvailableQty = Convert.ToDecimal(textBoxQty.Text);
+                //    // objPOBAL.ItemMode = comboBoxItemMode.Text.Trim();
+                //    objPOBAL.ItemMode = "COMMON STOCK";
+                //    objPOBAL.OpenBalDate = dateTimePickerTranDate.Value;
+                //    objPOBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
+                //    //objPOBAL.Wharehouse = "Wharehouse1";
+                //    objPOBAL.SupplierId = Convert.ToInt32(comboBoxSupplier.SelectedValue.ToString());
+                //    //objPOBAL.SupplierId = 1;
+                //    objPOBAL.WarrantyPeriod = textBoxWarranty.Text.Trim();
+                //    objPOBAL.FreeIssueEffectFrom = Convert.ToInt32(textBoxFreeIssue.Text);
+                //    if (Convert.ToDecimal(labelNetDiff.Text) > 0)
+                //    {
+                //        objPOBAL.InValue = Convert.ToDecimal(labelNetDiff.Text);
+                //        objPOBAL.OutValue = 0;
+                //    }
+                //    if (Convert.ToDecimal(labelNetDiff.Text) < 0)
+                //    {
+                //        objPOBAL.OutValue = (Convert.ToDecimal(labelNetDiff.Text) * -1);
+                //        objPOBAL.InValue = 0;
+                //    }
+                //    if (Convert.ToDecimal(labelQtyDiff.Text) > 0)
+                //    {
+                //        objPOBAL.InQty = Convert.ToDecimal(labelQtyDiff.Text);
+                //        objPOBAL.OutQty = 0;
+                //    }
+                //    if (Convert.ToDecimal(labelQtyDiff.Text) < 0)
+                //    {
+                //        objPOBAL.OutQty = (Convert.ToDecimal(labelQtyDiff.Text) * -1);
+                //        objPOBAL.InQty = 0;
+                //    }
+                //    if (radioButtonOpen.Checked == true)
+                //    {
+                //        objPOBAL.OpenStates = 1;
+                //    }
+                //    if (radioButtonNew.Checked == true || radioButtonAdjust.Checked == true)
+                //    {
+                //        objPOBAL.OpenStates = 0;
+                //    }
+                //    objPOBAL.RackNo = textBoxRackNo.Text;
+                //    objPOBAL.MinSellingPrice = Convert.ToDecimal(textBoxMinSellingPrice.Text);
+                //    objPOBAL.ShopPrice = Convert.ToDecimal(textBoxShopPrice.Text);
+                //    objPOBAL.RetailDiscPer = Convert.ToDecimal(textBoxRetailDiscPer.Text);
+                //    objPOBAL.WholesaleDiscPer = Convert.ToDecimal(textBoxWholesaleDiscPer.Text);
+                //    if (checkBoxScaleItem.Checked == true)
+                //    {
+                //        objPOBAL.ScaleItem = true;
+                //    }
+                //    if (checkBoxScaleItem.Checked == false)
+                //    {
+                //        objPOBAL.ScaleItem = false;
+                //    }
+                //    if (checkBoxBundleItem.Checked == true)
+                //    {
+                //        objPOBAL.BundleItem = true;
+                //    }
+                //    if (checkBoxBundleItem.Checked == false)
+                //    {
+                //        objPOBAL.BundleItem = false;
+                //    }
+                //    if (checkBoxRawMaterial.Checked == true)
+                //    {
+                //        objPOBAL.RawMaterial = true;
+                //    }
+                //    if (checkBoxRawMaterial.Checked == false)
+                //    {
+                //        objPOBAL.RawMaterial = false;
+                //    }
 
-                    if (checkBoxAllowSales.Checked == true)
-                    {
-                        objPOBAL.AllowSales = true;
-                    }
-                    if (checkBoxAllowSales.Checked == false)
-                    {
-                        objPOBAL.AllowSales = false;
-                    }
+                //    if (checkBoxAllowSales.Checked == true)
+                //    {
+                //        objPOBAL.AllowSales = true;
+                //    }
+                //    if (checkBoxAllowSales.Checked == false)
+                //    {
+                //        objPOBAL.AllowSales = false;
+                //    }
 
-                    if (checkBoxAllowPurchase.Checked == true)
-                    {
-                        objPOBAL.AllowPurchase = true;
-                    }
-                    if (checkBoxAllowPurchase.Checked == false)
-                    {
-                        objPOBAL.AllowPurchase = false;
-                    }
+                //    if (checkBoxAllowPurchase.Checked == true)
+                //    {
+                //        objPOBAL.AllowPurchase = true;
+                //    }
+                //    if (checkBoxAllowPurchase.Checked == false)
+                //    {
+                //        objPOBAL.AllowPurchase = false;
+                //    }
 
-                    if (checkBoxAllowInventory.Checked == true)
-                    {
-                        objPOBAL.AllowInventory = true;
-                    }
-                    if (checkBoxAllowInventory.Checked == false)
-                    {
-                        objPOBAL.AllowInventory = false;
-                    }
-                    objPOBAL.TItemName = textBoxItemNameT.Text.Trim();
-                    objPODAL = new ClassPODAL();
-                    int count = objPODAL.InsertUpdateStock(objPOBAL);
-                    if (count != 0)
-                    {
-                        MessageBox.Show("Item Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //if (textBoxItemId.Text == "" || Convert.ToInt32(textBoxItemId.Text) == 0)
-                        //{
-                        //    DialogResult result = MessageBox.Show("Do you want to Print Barcode for this Item", "Print Barcode Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        //    if (result == DialogResult.Yes)
-                        //    {
-                        //        insertItemBarcode();
-                        //    }
-                        //}
-                        resetDetail();
+                //    if (checkBoxAllowInventory.Checked == true)
+                //    {
+                //        objPOBAL.AllowInventory = true;
+                //    }
+                //    if (checkBoxAllowInventory.Checked == false)
+                //    {
+                //        objPOBAL.AllowInventory = false;
+                //    }
+                //    objPOBAL.TItemName = textBoxItemNameT.Text.Trim();
+                //    objPODAL = new ClassPODAL();
+                //    int count = objPODAL.InsertUpdateStock(objPOBAL);
+                //    if (count != 0)
+                //    {
+                //        MessageBox.Show("Item Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //        //if (textBoxItemId.Text == "" || Convert.ToInt32(textBoxItemId.Text) == 0)
+                //        //{
+                //        //    DialogResult result = MessageBox.Show("Do you want to Print Barcode for this Item", "Print Barcode Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //        //    if (result == DialogResult.Yes)
+                //        //    {
+                //        //        insertItemBarcode();
+                //        //    }
+                //        //}
+                //        resetDetail();
 
-                        //if (textBoxSearchItemCode.Text != "")
-                        //{
-                        //    fillItemsGridByCode();
-                        //}
-                        //else if (comboBoxCategorySearch.Text != "")
-                        //{
-                        //    fillItemsGridByCat();
-                        //}
-                        //else if (textBoxSearchName.Text != "")
-                        //{
-                        //    fillItemsGridByName();
-                        //}
-                        //else
-                        //{
-                        //    fillItemsGridAll();
-                        //}
+                //        //if (textBoxSearchItemCode.Text != "")
+                //        //{
+                //        //    fillItemsGridByCode();
+                //        //}
+                //        //else if (comboBoxCategorySearch.Text != "")
+                //        //{
+                //        //    fillItemsGridByCat();
+                //        //}
+                //        //else if (textBoxSearchName.Text != "")
+                //        //{
+                //        //    fillItemsGridByName();
+                //        //}
+                //        //else
+                //        //{
+                //        //    fillItemsGridAll();
+                //        //}
                         
-                    }
-                }
-                else if (radioButtonNew.Checked == true)
-                {
-                    objPOBAL = new ClassPOBAL();
-                    objPOBAL.ItemStatus = "New";
-                    objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
-                    objPOBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
-                    if (comboBoxSubCat.SelectedIndex == -1)
-                    {
-                        comboBoxSubCat.SelectedValue = 0;
-                    }
-                    objPOBAL.ItemSubCatId = Convert.ToInt32(comboBoxSubCat.SelectedValue);
-                    objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
-                    objPOBAL.ItemName = textBoxItemName.Text.Trim();
-                    objPOBAL.SItemName = textBoxItemNameS.Text.Trim();
-                    objPOBAL.Discount = Convert.ToDecimal(textBoxDiscount.Text);
-                    objPOBAL.WholeSaleDiscount = Convert.ToDecimal(textBoxWholesaleDisc.Text);
-                    objPOBAL.ItemUnit = comboBoxUnit.Text.Trim();
-                    objPOBAL.CostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
-                    if (Convert.ToDecimal(textBoxDefPurchasePrice.Text) == 0)
-                    {
-                        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
-                    }
-                    else
-                    {
-                        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxDefPurchasePrice.Text);
-                    }
-                    objPOBAL.SellingPrice = Convert.ToDecimal(textBoxSellingPrice.Text);
-                    objPOBAL.SellingPrice2 = Convert.ToDecimal(textBoxPrice2.Text);
-                    objPOBAL.SPPRiceEffectFrom = Convert.ToDecimal(textBoxSPPriceEffectFrom.Text);
-                    objPOBAL.MinQty = Convert.ToDecimal(textBoxMinQty.Text);
-                    objPOBAL.MaintainQty = Convert.ToDecimal(textBoxMaintainQty.Text);
-                    objPOBAL.AvailableQty = Convert.ToDecimal(textBoxQty.Text);
-                    // objPOBAL.ItemMode = comboBoxItemMode.Text.Trim();
-                    objPOBAL.ItemMode = "COMMON STOCK";
-                    objPOBAL.OpenBalDate = dateTimePickerTranDate.Value;
-                    objPOBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
-                    //objPOBAL.Wharehouse = "Wharehouse1";
-                    objPOBAL.SupplierId = Convert.ToInt32(comboBoxSupplier.SelectedValue.ToString());
-                    //objPOBAL.SupplierId = 1;
-                    objPOBAL.WarrantyPeriod = textBoxWarranty.Text.Trim();
-                    objPOBAL.FreeIssueEffectFrom = Convert.ToInt32(textBoxFreeIssue.Text);
-                    if (Convert.ToDecimal(labelNetDiff.Text) > 0)
-                    {
-                        objPOBAL.InValue = Convert.ToDecimal(labelNetDiff.Text);
-                        objPOBAL.OutValue = 0;
-                    }
-                    if (Convert.ToDecimal(labelNetDiff.Text) < 0)
-                    {
-                        objPOBAL.OutValue = (Convert.ToDecimal(labelNetDiff.Text) * -1);
-                        objPOBAL.InValue = 0;
-                    }
-                    if (Convert.ToDecimal(labelQtyDiff.Text) > 0)
-                    {
-                        objPOBAL.InQty = Convert.ToDecimal(labelQtyDiff.Text);
-                        objPOBAL.OutQty = 0;
-                    }
-                    if (Convert.ToDecimal(labelQtyDiff.Text) < 0)
-                    {
-                        objPOBAL.OutQty = (Convert.ToDecimal(labelQtyDiff.Text) * -1);
-                        objPOBAL.InQty = 0;
-                    }
-                    if (radioButtonOpen.Checked == true)
-                    {
-                        objPOBAL.OpenStates = 1;
-                    }
-                    if (radioButtonNew.Checked == true || radioButtonAdjust.Checked == true)
-                    {
-                        objPOBAL.OpenStates = 0;
-                    }
-                    objPOBAL.RackNo = textBoxRackNo.Text;
-                    objPOBAL.MinSellingPrice = Convert.ToDecimal(textBoxMinSellingPrice.Text);
-                    objPOBAL.ShopPrice = Convert.ToDecimal(textBoxShopPrice.Text);
-                    objPOBAL.RetailDiscPer = Convert.ToDecimal(textBoxRetailDiscPer.Text);
-                    objPOBAL.WholesaleDiscPer = Convert.ToDecimal(textBoxWholesaleDiscPer.Text);
-                    if (checkBoxScaleItem.Checked == true)
-                    {
-                        objPOBAL.ScaleItem = true;
-                    }
-                    if (checkBoxScaleItem.Checked == false)
-                    {
-                        objPOBAL.ScaleItem = false;
-                    }
-                    if (checkBoxBundleItem.Checked == true)
-                    {
-                        objPOBAL.BundleItem = true;
-                    }
-                    if (checkBoxBundleItem.Checked == false)
-                    {
-                        objPOBAL.BundleItem = false;
-                    }
-                    if (checkBoxRawMaterial.Checked == true)
-                    {
-                        objPOBAL.RawMaterial = true;
-                    }
-                    if (checkBoxRawMaterial.Checked == false)
-                    {
-                        objPOBAL.RawMaterial = false;
-                    }
-                    objPOBAL.TItemName = textBoxItemNameT.Text.Trim();
+                //    }
+                //}
+                //else if (radioButtonNew.Checked == true)
+                //{
+                //    objPOBAL = new ClassPOBAL();
+                //    objPOBAL.ItemStatus = "New";
+                //    objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
+                //    objPOBAL.ItemCatId = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+                //    if (comboBoxSubCat.SelectedIndex == -1)
+                //    {
+                //        comboBoxSubCat.SelectedValue = 0;
+                //    }
+                //    objPOBAL.ItemSubCatId = Convert.ToInt32(comboBoxSubCat.SelectedValue);
+                //    objPOBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                //    objPOBAL.ItemName = textBoxItemName.Text.Trim();
+                //    objPOBAL.SItemName = textBoxItemNameS.Text.Trim();
+                //    objPOBAL.Discount = Convert.ToDecimal(textBoxDiscount.Text);
+                //    objPOBAL.WholeSaleDiscount = Convert.ToDecimal(textBoxWholesaleDisc.Text);
+                //    objPOBAL.ItemUnit = comboBoxUnit.Text.Trim();
+                //    objPOBAL.CostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
+                //    if (Convert.ToDecimal(textBoxDefPurchasePrice.Text) == 0)
+                //    {
+                //        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxUnitCostPrice.Text);
+                //    }
+                //    else
+                //    {
+                //        objPOBAL.DefaultCostPrice = Convert.ToDecimal(textBoxDefPurchasePrice.Text);
+                //    }
+                //    objPOBAL.SellingPrice = Convert.ToDecimal(textBoxSellingPrice.Text);
+                //    objPOBAL.SellingPrice2 = Convert.ToDecimal(textBoxPrice2.Text);
+                //    objPOBAL.SPPRiceEffectFrom = Convert.ToDecimal(textBoxSPPriceEffectFrom.Text);
+                //    objPOBAL.MinQty = Convert.ToDecimal(textBoxMinQty.Text);
+                //    objPOBAL.MaintainQty = Convert.ToDecimal(textBoxMaintainQty.Text);
+                //    objPOBAL.AvailableQty = Convert.ToDecimal(textBoxQty.Text);
+                //    // objPOBAL.ItemMode = comboBoxItemMode.Text.Trim();
+                //    objPOBAL.ItemMode = "COMMON STOCK";
+                //    objPOBAL.OpenBalDate = dateTimePickerTranDate.Value;
+                //    objPOBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
+                //    //objPOBAL.Wharehouse = "Wharehouse1";
+                //    objPOBAL.SupplierId = Convert.ToInt32(comboBoxSupplier.SelectedValue.ToString());
+                //    //objPOBAL.SupplierId = 1;
+                //    objPOBAL.WarrantyPeriod = textBoxWarranty.Text.Trim();
+                //    objPOBAL.FreeIssueEffectFrom = Convert.ToInt32(textBoxFreeIssue.Text);
+                //    if (Convert.ToDecimal(labelNetDiff.Text) > 0)
+                //    {
+                //        objPOBAL.InValue = Convert.ToDecimal(labelNetDiff.Text);
+                //        objPOBAL.OutValue = 0;
+                //    }
+                //    if (Convert.ToDecimal(labelNetDiff.Text) < 0)
+                //    {
+                //        objPOBAL.OutValue = (Convert.ToDecimal(labelNetDiff.Text) * -1);
+                //        objPOBAL.InValue = 0;
+                //    }
+                //    if (Convert.ToDecimal(labelQtyDiff.Text) > 0)
+                //    {
+                //        objPOBAL.InQty = Convert.ToDecimal(labelQtyDiff.Text);
+                //        objPOBAL.OutQty = 0;
+                //    }
+                //    if (Convert.ToDecimal(labelQtyDiff.Text) < 0)
+                //    {
+                //        objPOBAL.OutQty = (Convert.ToDecimal(labelQtyDiff.Text) * -1);
+                //        objPOBAL.InQty = 0;
+                //    }
+                //    if (radioButtonOpen.Checked == true)
+                //    {
+                //        objPOBAL.OpenStates = 1;
+                //    }
+                //    if (radioButtonNew.Checked == true || radioButtonAdjust.Checked == true)
+                //    {
+                //        objPOBAL.OpenStates = 0;
+                //    }
+                //    objPOBAL.RackNo = textBoxRackNo.Text;
+                //    objPOBAL.MinSellingPrice = Convert.ToDecimal(textBoxMinSellingPrice.Text);
+                //    objPOBAL.ShopPrice = Convert.ToDecimal(textBoxShopPrice.Text);
+                //    objPOBAL.RetailDiscPer = Convert.ToDecimal(textBoxRetailDiscPer.Text);
+                //    objPOBAL.WholesaleDiscPer = Convert.ToDecimal(textBoxWholesaleDiscPer.Text);
+                //    if (checkBoxScaleItem.Checked == true)
+                //    {
+                //        objPOBAL.ScaleItem = true;
+                //    }
+                //    if (checkBoxScaleItem.Checked == false)
+                //    {
+                //        objPOBAL.ScaleItem = false;
+                //    }
+                //    if (checkBoxBundleItem.Checked == true)
+                //    {
+                //        objPOBAL.BundleItem = true;
+                //    }
+                //    if (checkBoxBundleItem.Checked == false)
+                //    {
+                //        objPOBAL.BundleItem = false;
+                //    }
+                //    if (checkBoxRawMaterial.Checked == true)
+                //    {
+                //        objPOBAL.RawMaterial = true;
+                //    }
+                //    if (checkBoxRawMaterial.Checked == false)
+                //    {
+                //        objPOBAL.RawMaterial = false;
+                //    }
+                //    objPOBAL.TItemName = textBoxItemNameT.Text.Trim();
 
-                    if (checkBoxAllowSales.Checked == true)
-                    {
-                        objPOBAL.AllowSales = true;
-                    }
-                    if (checkBoxAllowSales.Checked == false)
-                    {
-                        objPOBAL.AllowSales = false;
-                    }
+                //    if (checkBoxAllowSales.Checked == true)
+                //    {
+                //        objPOBAL.AllowSales = true;
+                //    }
+                //    if (checkBoxAllowSales.Checked == false)
+                //    {
+                //        objPOBAL.AllowSales = false;
+                //    }
 
-                    if (checkBoxAllowPurchase.Checked == true)
-                    {
-                        objPOBAL.AllowPurchase = true;
-                    }
-                    if (checkBoxAllowPurchase.Checked == false)
-                    {
-                        objPOBAL.AllowPurchase = false;
-                    }
+                //    if (checkBoxAllowPurchase.Checked == true)
+                //    {
+                //        objPOBAL.AllowPurchase = true;
+                //    }
+                //    if (checkBoxAllowPurchase.Checked == false)
+                //    {
+                //        objPOBAL.AllowPurchase = false;
+                //    }
 
-                    if (checkBoxAllowInventory.Checked == true)
-                    {
-                        objPOBAL.AllowInventory = true;
-                    }
-                    if (checkBoxAllowInventory.Checked == false)
-                    {
-                        objPOBAL.AllowInventory = false;
-                    }
+                //    if (checkBoxAllowInventory.Checked == true)
+                //    {
+                //        objPOBAL.AllowInventory = true;
+                //    }
+                //    if (checkBoxAllowInventory.Checked == false)
+                //    {
+                //        objPOBAL.AllowInventory = false;
+                //    }
 
-                    objPODAL = new ClassPODAL();
-                    int count = objPODAL.InsertUpdateStock(objPOBAL);
-                    if (count != 0)
-                    {
-                        MessageBox.Show("Item Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //    objPODAL = new ClassPODAL();
+                //    int count = objPODAL.InsertUpdateStock(objPOBAL);
+                //    if (count != 0)
+                //    {
+                //        MessageBox.Show("Item Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        //if (textBoxItemId.Text == "" || Convert.ToInt32(textBoxItemId.Text) == 0)
-                        //{
-                        //    DialogResult result = MessageBox.Show("Do you want to Print Barcode for this Item", "Print Barcode Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        //    if (result == DialogResult.Yes)
-                        //    {
-                        //        insertItemBarcode();
-                        //    }
-                        //}
+                //        //if (textBoxItemId.Text == "" || Convert.ToInt32(textBoxItemId.Text) == 0)
+                //        //{
+                //        //    DialogResult result = MessageBox.Show("Do you want to Print Barcode for this Item", "Print Barcode Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //        //    if (result == DialogResult.Yes)
+                //        //    {
+                //        //        insertItemBarcode();
+                //        //    }
+                //        //}
 
-                        resetDetail();
-                        //if (textBoxSearchItemCode.Text != "")
-                        //{
-                        //    fillItemsGridByCode();
-                        //}
-                        //else if (comboBoxCategorySearch.Text != "")
-                        //{
-                        //    fillItemsGridByCat();
-                        //}
-                        //else if (textBoxSearchName.Text != "")
-                        //{
-                        //    fillItemsGridByName();
-                        //}
-                        //else
-                        //{
-                        //    fillItemsGridAll();
-                        //}
-                    }
-                }
-                else if (radioButtonAdjust.Checked == true)
-                {
+                //        resetDetail();
+                //        //if (textBoxSearchItemCode.Text != "")
+                //        //{
+                //        //    fillItemsGridByCode();
+                //        //}
+                //        //else if (comboBoxCategorySearch.Text != "")
+                //        //{
+                //        //    fillItemsGridByCat();
+                //        //}
+                //        //else if (textBoxSearchName.Text != "")
+                //        //{
+                //        //    fillItemsGridByName();
+                //        //}
+                //        //else
+                //        //{
+                //        //    fillItemsGridAll();
+                //        //}
+                //    }
+                //}
+                //else if (radioButtonAdjust.Checked == true)
+                //{
                     objPOBAL = new ClassPOBAL();
                     objPOBAL.ItemStatus = "Adj";
                     objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
@@ -1399,13 +1493,15 @@ namespace easyPOSSolution
                     {
                         objPOBAL.AllowInventory = false;
                     }
+                    objPOBAL.SearchText = textBoxSearchText.Text.Trim();
+                    objPOBAL.CostCode = textBoxCostCode.Text.Trim();
 
                     objPODAL = new ClassPODAL();
                     int count = objPODAL.InsertUpdateStock(objPOBAL);
                     if (count != 0)
                     {
                         MessageBox.Show("Item Saved Successfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        AddedItemCode = textBoxItemCode.Text.Trim();
                         //if (textBoxItemId.Text == "" || Convert.ToInt32(textBoxItemId.Text) == 0)
                         //{
                         //    DialogResult result = MessageBox.Show("Do you want to Print Barcode for this Item", "Print Barcode Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1432,8 +1528,15 @@ namespace easyPOSSolution
                         //{
                         //    fillItemsGridAll();
                         //}
+                        if (invoicestatus == true)
+                        {
+                            frm.txtItemCode.Text = AddedItemCode.ToString();
+                            frm.txtItemCode.Select();
+                            this.Close();
+                            frm.txtItemCode.Select();
+                        }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -1449,7 +1552,6 @@ namespace easyPOSSolution
                 resetDetailV();
                 objPOBAL = new ClassPOBAL();
                 objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
-                //objPOBAL.Wharehouse = "Wharehouse1";
                 objPODAL = new ClassPODAL();
                 objPOBAL.DtDataSet = objPODAL.retreiveItemCodeSelectedData(objPOBAL);
                 if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
@@ -1488,11 +1590,166 @@ namespace easyPOSSolution
                         textBoxRetailDiscPer.Text = (values[22].ToString().Trim());
                         textBoxWholesaleDiscPer.Text = (values[23].ToString().Trim());
                         textBoxMaintainQty.Text = (values[26].ToString().Trim());
-                        //comboBoxSupplier.SelectedValue = (values[13].ToString().Trim());
                         textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
                         labelNet.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-                        //textBoxItemIdV.Text = (values[24].ToString().Trim());
-                        //textBoxItemCodeV.Text = (values[25].ToString().Trim());
+                        checkBoxScaleItem.Checked = false;
+                        if (Convert.ToBoolean(values[27]) == true)
+                        {
+                            checkBoxScaleItem.Checked = true;
+                        }
+                        textBoxItemNameT.Text = (values[28].ToString().Trim());
+                        checkBoxBundleItem.Checked = false;
+                        if (Convert.ToBoolean(values[29]) == true)
+                        {
+                            checkBoxBundleItem.Checked = true;
+                        }
+                        comboBoxSupplier.SelectedValue = (values[30].ToString().Trim());
+                        checkBoxRawMaterial.Checked = false;
+                        if (Convert.ToBoolean(values[31]) == true)
+                        {
+                            checkBoxRawMaterial.Checked = true;
+                        }
+
+                        checkBoxAllowSales.Checked = false;
+                        if (Convert.ToBoolean(values[32]) == true)
+                        {
+                            checkBoxAllowSales.Checked = true;
+                        }
+                        checkBoxAllowPurchase.Checked = false;
+                        if (Convert.ToBoolean(values[33]) == true)
+                        {
+                            checkBoxAllowPurchase.Checked = true;
+                        }
+                        checkBoxAllowInventory.Checked = false;
+                        if (Convert.ToBoolean(values[34]) == true)
+                        {
+                            checkBoxAllowInventory.Checked = true;
+                        }
+                        textBoxSearchText.Text = (values[35].ToString().Trim());
+                        textBoxCostCode.Text = (values[36].ToString().Trim());
+
+                        comboBoxItemCategoryV.SelectedValue = (values[0].ToString().Trim());
+                        textBoxItemNameV.Text = (values[1].ToString().Trim());
+                        textBoxDiscountV.Text = (values[2].ToString().Trim());
+                        comboBoxUnitV.Text = (values[3].ToString().Trim());
+                        textBoxUnitCostPriceV.Text = (values[4].ToString().Trim());
+                        textBoxSellingPriceV.Text = (values[5].ToString().Trim());
+                        textBoxMinQtyV.Text = (values[6].ToString().Trim());
+                        //textBoxQtyV.Text = (values[8].ToString().Trim());
+                        //labelQtyV.Text = (values[8].ToString().Trim());
+                        //comboBoxItemModeV.Text = (values[9].ToString().Trim());
+                        textBoxItemNameSV.Text = (values[10].ToString().Trim());
+                        textBoxWarrantyV.Text = (values[11].ToString().Trim());
+                        textBoxFreeIssueV.Text = (values[12].ToString().Trim());
+                        textBoxPrice2V.Text = (values[13].ToString().Trim());
+                        //textBoxSPPriceEffectFromV.Text = (values[14].ToString().Trim());
+                        textBoxRackNoV.Text = (values[15].ToString().Trim());
+                        comboBoxSubCatV.SelectedValue = (values[16].ToString().Trim());
+                        //textBoxDefPurchasePriceV.Text = (values[17].ToString().Trim());
+                        textBoxMinSellingPriceV.Text = (values[18].ToString().Trim());
+                        textBoxWholesaleDiscV.Text = (values[19].ToString().Trim());
+                        textBoxPrice2V.Text = (values[20].ToString().Trim());
+                        textBoxShopPriceV.Text = (values[21].ToString().Trim());
+                        textBoxRetailDiscPerV.Text = (values[22].ToString().Trim());
+                        textBoxWholesaleDiscPerV.Text = (values[23].ToString().Trim());
+                        textBoxMaintainQtyV.Text = (values[26].ToString().Trim());
+
+                        checkBoxScaleItemV.Checked = false;
+                        if (Convert.ToBoolean(values[27]) == true)
+                        {
+                            checkBoxScaleItemV.Checked = true;
+                        }
+                        //textBoxItemNameT.Text = (values[28].ToString().Trim());
+                        checkBoxBundleItemV.Checked = false;
+                        if (Convert.ToBoolean(values[29]) == true)
+                        {
+                            checkBoxBundleItemV.Checked = true;
+                        }
+                        //comboBoxSupplier.SelectedValue = (values[30].ToString().Trim());
+                        checkBoxRawMaterialV.Checked = false;
+                        if (Convert.ToBoolean(values[31]) == true)
+                        {
+                            checkBoxRawMaterialV.Checked = true;
+                        }
+
+                        checkBoxAllowSalesV.Checked = false;
+                        if (Convert.ToBoolean(values[32]) == true)
+                        {
+                            checkBoxAllowSalesV.Checked = true;
+                        }
+                        checkBoxAllowPurchaseV.Checked = false;
+                        if (Convert.ToBoolean(values[33]) == true)
+                        {
+                            checkBoxAllowPurchaseV.Checked = true;
+                        }
+                        checkBoxAllowInventoryV.Checked = false;
+                        if (Convert.ToBoolean(values[34]) == true)
+                        {
+                            checkBoxAllowInventoryV.Checked = true;
+                        }
+
+                        //comboBoxSupplier.SelectedValue = (values[13].ToString().Trim());
+                        textBoxNetAmountV.Text = (Convert.ToDecimal(textBoxQtyV.Text) * Convert.ToDecimal(textBoxUnitCostPriceV.Text)).ToString("0.00");
+                        //labelNetV.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                        textBoxItemIdV.Text = (values[24].ToString().Trim());
+                        textBoxItemCodeV.Text = (values[25].ToString().Trim());
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void fillItemCodeDataOnly()
+        {
+            try
+            {
+                resetItemCodeData();
+                objPOBAL = new ClassPOBAL();
+                objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
+                objPODAL = new ClassPODAL();
+                objPOBAL.DtDataSet = objPODAL.retreiveItemCodeSelectedData(objPOBAL);
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        comboBoxItemCategory.SelectedValue = (values[0].ToString().Trim());
+                        textBoxItemName.Text = (values[1].ToString().Trim());
+                        textBoxDiscount.Text = (values[2].ToString().Trim());
+                        comboBoxUnit.Text = (values[3].ToString().Trim());
+                        textBoxUnitCostPrice.Text = (values[4].ToString().Trim());
+                        textBoxSellingPrice.Text = (values[5].ToString().Trim());
+                        textBoxMinQty.Text = (values[6].ToString().Trim());
+                        textBoxItemId.Text = (values[7].ToString().Trim());
+                        textBoxQty.Text = (values[8].ToString().Trim());
+                        labelQty.Text = (values[8].ToString().Trim());
+                        comboBoxItemMode.Text = (values[9].ToString().Trim());
+                        textBoxItemNameS.Text = (values[10].ToString().Trim());
+                        textBoxWarranty.Text = (values[11].ToString().Trim());
+                        textBoxFreeIssue.Text = (values[12].ToString().Trim());
+                        textBoxPrice2.Text = (values[13].ToString().Trim());
+                        textBoxSPPriceEffectFrom.Text = (values[14].ToString().Trim());
+                        textBoxRackNo.Text = (values[15].ToString().Trim());
+                        comboBoxSubCat.SelectedValue = (values[16].ToString().Trim());
+                        textBoxDefPurchasePrice.Text = (values[17].ToString().Trim());
+                        textBoxMinSellingPrice.Text = (values[18].ToString().Trim());
+                        textBoxWholesaleDisc.Text = (values[19].ToString().Trim());
+                        textBoxPrice2.Text = (values[20].ToString().Trim());
+                        textBoxShopPrice.Text = (values[21].ToString().Trim());
+                        textBoxRetailDiscPer.Text = (values[22].ToString().Trim());
+                        textBoxWholesaleDiscPer.Text = (values[23].ToString().Trim());
+                        textBoxMaintainQty.Text = (values[26].ToString().Trim());
+                        textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                        labelNet.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
                         checkBoxScaleItem.Checked = false;
                         if (Convert.ToBoolean(values[27]) == true)
                         {
@@ -1527,39 +1784,10 @@ namespace easyPOSSolution
                             checkBoxAllowInventory.Checked = true;
                         }
 
-                        comboBoxItemCategoryV.SelectedValue = (values[0].ToString().Trim());
-                        textBoxItemNameV.Text = (values[1].ToString().Trim());
-                        textBoxDiscountV.Text = (values[2].ToString().Trim());
-                        comboBoxUnitV.Text = (values[3].ToString().Trim());
-                        textBoxUnitCostPriceV.Text = (values[4].ToString().Trim());
-                        textBoxSellingPriceV.Text = (values[5].ToString().Trim());
-                        textBoxMinQtyV.Text = (values[6].ToString().Trim());
-                        textBoxQtyV.Text = (values[8].ToString().Trim());
-                        //labelQtyV.Text = (values[8].ToString().Trim());
-                        //comboBoxItemModeV.Text = (values[9].ToString().Trim());
-                        textBoxItemNameSV.Text = (values[10].ToString().Trim());
-                        //textBoxWarrantyV.Text = (values[11].ToString().Trim());
-                        textBoxFreeIssueV.Text = (values[12].ToString().Trim());
-                        textBoxPrice2V.Text = (values[13].ToString().Trim());
-                        //textBoxSPPriceEffectFromV.Text = (values[14].ToString().Trim());
-                        textBoxRackNoV.Text = (values[15].ToString().Trim());
-                        comboBoxSubCatV.SelectedValue = (values[16].ToString().Trim());
-                        //textBoxDefPurchasePriceV.Text = (values[17].ToString().Trim());
-                        textBoxMinSellingPriceV.Text = (values[18].ToString().Trim());
-                        textBoxWholesaleDiscV.Text = (values[19].ToString().Trim());
-                        textBoxPrice2V.Text = (values[20].ToString().Trim());
-                        textBoxShopPriceV.Text = (values[21].ToString().Trim());
-                        textBoxRetailDiscPerV.Text = (values[22].ToString().Trim());
-                        textBoxWholesaleDiscPerV.Text = (values[23].ToString().Trim());
-                        textBoxMaintainQtyV.Text = (values[26].ToString().Trim());
-                        //comboBoxSupplier.SelectedValue = (values[13].ToString().Trim());
-                        textBoxNetAmountV.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-                        //labelNetV.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-                        textBoxItemIdV.Text = (values[24].ToString().Trim());
-                        textBoxItemCodeV.Text = (values[25].ToString().Trim());
+                        textBoxSearchText.Text = (values[35].ToString().Trim());
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -1604,7 +1832,7 @@ namespace easyPOSSolution
         {
             try
             {
-                resetItemCodeDataV();
+                //resetItemCodeDataV();
                 objPOBAL = new ClassPOBAL();
                 objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
                 //objPOBAL.Wharehouse = "Wharehouse1";
@@ -1612,6 +1840,7 @@ namespace easyPOSSolution
                 objPOBAL.DtDataSet = objPODAL.retreiveItemCodeVarientData(objPOBAL);
                 if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
+                    resetItemCodeDataV();
                     List<ArrayList> newval = new List<ArrayList>();
                     foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                     {
@@ -1647,6 +1876,40 @@ namespace easyPOSSolution
                         textBoxRetailDiscPerV.Text = (values[22].ToString().Trim());
                         textBoxWholesaleDiscPerV.Text = (values[23].ToString().Trim());
                         textBoxMaintainQtyV.Text = (values[27].ToString().Trim());
+                        checkBoxScaleItemV.Checked = false;
+                        if (Convert.ToBoolean(values[28]) == true)
+                        {
+                            checkBoxScaleItemV.Checked = true;
+                        }
+                        //textBoxItemNameT.Text = (values[28].ToString().Trim());
+                        checkBoxBundleItemV.Checked = false;
+                        if (Convert.ToBoolean(values[30]) == true)
+                        {
+                            checkBoxBundleItemV.Checked = true;
+                        }
+                        //comboBoxSupplier.SelectedValue = (values[30].ToString().Trim());
+                        checkBoxRawMaterialV.Checked = false;
+                        if (Convert.ToBoolean(values[32]) == true)
+                        {
+                            checkBoxRawMaterialV.Checked = true;
+                        }
+
+                        checkBoxAllowSalesV.Checked = false;
+                        if (Convert.ToBoolean(values[33]) == true)
+                        {
+                            checkBoxAllowSalesV.Checked = true;
+                        }
+                        checkBoxAllowPurchaseV.Checked = false;
+                        if (Convert.ToBoolean(values[34]) == true)
+                        {
+                            checkBoxAllowPurchaseV.Checked = true;
+                        }
+                        checkBoxAllowInventoryV.Checked = false;
+                        if (Convert.ToBoolean(values[35]) == true)
+                        {
+                            checkBoxAllowInventoryV.Checked = true;
+                        }
+
                         //comboBoxSupplier.SelectedValue = (values[13].ToString().Trim());
                         textBoxNetAmountV.Text = (Convert.ToDecimal(textBoxQtyV.Text) * Convert.ToDecimal(textBoxUnitCostPriceV.Text)).ToString("0.00");
                         //labelNetV.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
@@ -1654,6 +1917,107 @@ namespace easyPOSSolution
                         textBoxItemCodeV.Text = (values[25].ToString().Trim());
                         textBoxConvertionQty.Text = (values[26].ToString().Trim());
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void fillItemCodeVarientData()
+        {
+            try
+            {
+                //resetItemCodeDataV();
+                objPOBAL = new ClassPOBAL();
+                objPOBAL.ItemCode = textBoxItemCodeV.Text.Trim();
+                //objPOBAL.Wharehouse = "Wharehouse1";
+                objPODAL = new ClassPODAL();
+                objPOBAL.DtDataSet = objPODAL.retreiveVarientItemCodeData(objPOBAL);
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    resetItemCodeDataV();
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+
+                        comboBoxItemCategoryV.SelectedValue = (values[0].ToString().Trim());
+                        textBoxItemNameV.Text = (values[1].ToString().Trim());
+                        textBoxDiscountV.Text = (values[2].ToString().Trim());
+                        comboBoxUnitV.Text = (values[3].ToString().Trim());
+                        textBoxUnitCostPriceV.Text = (values[4].ToString().Trim());
+                        textBoxSellingPriceV.Text = (values[5].ToString().Trim());
+                        textBoxMinQtyV.Text = (values[6].ToString().Trim());
+                        textBoxItemIdV.Text = (values[7].ToString().Trim());
+                        textBoxQtyV.Text = (values[8].ToString().Trim());
+                        //labelQtyV.Text = (values[8].ToString().Trim());
+                        //comboBoxItemModeV.Text = (values[9].ToString().Trim());
+                        textBoxItemNameSV.Text = (values[10].ToString().Trim());
+                        //textBoxWarrantyV.Text = (values[11].ToString().Trim());
+                        textBoxFreeIssueV.Text = (values[12].ToString().Trim());
+                        textBoxPrice2V.Text = (values[13].ToString().Trim());
+                        //textBoxSPPriceEffectFromV.Text = (values[14].ToString().Trim());
+                        textBoxRackNoV.Text = (values[15].ToString().Trim());
+                        comboBoxSubCatV.SelectedValue = (values[16].ToString().Trim());
+                        //textBoxDefPurchasePriceV.Text = (values[17].ToString().Trim());
+                        textBoxMinSellingPriceV.Text = (values[18].ToString().Trim());
+                        textBoxWholesaleDiscV.Text = (values[19].ToString().Trim());
+                        textBoxPrice2V.Text = (values[20].ToString().Trim());
+                        textBoxShopPriceV.Text = (values[21].ToString().Trim());
+                        textBoxRetailDiscPerV.Text = (values[22].ToString().Trim());
+                        textBoxWholesaleDiscPerV.Text = (values[23].ToString().Trim());
+                        textBoxMaintainQtyV.Text = (values[27].ToString().Trim());
+                        checkBoxScaleItemV.Checked = false;
+                        if (Convert.ToBoolean(values[28]) == true)
+                        {
+                            checkBoxScaleItemV.Checked = true;
+                        }
+                        //textBoxItemNameT.Text = (values[28].ToString().Trim());
+                        checkBoxBundleItemV.Checked = false;
+                        if (Convert.ToBoolean(values[30]) == true)
+                        {
+                            checkBoxBundleItemV.Checked = true;
+                        }
+                        //comboBoxSupplier.SelectedValue = (values[30].ToString().Trim());
+                        checkBoxRawMaterialV.Checked = false;
+                        if (Convert.ToBoolean(values[32]) == true)
+                        {
+                            checkBoxRawMaterialV.Checked = true;
+                        }
+
+                        checkBoxAllowSalesV.Checked = false;
+                        if (Convert.ToBoolean(values[33]) == true)
+                        {
+                            checkBoxAllowSalesV.Checked = true;
+                        }
+                        checkBoxAllowPurchaseV.Checked = false;
+                        if (Convert.ToBoolean(values[34]) == true)
+                        {
+                            checkBoxAllowPurchaseV.Checked = true;
+                        }
+                        checkBoxAllowInventoryV.Checked = false;
+                        if (Convert.ToBoolean(values[35]) == true)
+                        {
+                            checkBoxAllowInventoryV.Checked = true;
+                        }
+                        textBoxItemCode.Text = (values[37].ToString().Trim());
+                        textBoxItemId.Text = (values[36].ToString().Trim());
+                        //comboBoxSupplier.SelectedValue = (values[13].ToString().Trim());
+                        textBoxNetAmountV.Text = (Convert.ToDecimal(textBoxQtyV.Text) * Convert.ToDecimal(textBoxUnitCostPriceV.Text)).ToString("0.00");
+                        //labelNetV.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                        textBoxItemIdV.Text = (values[24].ToString().Trim());
+                        textBoxItemCodeV.Text = (values[25].ToString().Trim());
+                        textBoxConvertionQty.Text = (values[26].ToString().Trim());
+
+                    }
+
+                    fillItemCodeDataOnly();
                 }
             }
             catch (Exception ex)
@@ -1702,6 +2066,7 @@ namespace easyPOSSolution
                 {
                     MessageBox.Show("Item Category Deleted Successfully.", "Delete Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     textBoxCategory.SelectedIndex = -1;
+                    checkBoxShowInv.Checked = false;
                     loadCategory();
                     //fillItemsGridAll();
                 }
@@ -1732,6 +2097,7 @@ namespace easyPOSSolution
                     MessageBox.Show("Item Sub Category Deleted Successfully.", "Delete Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     textBoxCategory.SelectedIndex = -1;
                     textBoxSubCat.SelectedIndex = -1;
+                    checkBoxShowInv.Checked = false;
                     loadCategory();
                     //fillItemsGridAll();
                 }
@@ -1776,6 +2142,14 @@ namespace easyPOSSolution
             {
                 ClassCommonBAL objBAL = new ClassCommonBAL();
                 objBAL.CatDescription = textBoxCategory.Text.Trim();
+                if (checkBoxShowInv.Checked == true)
+                {
+                    objBAL.ShowInInvoice = true;
+                }
+                if (checkBoxShowInv.Checked == false)
+                {
+                    objBAL.ShowInInvoice = false;
+                }
 
                 ClassMasterDAL objDAL = new ClassMasterDAL();
                 int count = objDAL.InsertItemCategory1(objBAL);
@@ -1784,6 +2158,7 @@ namespace easyPOSSolution
                     MessageBox.Show("Item Category Saved Susccessfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     loadCategory();
                     textBoxCategory.SelectedIndex = -1;
+                    checkBoxShowInv.Checked = false;
                 }
 
             }
@@ -1819,6 +2194,7 @@ namespace easyPOSSolution
                 textBoxCategory.DisplayMember = "ItemCatName";
                 textBoxCategory.ValueMember = "ItemCatId";
                 textBoxCategory.SelectedIndex = -1;
+                checkBoxShowInv.Checked = false;
 
                 comboBoxSupplier.DataSource = objPODAL.retreivePOLoadingData(objPOBAL).Tables[0];
                 comboBoxSupplier.DisplayMember = "SupplierName";
@@ -1856,6 +2232,10 @@ namespace easyPOSSolution
             checkBoxAllowSales.Checked = true;
             checkBoxAllowPurchase.Checked = true;
             checkBoxAllowInventory.Checked = true;
+
+            checkBoxAllowSalesV.Checked = true;
+            checkBoxAllowPurchaseV.Checked = true;
+            checkBoxAllowInventoryV.Checked = true;
             comboBoxSupplier.Select();
         }
 
@@ -1863,222 +2243,10 @@ namespace easyPOSSolution
         {
             if ((e.KeyCode == System.Windows.Forms.Keys.Enter))
             {
-                //errorProvider1.Clear();
-                //bool isValid = ValidateWharehouse();
-                //if (isValid)
-                //{
-                    if (radioButtonOpen.Checked == true)
-                    {
-                        try
-                        {
-                            resetItemCodeData();
-                            objPOBAL = new ClassPOBAL();
-                            objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
-                            //objPOBAL.Wharehouse = "Wharehouse1";
-                            objPODAL = new ClassPODAL();
-                            objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                            if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
-                            {
-                                MessageBox.Show("You have allready entered this item to the stock. Please select the correct stock status.", "Wrong Stock Status", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                textBoxItemCode.Select();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-
-                    }
-                    else if (radioButtonNew.Checked == true)
-                    {
-                        try
-                        {
-                            resetItemCodeData();
-                            objPOBAL = new ClassPOBAL();
-                            objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
-                            //objPOBAL.Wharehouse = "Wharehouse1";
-                            objPODAL = new ClassPODAL();
-                            objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                            if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
-                            {
-                                List<ArrayList> newval = new List<ArrayList>();
-                                foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
-                                {
-                                    ArrayList values = new ArrayList();
-                                    values.Clear();
-                                    foreach (object value in dRow.ItemArray)
-                                        values.Add(value);
-                                    newval.Add(values);
-                                    comboBoxItemCategory.SelectedValue = (values[0].ToString().Trim());
-                                    textBoxItemName.Text = (values[1].ToString().Trim());
-                                    textBoxDiscount.Text = (values[2].ToString().Trim());
-                                    comboBoxUnit.Text = (values[3].ToString().Trim());
-                                    textBoxUnitCostPrice.Text = (values[4].ToString().Trim());
-                                    textBoxSellingPrice.Text = (values[5].ToString().Trim());
-                                    textBoxMinQty.Text = (values[6].ToString().Trim());
-                                    textBoxItemId.Text = (values[7].ToString().Trim());
-                                    textBoxQty.Text = "0";
-                                    labelQty.Text = (values[8].ToString().Trim());
-                                    comboBoxItemMode.Text = (values[9].ToString().Trim());
-                                    textBoxItemNameS.Text = (values[10].ToString().Trim());
-                                    textBoxWarranty.Text = (values[11].ToString().Trim());
-                                    textBoxFreeIssue.Text = (values[12].ToString().Trim());
-                                    textBoxPrice2.Text = (values[13].ToString().Trim());
-                                    textBoxSPPriceEffectFrom.Text = (values[14].ToString().Trim());
-                                    textBoxRackNo.Text = (values[15].ToString().Trim());
-                                    comboBoxSubCat.SelectedValue = (values[16].ToString().Trim());
-                                    textBoxDefPurchasePrice.Text = (values[17].ToString().Trim());
-                                    textBoxMinSellingPrice.Text = (values[18].ToString().Trim());
-                                    textBoxWholesaleDisc.Text = (values[19].ToString().Trim());
-                                    textBoxRetailDiscPer.Text = (values[22].ToString().Trim());
-                                    textBoxWholesaleDiscPer.Text = (values[23].ToString().Trim());
-                                    textBoxMaintainQty.Text = (values[24].ToString().Trim());
-                                    textBoxItemNameT.Text = (values[25].ToString().Trim());
-                                    checkBoxScaleItem.Checked = false;
-                                    if (Convert.ToBoolean(values[26]) == true)
-                                    {
-                                        checkBoxScaleItem.Checked = true;
-                                    }
-                                    checkBoxBundleItem.Checked = false;
-                                    if (Convert.ToBoolean(values[27]) == true)
-                                    {
-                                        checkBoxBundleItem.Checked = true;
-                                    }
-                                    comboBoxSupplier.SelectedValue = (values[28].ToString().Trim());
-
-                                    checkBoxRawMaterial.Checked = false;
-                                    if (Convert.ToBoolean(values[29]) == true)
-                                    {
-                                        checkBoxRawMaterial.Checked = true;
-                                    }
-
-                                    checkBoxAllowSales.Checked = false;
-                                    if (Convert.ToBoolean(values[30]) == true)
-                                    {
-                                        checkBoxAllowSales.Checked = true;
-                                    }
-                                    checkBoxAllowPurchase.Checked = false;
-                                    if (Convert.ToBoolean(values[31]) == true)
-                                    {
-                                        checkBoxAllowPurchase.Checked = true;
-                                    }
-                                    checkBoxAllowInventory.Checked = false;
-                                    if (Convert.ToBoolean(values[32]) == true)
-                                    {
-                                        checkBoxAllowInventory.Checked = true;
-                                    }
-
-                                    //  textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-                                    //  labelNet.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString();
-                                }
-                                textBoxQty.Select();
-                            }
-                            else
-                            {
-                                comboBoxItemCategory.Select();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    else if (radioButtonAdjust.Checked == true)
-                    {
-                        try
-                        {
-                            resetItemCodeData();
-                            objPOBAL = new ClassPOBAL();
-                            objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
-                            //objPOBAL.Wharehouse = "Wharehouse1";
-                            objPODAL = new ClassPODAL();
-                            objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                            if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
-                            {
-                                List<ArrayList> newval = new List<ArrayList>();
-                                foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
-                                {
-                                    ArrayList values = new ArrayList();
-                                    values.Clear();
-                                    foreach (object value in dRow.ItemArray)
-                                        values.Add(value);
-                                    newval.Add(values);
-                                    comboBoxItemCategory.SelectedValue = (values[0].ToString().Trim());
-                                    textBoxItemName.Text = (values[1].ToString().Trim());
-                                    textBoxDiscount.Text = (values[2].ToString().Trim());
-                                    comboBoxUnit.Text = (values[3].ToString().Trim());
-                                    textBoxUnitCostPrice.Text = (values[4].ToString().Trim());
-                                    textBoxSellingPrice.Text = (values[5].ToString().Trim());
-                                    textBoxMinQty.Text = (values[6].ToString().Trim());
-                                    textBoxItemId.Text = (values[7].ToString().Trim());
-                                    textBoxQty.Text = (values[8].ToString().Trim());
-                                    labelQty.Text = (values[8].ToString().Trim());
-                                    comboBoxItemMode.Text = (values[9].ToString().Trim());
-                                    textBoxItemNameS.Text = (values[10].ToString().Trim());
-                                    textBoxWarranty.Text = (values[11].ToString().Trim());
-                                    textBoxFreeIssue.Text = (values[12].ToString().Trim());
-                                    textBoxPrice2.Text = (values[13].ToString().Trim());
-                                    textBoxSPPriceEffectFrom.Text = (values[14].ToString().Trim());
-                                    textBoxRackNo.Text = (values[15].ToString().Trim());
-                                    comboBoxSubCat.SelectedValue = (values[16].ToString().Trim());
-                                    textBoxDefPurchasePrice.Text = (values[17].ToString().Trim());
-                                    textBoxMinSellingPrice.Text = (values[18].ToString().Trim());
-                                    textBoxWholesaleDisc.Text = (values[19].ToString().Trim());
-                                    textBoxRetailDiscPer.Text = (values[22].ToString().Trim());
-                                    textBoxWholesaleDiscPer.Text = (values[23].ToString().Trim());
-                                    textBoxMaintainQty.Text = (values[24].ToString().Trim());
-                                    textBoxItemNameT.Text = (values[25].ToString().Trim());
-                                    checkBoxScaleItem.Checked = false;
-                                    if (Convert.ToBoolean(values[26]) == true)
-                                    {
-                                        checkBoxScaleItem.Checked = true;
-                                    }
-                                    checkBoxBundleItem.Checked = false;
-                                    if (Convert.ToBoolean(values[27]) == true)
-                                    {
-                                        checkBoxBundleItem.Checked = true;
-                                    }
-                                    comboBoxSupplier.SelectedValue = (values[28].ToString().Trim());
-                                    checkBoxRawMaterial.Checked = false;
-                                    if (Convert.ToBoolean(values[29]) == true)
-                                    {
-                                        checkBoxRawMaterial.Checked = true;
-                                    }
-                                    checkBoxAllowSales.Checked = false;
-                                    if (Convert.ToBoolean(values[30]) == true)
-                                    {
-                                        checkBoxAllowSales.Checked = true;
-                                    }
-                                    checkBoxAllowPurchase.Checked = false;
-                                    if (Convert.ToBoolean(values[31]) == true)
-                                    {
-                                        checkBoxAllowPurchase.Checked = true;
-                                    }
-                                    checkBoxAllowInventory.Checked = false;
-                                    if (Convert.ToBoolean(values[32]) == true)
-                                    {
-                                        checkBoxAllowInventory.Checked = true;
-                                    }
-                                    //     comboBoxModel.SelectedValue = (values[11].ToString().Trim());
-                                    textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-                                    labelNet.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString();
-                                }
-                                textBoxQty.Select();
-                            }
-                            else
-                            {
-                                comboBoxItemCategory.Select();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    comboBoxItemCategory.Select();
-                }
-                
-            //}
+                fillItemCodeData();
+                fillItemCodeDataV();
+                comboBoxItemCategory.Select();
+            }
         }
 
         private void textBoxItemCode_Validating(object sender, CancelEventArgs e)
@@ -2739,17 +2907,31 @@ namespace easyPOSSolution
 
         private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
+            bool IsVariant = false;
+
             if (this.gridView1.GetFocusedRowCellValue("ItemCode") == null)
                 return;
-            textBoxItemCode.Text = this.gridView1.GetFocusedRowCellValue("ItemCode").ToString();
-            fillItemCodeData();
-            
-            //if (textBoxItemCodeV.Text != "")
-            //{
+
+            IsVariant = Convert.ToBoolean(this.gridView1.GetFocusedRowCellValue("IsVariant"));
+
+            if (IsVariant == true)
+            {
+                textBoxItemCodeV.Text = this.gridView1.GetFocusedRowCellValue("ItemCode").ToString();
+                fillItemCodeVarientData();
+            }
+            else
+            {
+                textBoxItemCode.Text = this.gridView1.GetFocusedRowCellValue("ItemCode").ToString();
+                fillItemCodeData();
+
+                //if (textBoxItemCodeV.Text != "")
+                //{
                 fillItemCodeDataV();
-            //}
-            comboBoxBranch.SelectedValue = this.gridView1.GetFocusedRowCellValue("BranchId").ToString();
-            textBoxQty.Text = this.gridView1.GetFocusedRowCellValue("BranchQty").ToString();
+                //}
+                comboBoxBranch.SelectedValue = this.gridView1.GetFocusedRowCellValue("BranchId").ToString();
+                textBoxQty.Text = this.gridView1.GetFocusedRowCellValue("BranchQty").ToString();
+            }
+            
 
         }
 
@@ -3136,13 +3318,53 @@ namespace easyPOSSolution
                 textBoxSubCat.DisplayMember = "ItemSubCatName";
                 textBoxSubCat.ValueMember = "ItemSubCatId";
                 textBoxSubCat.SelectedIndex = -1;
+
+                fillItemCatShowData();
+
             }
         }
+
+        private void fillItemCatShowData()
+        {
+            try
+            {
+                checkBoxShowInv.Checked = false;
+                objPOBAL = new ClassPOBAL();
+                objPOBAL.ItemCatId = Convert.ToInt32(textBoxCategory.SelectedValue.ToString());
+                objPODAL = new ClassPODAL();
+                objPOBAL.DtDataSet = objPODAL.retreiveItemCategoryData(objPOBAL);
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        
+                        if (Convert.ToBoolean(values[0]) == true)
+                        {
+                            checkBoxShowInv.Checked = true;
+                        }
+                        
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
         private void button3_Click(object sender, EventArgs e)
         {
             textBoxCategory.SelectedIndex = -1;
             textBoxSubCat.SelectedIndex = -1;
+            checkBoxShowInv.Checked = false;
         }
 
         private void comboBoxItemCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -3217,6 +3439,7 @@ namespace easyPOSSolution
         private void lblUserId_TextChanged(object sender, EventArgs e)
         {
             userPermission();
+            ItemAutoComplete();
         }
 
         private void comboBoxSearchWH_SelectedIndexChanged(object sender, EventArgs e)
@@ -3379,6 +3602,7 @@ namespace easyPOSSolution
         {
             if (e.KeyCode == Keys.Enter)
             {
+                fillItemCodeVarientData();
                 comboBoxItemCategoryV.Select();
             }
         }
@@ -3567,7 +3791,7 @@ namespace easyPOSSolution
         {
             if (e.KeyCode == Keys.Enter)
             {
-                textBoxSellingPrice.Select();
+                textBoxSearchText.Select();
             }
         }
 
@@ -3702,6 +3926,131 @@ namespace easyPOSSolution
         private void lblBranchID_TextChanged(object sender, EventArgs e)
         {
             comboBoxBranch.SelectedValue = lblBranchID.Text;
+        }
+
+        private void textBoxSearchText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBoxCostCode.Select();
+            }
+        }
+
+        private void picPurchase_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxCostCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBoxSellingPrice.Select();
+            }
+        }
+
+        private void textBoxQty_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxQty.Text)) || (textBoxQty.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxQty.Text = "0";
+            }
+        }
+
+        private void textBoxMinQty_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxMinQty.Text)) || (textBoxMinQty.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxMinQty.Text = "0";
+            }
+        }
+
+        private void textBoxMaintainQty_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxMaintainQty.Text)) || (textBoxMaintainQty.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxMaintainQty.Text = "0";
+            }
+        }
+
+        private void textBoxSellingPrice_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxSellingPrice.Text)) || (textBoxSellingPrice.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxSellingPrice.Text = "0";
+            }
+        }
+
+        private void textBoxRetailDiscPer_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxRetailDiscPer.Text)) || (textBoxRetailDiscPer.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxRetailDiscPer.Text = "0";
+            }
+        }
+
+        private void textBoxDiscount_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxDiscount.Text)) || (textBoxDiscount.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxDiscount.Text = "0";
+            }
+        }
+
+        private void textBoxPrice2_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxPrice2.Text)) || (textBoxPrice2.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxPrice2.Text = "0";
+            }
+        }
+
+        private void textBoxWholesaleDiscPer_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxWholesaleDiscPer.Text)) || (textBoxWholesaleDiscPer.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxWholesaleDiscPer.Text = "0";
+            }
+        }
+
+        private void textBoxWholesaleDisc_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxWholesaleDisc.Text)) || (textBoxWholesaleDisc.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxWholesaleDisc.Text = "0";
+            }
+        }
+
+        private void textBoxShopPrice_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxShopPrice.Text)) || (textBoxShopPrice.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxShopPrice.Text = "0";
+            }
+        }
+
+        private void textBoxUnitCostPrice_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxUnitCostPrice.Text)) || (textBoxUnitCostPrice.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxUnitCostPrice.Text = "0";
+            }
+        }
+
+        private void textBoxMinSellingPrice_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxMinSellingPrice.Text)) || (textBoxMinSellingPrice.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxMinSellingPrice.Text = "0";
+            }
+        }
+
+        private void textBoxFreeIssue_TextChanged(object sender, EventArgs e)
+        {
+            if ((string.IsNullOrEmpty(textBoxFreeIssue.Text)) || (textBoxFreeIssue.Text.Trim().Equals(string.Empty)))
+            {
+                textBoxFreeIssue.Text = "0";
+            }
         }
 
         

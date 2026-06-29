@@ -1,4 +1,4 @@
-﻿using easyBAL;
+using easyBAL;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace easyDAL
 {
     public class DALUser
     {
-        clsUserDataAccess objclsDataAccess = new clsUserDataAccess();
+        ClassDataAccess objclsDataAccess = new ClassDataAccess();
         MySqlParameter[] param;
         public MySqlConnection connection = null;
 
@@ -177,7 +177,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[21];
+                param = new MySqlParameter[22];
                 param[0] = new MySqlParameter("CompanyInfoId1", objUser.CompanyInfoId);
                 param[1] = new MySqlParameter("CompanyName1", objUser.CompanyName);
                 param[2] = new MySqlParameter("CompanyAddress11", objUser.CompanyAddress1);
@@ -199,6 +199,7 @@ namespace easyDAL
                 param[18] = new MySqlParameter("SenderId1", objUser.SenderId);
                 param[19] = new MySqlParameter("CommissionRate1", objUser.CommissionRate);
                 param[20] = new MySqlParameter("AllowSMS1", objUser.AllowSMS);
+                param[21] = new MySqlParameter("QuotationFooter1", objUser.QuotationFooter);
                 
                 objclsDataAccess.beginTransaction();
                 count = objclsDataAccess.executeReturnInt("InsertCompanyInfo", param);
@@ -217,10 +218,11 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[3];
+                param = new MySqlParameter[4];
                 param[0] = new MySqlParameter("ActBillNo1", objUser.ActBillNo);
                 param[1] = new MySqlParameter("ActStatus1", objUser.ActStatus);
                 param[2] = new MySqlParameter("ActivationType1", objUser.ActivationType);
+                param[3] = new MySqlParameter("DevKey1", objUser.DevKey);
 
                 objclsDataAccess.beginTransaction();
                 count = objclsDataAccess.executeReturnInt("UpdateSystemActivation", param);
@@ -443,9 +445,10 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[1];
+                param = new MySqlParameter[2];
                 //param[0] = new MySqlParameter("Action", "DeletePermission");
                 param[0] = new MySqlParameter("USERROLEID1", objUser.USER_ROLE_ID);
+                param[1] = new MySqlParameter("USERID1", objUser.USER_ID);
 
                 objclsDataAccess.beginTransaction();
                 count = objclsDataAccess.executeReturnInt("DeletePermission", param);
@@ -486,6 +489,21 @@ namespace easyDAL
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("USERID1", objUser.EntUser);
                 objUser.DtDataSet = objclsDataAccess.executeReturnDataset("SelectUserPort", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return objUser.DtDataSet;
+        }
+
+        public DataSet retreiveFormHelpURL(BALUser objUser)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("FormId1", objUser.FormId);
+                objUser.DtDataSet = objclsDataAccess.executeReturnDataset("SelectFormHelpURL", param);
             }
             catch (Exception ex)
             {

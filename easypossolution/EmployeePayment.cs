@@ -728,5 +728,10 @@ namespace easyPOSSolution
             {
             }
         }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://youtu.be/gfH_OQ6cn3g");
+        }
     }
 }

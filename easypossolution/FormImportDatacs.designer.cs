@@ -30,6 +30,7 @@
         {
             this.label46 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.simpleButton8 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton6 = new DevExpress.XtraEditors.SimpleButton();
@@ -49,6 +50,7 @@
             this.label51 = new System.Windows.Forms.Label();
             this.comboBoxBranch = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.simpleButton10 = new DevExpress.XtraEditors.SimpleButton();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -62,15 +64,19 @@
             this.label46.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label46.Font = new System.Drawing.Font("Tahoma", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label46.ForeColor = System.Drawing.Color.White;
-            this.label46.Location = new System.Drawing.Point(3, 6);
+            this.label46.Location = new System.Drawing.Point(4, 7);
+            this.label46.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(689, 32);
+            this.label46.Size = new System.Drawing.Size(918, 39);
             this.label46.TabIndex = 708;
             this.label46.Text = "IMPORT DATA";
             this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.pictureBox2);
+            this.groupBox7.Controls.Add(this.simpleButton10);
+            this.groupBox7.Controls.Add(this.simpleButton9);
             this.groupBox7.Controls.Add(this.dataGridView2);
             this.groupBox7.Controls.Add(this.simpleButton8);
             this.groupBox7.Controls.Add(this.simpleButton6);
@@ -86,12 +92,24 @@
             this.groupBox7.Controls.Add(this.simpleButtonSelect);
             this.groupBox7.Controls.Add(this.textBoxPath);
             this.groupBox7.Controls.Add(this.dataGridView1);
-            this.groupBox7.Location = new System.Drawing.Point(3, 41);
+            this.groupBox7.Location = new System.Drawing.Point(4, 50);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(991, 525);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Size = new System.Drawing.Size(1321, 646);
             this.groupBox7.TabIndex = 709;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Import CSV";
+            // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Location = new System.Drawing.Point(1019, 19);
+            this.simpleButton9.Margin = new System.Windows.Forms.Padding(4);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(135, 63);
+            this.simpleButton9.TabIndex = 719;
+            this.simpleButton9.Text = "Update Item Price";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
             // 
             // dataGridView2
             // 
@@ -101,18 +119,20 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(10, 92);
+            this.dataGridView2.Location = new System.Drawing.Point(13, 113);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(934, 363);
+            this.dataGridView2.Size = new System.Drawing.Size(1245, 447);
             this.dataGridView2.TabIndex = 207;
             this.dataGridView2.Visible = false;
             // 
             // simpleButton8
             // 
-            this.simpleButton8.Location = new System.Drawing.Point(857, 16);
+            this.simpleButton8.Location = new System.Drawing.Point(1143, 20);
+            this.simpleButton8.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton8.Name = "simpleButton8";
-            this.simpleButton8.Size = new System.Drawing.Size(27, 51);
+            this.simpleButton8.Size = new System.Drawing.Size(36, 63);
             this.simpleButton8.TabIndex = 206;
             this.simpleButton8.Text = "Import Cost Price";
             this.simpleButton8.Visible = false;
@@ -120,18 +140,20 @@
             // 
             // simpleButton6
             // 
-            this.simpleButton6.Location = new System.Drawing.Point(628, 16);
+            this.simpleButton6.Location = new System.Drawing.Point(837, 20);
+            this.simpleButton6.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton6.Name = "simpleButton6";
-            this.simpleButton6.Size = new System.Drawing.Size(126, 51);
+            this.simpleButton6.Size = new System.Drawing.Size(168, 63);
             this.simpleButton6.TabIndex = 205;
             this.simpleButton6.Text = "Import Suppliers";
             this.simpleButton6.Click += new System.EventHandler(this.simpleButton6_Click);
             // 
             // simpleButton7
             // 
-            this.simpleButton7.Location = new System.Drawing.Point(911, 16);
+            this.simpleButton7.Location = new System.Drawing.Point(1215, 20);
+            this.simpleButton7.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton7.Name = "simpleButton7";
-            this.simpleButton7.Size = new System.Drawing.Size(73, 22);
+            this.simpleButton7.Size = new System.Drawing.Size(97, 27);
             this.simpleButton7.TabIndex = 204;
             this.simpleButton7.Text = "Import Supplier Credit";
             this.simpleButton7.Visible = false;
@@ -139,9 +161,10 @@
             // 
             // simpleButton5
             // 
-            this.simpleButton5.Location = new System.Drawing.Point(759, 46);
+            this.simpleButton5.Location = new System.Drawing.Point(1012, 57);
+            this.simpleButton5.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton5.Name = "simpleButton5";
-            this.simpleButton5.Size = new System.Drawing.Size(73, 22);
+            this.simpleButton5.Size = new System.Drawing.Size(97, 27);
             this.simpleButton5.TabIndex = 203;
             this.simpleButton5.Text = "Import Customer";
             this.simpleButton5.Visible = false;
@@ -150,9 +173,10 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(791, 7);
+            this.pictureBox1.Location = new System.Drawing.Point(1055, 9);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(119, 10);
+            this.pictureBox1.Size = new System.Drawing.Size(157, 11);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 202;
             this.pictureBox1.TabStop = false;
@@ -160,9 +184,10 @@
             // 
             // simpleButton4
             // 
-            this.simpleButton4.Location = new System.Drawing.Point(759, 16);
+            this.simpleButton4.Location = new System.Drawing.Point(1012, 20);
+            this.simpleButton4.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton4.Name = "simpleButton4";
-            this.simpleButton4.Size = new System.Drawing.Size(73, 22);
+            this.simpleButton4.Size = new System.Drawing.Size(97, 27);
             this.simpleButton4.TabIndex = 201;
             this.simpleButton4.Text = "Import Customer Credit";
             this.simpleButton4.Visible = false;
@@ -170,36 +195,40 @@
             // 
             // simpleButton3
             // 
-            this.simpleButton3.Location = new System.Drawing.Point(340, 16);
+            this.simpleButton3.Location = new System.Drawing.Point(453, 20);
+            this.simpleButton3.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(155, 51);
+            this.simpleButton3.Size = new System.Drawing.Size(207, 63);
             this.simpleButton3.TabIndex = 200;
             this.simpleButton3.Text = "Import Varient Items";
             this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
             // 
             // simpleButton2
             // 
-            this.simpleButton2.Location = new System.Drawing.Point(501, 16);
+            this.simpleButton2.Location = new System.Drawing.Point(668, 20);
+            this.simpleButton2.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(121, 51);
+            this.simpleButton2.Size = new System.Drawing.Size(161, 63);
             this.simpleButton2.TabIndex = 199;
             this.simpleButton2.Text = "Import Customers";
             this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(233, 16);
+            this.simpleButton1.Location = new System.Drawing.Point(311, 20);
+            this.simpleButton1.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(101, 51);
+            this.simpleButton1.Size = new System.Drawing.Size(135, 63);
             this.simpleButton1.TabIndex = 198;
             this.simpleButton1.Text = "Import Items";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // simpleButtonImport
             // 
-            this.simpleButtonImport.Location = new System.Drawing.Point(122, 44);
+            this.simpleButtonImport.Location = new System.Drawing.Point(163, 54);
+            this.simpleButtonImport.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButtonImport.Name = "simpleButtonImport";
-            this.simpleButtonImport.Size = new System.Drawing.Size(101, 23);
+            this.simpleButtonImport.Size = new System.Drawing.Size(135, 28);
             this.simpleButtonImport.TabIndex = 197;
             this.simpleButtonImport.Text = "Import";
             this.simpleButtonImport.Click += new System.EventHandler(this.simpleButtonImport_Click);
@@ -208,17 +237,19 @@
             // 
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(7, 20);
+            this.label36.Location = new System.Drawing.Point(9, 25);
+            this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(58, 14);
+            this.label36.Size = new System.Drawing.Size(70, 17);
             this.label36.TabIndex = 195;
             this.label36.Text = "File Path :";
             // 
             // simpleButtonSelect
             // 
-            this.simpleButtonSelect.Location = new System.Drawing.Point(4, 45);
+            this.simpleButtonSelect.Location = new System.Drawing.Point(5, 55);
+            this.simpleButtonSelect.Margin = new System.Windows.Forms.Padding(4);
             this.simpleButtonSelect.Name = "simpleButtonSelect";
-            this.simpleButtonSelect.Size = new System.Drawing.Size(101, 23);
+            this.simpleButtonSelect.Size = new System.Drawing.Size(135, 28);
             this.simpleButtonSelect.TabIndex = 196;
             this.simpleButtonSelect.Text = "Select CSV File";
             this.simpleButtonSelect.Click += new System.EventHandler(this.simpleButtonSelect_Click);
@@ -226,9 +257,10 @@
             // textBoxPath
             // 
             this.textBoxPath.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPath.Location = new System.Drawing.Point(68, 16);
+            this.textBoxPath.Location = new System.Drawing.Point(91, 20);
+            this.textBoxPath.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(155, 22);
+            this.textBoxPath.Size = new System.Drawing.Size(205, 25);
             this.textBoxPath.TabIndex = 194;
             // 
             // dataGridView1
@@ -239,10 +271,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 73);
+            this.dataGridView1.Location = new System.Drawing.Point(8, 90);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(979, 446);
+            this.dataGridView1.Size = new System.Drawing.Size(1305, 549);
             this.dataGridView1.TabIndex = 1;
             // 
             // openFileDialog1
@@ -255,9 +288,10 @@
             this.label51.BackColor = System.Drawing.Color.Transparent;
             this.label51.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label51.ForeColor = System.Drawing.Color.Black;
-            this.label51.Location = new System.Drawing.Point(712, 17);
+            this.label51.Location = new System.Drawing.Point(949, 21);
+            this.label51.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(77, 13);
+            this.label51.Size = new System.Drawing.Size(95, 17);
             this.label51.TabIndex = 716;
             this.label51.Text = "Warehouse :";
             // 
@@ -266,32 +300,44 @@
             this.comboBoxBranch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.comboBoxBranch.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxBranch.FormattingEnabled = true;
-            this.comboBoxBranch.Location = new System.Drawing.Point(794, 12);
+            this.comboBoxBranch.Location = new System.Drawing.Point(1059, 15);
+            this.comboBoxBranch.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxBranch.Name = "comboBoxBranch";
-            this.comboBoxBranch.Size = new System.Drawing.Size(200, 23);
+            this.comboBoxBranch.Size = new System.Drawing.Size(265, 27);
             this.comboBoxBranch.TabIndex = 715;
             // 
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(427, 231);
+            this.pictureBox2.Location = new System.Drawing.Point(877, 234);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(152, 117);
+            this.pictureBox2.Size = new System.Drawing.Size(201, 143);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 717;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Visible = false;
             // 
+            // simpleButton10
+            // 
+            this.simpleButton10.Location = new System.Drawing.Point(1164, 19);
+            this.simpleButton10.Margin = new System.Windows.Forms.Padding(4);
+            this.simpleButton10.Name = "simpleButton10";
+            this.simpleButton10.Size = new System.Drawing.Size(135, 63);
+            this.simpleButton10.TabIndex = 720;
+            this.simpleButton10.Text = "Import Qty";
+            this.simpleButton10.Click += new System.EventHandler(this.simpleButton10_Click);
+            // 
             // FormImportDatacs
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 578);
-            this.Controls.Add(this.pictureBox2);
+            this.ClientSize = new System.Drawing.Size(1341, 711);
             this.Controls.Add(this.label51);
             this.Controls.Add(this.comboBoxBranch);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.label46);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormImportDatacs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormImportDatacs";
@@ -330,5 +376,7 @@
         private System.Windows.Forms.ComboBox comboBoxBranch;
         private System.Windows.Forms.DataGridView dataGridView2;
         public System.Windows.Forms.PictureBox pictureBox2;
+        private DevExpress.XtraEditors.SimpleButton simpleButton9;
+        private DevExpress.XtraEditors.SimpleButton simpleButton10;
     }
 }

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormExpenses));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxPrint3In = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBoxVehicle = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -73,8 +74,9 @@
             this.lblUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblUserId = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblBranchID = new System.Windows.Forms.ToolStripStatusLabel();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -86,6 +88,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.checkBoxPrint3In);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.comboBoxVehicle);
             this.groupBox1.Controls.Add(this.label27);
@@ -116,6 +119,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Transaction";
+            // 
+            // checkBoxPrint3In
+            // 
+            this.checkBoxPrint3In.AutoSize = true;
+            this.checkBoxPrint3In.Location = new System.Drawing.Point(496, 241);
+            this.checkBoxPrint3In.Name = "checkBoxPrint3In";
+            this.checkBoxPrint3In.Size = new System.Drawing.Size(91, 18);
+            this.checkBoxPrint3In.TabIndex = 703;
+            this.checkBoxPrint3In.Text = "3 Inch Print";
+            this.checkBoxPrint3In.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -260,6 +273,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.simpleButton9);
             this.groupBox3.Controls.Add(this.checkBoxPnl);
             this.groupBox3.Controls.Add(this.buttonExpCatSave);
             this.groupBox3.Controls.Add(this.textBoxCategory);
@@ -584,12 +598,8 @@
             // ToolStripStatusLabel3
             // 
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(130, 17);
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(306, 17);
             this.ToolStripStatusLabel3.Spring = true;
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
             // 
             // lblBranchID
             // 
@@ -597,6 +607,27 @@
             this.lblBranchID.Size = new System.Drawing.Size(68, 17);
             this.lblBranchID.Text = "lblBranchID";
             this.lblBranchID.TextChanged += new System.EventHandler(this.lblBranchID_TextChanged);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Appearance.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.simpleButton9.Appearance.BackColor2 = System.Drawing.Color.RoyalBlue;
+            this.simpleButton9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simpleButton9.Appearance.ForeColor = System.Drawing.Color.LavenderBlush;
+            this.simpleButton9.Appearance.Options.UseBackColor = true;
+            this.simpleButton9.Appearance.Options.UseFont = true;
+            this.simpleButton9.Appearance.Options.UseForeColor = true;
+            this.simpleButton9.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
+            this.simpleButton9.Location = new System.Drawing.Point(484, 57);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(93, 25);
+            this.simpleButton9.TabIndex = 734;
+            this.simpleButton9.Text = "Help";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
             // 
             // FormExpenses
             // 
@@ -675,5 +706,7 @@
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.ComboBox comboBoxVehicle;
         public System.Windows.Forms.ToolStripStatusLabel lblBranchID;
+        private System.Windows.Forms.CheckBox checkBoxPrint3In;
+        private DevExpress.XtraEditors.SimpleButton simpleButton9;
     }
 }

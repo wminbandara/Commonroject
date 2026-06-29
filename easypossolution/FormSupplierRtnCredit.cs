@@ -89,6 +89,8 @@ namespace easyPOSSolution
                 objBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
                 objBAL.PayModeId = 3;
                 objBAL.BankId = 0;
+                objBAL.BranchId = 1;
+
                 objDAL = new ClassMasterDAL();
 
                 string count = objDAL.InsertSupplierCredPayHD(objBAL);
@@ -104,6 +106,33 @@ namespace easyPOSSolution
                 MessageBox.Show(ex.Message);
             }
         }
+
+        //private void insertSupplierCreditHD()
+        //{
+        //    try
+        //    {
+        //        objBAL = new ClassCommonBAL();
+        //        objBAL.SupplierId = SupplierId;
+        //        objBAL.PaymentDate = DateTime.Today;
+        //        objBAL.PaymentAmount = Convert.ToDecimal(textBoxPayTotal.Text);
+        //        objBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
+        //        objBAL.PayModeId = 3;
+        //        objBAL.BankId = 0;
+        //        objDAL = new ClassMasterDAL();
+
+        //        string count = objDAL.InsertSupplierCredPayHD(objBAL);
+        //        textBoxHDId.Text = count.ToString();
+        //        if (count != "")
+        //        {
+        //            insertSupplierCredit();
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
 
         private void insertSupplierCredit()
         {
@@ -123,6 +152,7 @@ namespace easyPOSSolution
                         objBAL.PayModeId = 3;
                         objBAL.ChequeNo = "";
                         objBAL.CreditPayHDId = Convert.ToInt32(textBoxHDId.Text);
+                        objBAL.SuppCreditId = Convert.ToInt32(dataGridView3.Rows[i].Cells["SuppCreditId"].Value);
                         objDAL = new ClassMasterDAL();
                         int count = objDAL.InsertSuppCredPay(objBAL);
                         if (count != 0)
@@ -177,6 +207,7 @@ namespace easyPOSSolution
                             dataGridView3.Rows[n].Cells["BillNo"].Value = (values[0].ToString().Trim());
                             dataGridView3.Rows[n].Cells["CreditDate"].Value = Convert.ToDateTime(values[2].ToString().Trim()).ToString("yyyy/MM/dd");
                             dataGridView3.Rows[n].Cells["CreditAmount"].Value = (values[3].ToString().Trim());
+                            dataGridView3.Rows[n].Cells["SuppCreditId"].Value = (values[5].ToString().Trim());
                             dataGridView3.Rows[n].Cells["PaymentAmount"].Value = "0";
 
                             dataGridView3.FirstDisplayedScrollingRowIndex = n;
@@ -217,6 +248,57 @@ namespace easyPOSSolution
             {
                 MessageBox.Show("Amount Missed Mach.", "Invalid Amount", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
+            }
+        }
+
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (Convert.ToDecimal(textBoxOutofBalance.Text) >= Convert.ToDecimal(dataGridView3.CurrentRow.Cells[2].Value))
+                {
+                    if (Convert.ToDecimal(dataGridView3.CurrentRow.Cells[3].Value) == 0)
+                    {
+                        dataGridView3.CurrentRow.Cells[3].Value = dataGridView3.CurrentRow.Cells[2].Value.ToString();
+
+                    }
+
+                }
+                else if (Convert.ToDecimal(textBoxOutofBalance.Text) < Convert.ToDecimal(dataGridView3.CurrentRow.Cells[2].Value))
+                {
+                    if (Convert.ToDecimal(dataGridView3.CurrentRow.Cells[3].Value) == 0)
+                    {
+                        dataGridView3.CurrentRow.Cells[3].Value = textBoxOutofBalance.Text;
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private void textBoxPayTotal_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                //textBoxPayment.Text = textBoxPayTotal.Text;
+                textBoxOutofBalance.Text = (Convert.ToDecimal(textBoxReturn.Text) - Convert.ToDecimal(textBoxPayTotal.Text)).ToString();
+
+            }
+            catch
+            {
+            }
+        }
+
+        private void textBoxReturn_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                textBoxOutofBalance.Text = (Convert.ToDecimal(textBoxReturn.Text) - Convert.ToDecimal(textBoxPayTotal.Text)).ToString();
+
+            }
+            catch
+            {
             }
         }
     }

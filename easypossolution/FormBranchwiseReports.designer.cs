@@ -34,6 +34,7 @@
             this.gridControl4 = new DevExpress.XtraGrid.GridControl();
             this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button68 = new System.Windows.Forms.Button();
             this.button40 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -242,6 +243,9 @@
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.groupBox36 = new System.Windows.Forms.GroupBox();
+            this.gridControl18 = new DevExpress.XtraGrid.GridControl();
+            this.gridView18 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.groupBox35 = new System.Windows.Forms.GroupBox();
             this.button62 = new System.Windows.Forms.Button();
             this.button63 = new System.Windows.Forms.Button();
@@ -250,9 +254,27 @@
             this.dateTimePicker18 = new System.Windows.Forms.DateTimePicker();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
-            this.groupBox36 = new System.Windows.Forms.GroupBox();
-            this.gridControl18 = new DevExpress.XtraGrid.GridControl();
-            this.gridView18 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.tabPage19 = new System.Windows.Forms.TabPage();
+            this.groupBox38 = new System.Windows.Forms.GroupBox();
+            this.gridControl19 = new DevExpress.XtraGrid.GridControl();
+            this.gridView19 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.groupBox37 = new System.Windows.Forms.GroupBox();
+            this.button65 = new System.Windows.Forms.Button();
+            this.button66 = new System.Windows.Forms.Button();
+            this.button67 = new System.Windows.Forms.Button();
+            this.dateTimePicker19 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker20 = new System.Windows.Forms.DateTimePicker();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.tabPage20 = new System.Windows.Forms.TabPage();
+            this.groupBox40 = new System.Windows.Forms.GroupBox();
+            this.gridControl20 = new DevExpress.XtraGrid.GridControl();
+            this.gridView20 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.groupBox39 = new System.Windows.Forms.GroupBox();
+            this.button72 = new System.Windows.Forms.Button();
+            this.button69 = new System.Windows.Forms.Button();
+            this.button70 = new System.Windows.Forms.Button();
+            this.button71 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -340,10 +362,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView17)).BeginInit();
             this.groupBox33.SuspendLayout();
             this.tabPage18.SuspendLayout();
-            this.groupBox35.SuspendLayout();
             this.groupBox36.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView18)).BeginInit();
+            this.groupBox35.SuspendLayout();
+            this.tabPage19.SuspendLayout();
+            this.groupBox38.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView19)).BeginInit();
+            this.groupBox37.SuspendLayout();
+            this.tabPage20.SuspendLayout();
+            this.groupBox40.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView20)).BeginInit();
+            this.groupBox39.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -369,6 +401,8 @@
             this.tabControl1.Controls.Add(this.tabPage16);
             this.tabControl1.Controls.Add(this.tabPage17);
             this.tabControl1.Controls.Add(this.tabPage18);
+            this.tabControl1.Controls.Add(this.tabPage19);
+            this.tabControl1.Controls.Add(this.tabPage20);
             this.tabControl1.Location = new System.Drawing.Point(4, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -420,6 +454,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button68);
             this.groupBox1.Controls.Add(this.button40);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.button1);
@@ -434,12 +469,23 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // button68
+            // 
+            this.button68.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button68.Location = new System.Drawing.Point(725, 20);
+            this.button68.Name = "button68";
+            this.button68.Size = new System.Drawing.Size(152, 40);
+            this.button68.TabIndex = 117;
+            this.button68.Text = "&Cancel Invoice Report";
+            this.button68.UseVisualStyleBackColor = true;
+            this.button68.Click += new System.EventHandler(this.button68_Click);
+            // 
             // button40
             // 
             this.button40.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button40.Location = new System.Drawing.Point(566, 20);
+            this.button40.Location = new System.Drawing.Point(397, 20);
             this.button40.Name = "button40";
-            this.button40.Size = new System.Drawing.Size(182, 40);
+            this.button40.Size = new System.Drawing.Size(171, 40);
             this.button40.TabIndex = 116;
             this.button40.Text = "&Sales Summary Report";
             this.button40.UseVisualStyleBackColor = true;
@@ -459,7 +505,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(443, 20);
+            this.button1.Location = new System.Drawing.Point(277, 20);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 40);
             this.button1.TabIndex = 112;
@@ -470,11 +516,11 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(759, 20);
+            this.button2.Location = new System.Drawing.Point(574, 20);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 40);
+            this.button2.Size = new System.Drawing.Size(145, 40);
             this.button2.TabIndex = 113;
-            this.button2.Text = "&Exit";
+            this.button2.Text = "&Invoice Report";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -482,25 +528,25 @@
             // 
             this.dateTimePickerTo1.CustomFormat = "yyyy/MM/dd";
             this.dateTimePickerTo1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerTo1.Location = new System.Drawing.Point(190, 40);
+            this.dateTimePickerTo1.Location = new System.Drawing.Point(151, 40);
             this.dateTimePickerTo1.Name = "dateTimePickerTo1";
-            this.dateTimePickerTo1.Size = new System.Drawing.Size(120, 20);
+            this.dateTimePickerTo1.Size = new System.Drawing.Size(109, 20);
             this.dateTimePickerTo1.TabIndex = 111;
             // 
             // dateTimePickerFrom1
             // 
             this.dateTimePickerFrom1.CustomFormat = "yyyy/MM/dd";
             this.dateTimePickerFrom1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerFrom1.Location = new System.Drawing.Point(19, 40);
+            this.dateTimePickerFrom1.Location = new System.Drawing.Point(12, 40);
             this.dateTimePickerFrom1.Name = "dateTimePickerFrom1";
-            this.dateTimePickerFrom1.Size = new System.Drawing.Size(120, 20);
+            this.dateTimePickerFrom1.Size = new System.Drawing.Size(113, 20);
             this.dateTimePickerFrom1.TabIndex = 110;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(15, 16);
+            this.label7.Location = new System.Drawing.Point(8, 16);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 21);
             this.label7.TabIndex = 108;
@@ -510,7 +556,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(186, 16);
+            this.label8.Location = new System.Drawing.Point(147, 16);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(28, 21);
             this.label8.TabIndex = 109;
@@ -2672,6 +2718,37 @@
             this.tabPage18.Text = "Attendance";
             this.tabPage18.UseVisualStyleBackColor = true;
             // 
+            // groupBox36
+            // 
+            this.groupBox36.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox36.Controls.Add(this.gridControl18);
+            this.groupBox36.Location = new System.Drawing.Point(6, 91);
+            this.groupBox36.Name = "groupBox36";
+            this.groupBox36.Size = new System.Drawing.Size(1006, 534);
+            this.groupBox36.TabIndex = 18;
+            this.groupBox36.TabStop = false;
+            // 
+            // gridControl18
+            // 
+            this.gridControl18.Cursor = System.Windows.Forms.Cursors.Default;
+            this.gridControl18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl18.Location = new System.Drawing.Point(3, 16);
+            this.gridControl18.MainView = this.gridView18;
+            this.gridControl18.Name = "gridControl18";
+            this.gridControl18.Size = new System.Drawing.Size(1000, 515);
+            this.gridControl18.TabIndex = 5;
+            this.gridControl18.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView18});
+            // 
+            // gridView18
+            // 
+            this.gridView18.GridControl = this.gridControl18;
+            this.gridView18.Name = "gridView18";
+            this.gridView18.OptionsFind.AlwaysVisible = true;
+            this.gridView18.OptionsView.ShowFooter = true;
+            // 
             // groupBox35
             // 
             this.groupBox35.Controls.Add(this.button62);
@@ -2758,36 +2835,233 @@
             this.label34.TabIndex = 109;
             this.label34.Text = "To";
             // 
-            // groupBox36
+            // tabPage19
             // 
-            this.groupBox36.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabPage19.Controls.Add(this.groupBox38);
+            this.tabPage19.Controls.Add(this.groupBox37);
+            this.tabPage19.Location = new System.Drawing.Point(4, 22);
+            this.tabPage19.Name = "tabPage19";
+            this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage19.Size = new System.Drawing.Size(1019, 632);
+            this.tabPage19.TabIndex = 18;
+            this.tabPage19.Text = "Cash In";
+            this.tabPage19.UseVisualStyleBackColor = true;
+            // 
+            // groupBox38
+            // 
+            this.groupBox38.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox36.Controls.Add(this.gridControl18);
-            this.groupBox36.Location = new System.Drawing.Point(6, 91);
-            this.groupBox36.Name = "groupBox36";
-            this.groupBox36.Size = new System.Drawing.Size(1006, 534);
-            this.groupBox36.TabIndex = 18;
-            this.groupBox36.TabStop = false;
+            this.groupBox38.Controls.Add(this.gridControl19);
+            this.groupBox38.Location = new System.Drawing.Point(4, 90);
+            this.groupBox38.Name = "groupBox38";
+            this.groupBox38.Size = new System.Drawing.Size(1006, 534);
+            this.groupBox38.TabIndex = 20;
+            this.groupBox38.TabStop = false;
             // 
-            // gridControl18
+            // gridControl19
             // 
-            this.gridControl18.Cursor = System.Windows.Forms.Cursors.Default;
-            this.gridControl18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl18.Location = new System.Drawing.Point(3, 16);
-            this.gridControl18.MainView = this.gridView18;
-            this.gridControl18.Name = "gridControl18";
-            this.gridControl18.Size = new System.Drawing.Size(1000, 515);
-            this.gridControl18.TabIndex = 5;
-            this.gridControl18.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView18});
+            this.gridControl19.Cursor = System.Windows.Forms.Cursors.Default;
+            this.gridControl19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl19.Location = new System.Drawing.Point(3, 16);
+            this.gridControl19.MainView = this.gridView19;
+            this.gridControl19.Name = "gridControl19";
+            this.gridControl19.Size = new System.Drawing.Size(1000, 515);
+            this.gridControl19.TabIndex = 5;
+            this.gridControl19.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView19});
             // 
-            // gridView18
+            // gridView19
             // 
-            this.gridView18.GridControl = this.gridControl18;
-            this.gridView18.Name = "gridView18";
-            this.gridView18.OptionsFind.AlwaysVisible = true;
-            this.gridView18.OptionsView.ShowFooter = true;
+            this.gridView19.GridControl = this.gridControl19;
+            this.gridView19.Name = "gridView19";
+            this.gridView19.OptionsFind.AlwaysVisible = true;
+            this.gridView19.OptionsView.ShowFooter = true;
+            // 
+            // groupBox37
+            // 
+            this.groupBox37.Controls.Add(this.button65);
+            this.groupBox37.Controls.Add(this.button66);
+            this.groupBox37.Controls.Add(this.button67);
+            this.groupBox37.Controls.Add(this.dateTimePicker19);
+            this.groupBox37.Controls.Add(this.dateTimePicker20);
+            this.groupBox37.Controls.Add(this.label35);
+            this.groupBox37.Controls.Add(this.label36);
+            this.groupBox37.Location = new System.Drawing.Point(4, 6);
+            this.groupBox37.Name = "groupBox37";
+            this.groupBox37.Size = new System.Drawing.Size(1006, 81);
+            this.groupBox37.TabIndex = 8;
+            this.groupBox37.TabStop = false;
+            // 
+            // button65
+            // 
+            this.button65.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button65.Location = new System.Drawing.Point(883, 25);
+            this.button65.Name = "button65";
+            this.button65.Size = new System.Drawing.Size(112, 40);
+            this.button65.TabIndex = 114;
+            this.button65.Text = "&Export Excell";
+            this.button65.UseVisualStyleBackColor = true;
+            this.button65.Click += new System.EventHandler(this.button65_Click);
+            // 
+            // button66
+            // 
+            this.button66.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button66.Location = new System.Drawing.Point(523, 25);
+            this.button66.Name = "button66";
+            this.button66.Size = new System.Drawing.Size(112, 40);
+            this.button66.TabIndex = 112;
+            this.button66.Text = "&View Report";
+            this.button66.UseVisualStyleBackColor = true;
+            this.button66.Click += new System.EventHandler(this.button66_Click);
+            // 
+            // button67
+            // 
+            this.button67.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button67.Location = new System.Drawing.Point(703, 25);
+            this.button67.Name = "button67";
+            this.button67.Size = new System.Drawing.Size(112, 40);
+            this.button67.TabIndex = 113;
+            this.button67.Text = "&Exit";
+            this.button67.UseVisualStyleBackColor = true;
+            this.button67.Click += new System.EventHandler(this.button67_Click);
+            // 
+            // dateTimePicker19
+            // 
+            this.dateTimePicker19.CustomFormat = "yyyy/MM/dd";
+            this.dateTimePicker19.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker19.Location = new System.Drawing.Point(190, 40);
+            this.dateTimePicker19.Name = "dateTimePicker19";
+            this.dateTimePicker19.Size = new System.Drawing.Size(120, 20);
+            this.dateTimePicker19.TabIndex = 111;
+            // 
+            // dateTimePicker20
+            // 
+            this.dateTimePicker20.CustomFormat = "yyyy/MM/dd";
+            this.dateTimePicker20.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker20.Location = new System.Drawing.Point(19, 40);
+            this.dateTimePicker20.Name = "dateTimePicker20";
+            this.dateTimePicker20.Size = new System.Drawing.Size(120, 20);
+            this.dateTimePicker20.TabIndex = 110;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Location = new System.Drawing.Point(15, 16);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(47, 21);
+            this.label35.TabIndex = 108;
+            this.label35.Text = "From";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(186, 16);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(28, 21);
+            this.label36.TabIndex = 109;
+            this.label36.Text = "To";
+            // 
+            // tabPage20
+            // 
+            this.tabPage20.Controls.Add(this.groupBox40);
+            this.tabPage20.Controls.Add(this.groupBox39);
+            this.tabPage20.Location = new System.Drawing.Point(4, 22);
+            this.tabPage20.Name = "tabPage20";
+            this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage20.Size = new System.Drawing.Size(1019, 632);
+            this.tabPage20.TabIndex = 19;
+            this.tabPage20.Text = "Cheque Details";
+            this.tabPage20.UseVisualStyleBackColor = true;
+            // 
+            // groupBox40
+            // 
+            this.groupBox40.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox40.Controls.Add(this.gridControl20);
+            this.groupBox40.Location = new System.Drawing.Point(7, 90);
+            this.groupBox40.Name = "groupBox40";
+            this.groupBox40.Size = new System.Drawing.Size(1006, 534);
+            this.groupBox40.TabIndex = 21;
+            this.groupBox40.TabStop = false;
+            // 
+            // gridControl20
+            // 
+            this.gridControl20.Cursor = System.Windows.Forms.Cursors.Default;
+            this.gridControl20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl20.Location = new System.Drawing.Point(3, 16);
+            this.gridControl20.MainView = this.gridView20;
+            this.gridControl20.Name = "gridControl20";
+            this.gridControl20.Size = new System.Drawing.Size(1000, 515);
+            this.gridControl20.TabIndex = 5;
+            this.gridControl20.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView20});
+            // 
+            // gridView20
+            // 
+            this.gridView20.GridControl = this.gridControl20;
+            this.gridView20.Name = "gridView20";
+            this.gridView20.OptionsFind.AlwaysVisible = true;
+            this.gridView20.OptionsView.ShowFooter = true;
+            // 
+            // groupBox39
+            // 
+            this.groupBox39.Controls.Add(this.button72);
+            this.groupBox39.Controls.Add(this.button69);
+            this.groupBox39.Controls.Add(this.button70);
+            this.groupBox39.Controls.Add(this.button71);
+            this.groupBox39.Location = new System.Drawing.Point(7, 5);
+            this.groupBox39.Name = "groupBox39";
+            this.groupBox39.Size = new System.Drawing.Size(1006, 81);
+            this.groupBox39.TabIndex = 9;
+            this.groupBox39.TabStop = false;
+            // 
+            // button72
+            // 
+            this.button72.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button72.Location = new System.Drawing.Point(502, 25);
+            this.button72.Name = "button72";
+            this.button72.Size = new System.Drawing.Size(224, 40);
+            this.button72.TabIndex = 115;
+            this.button72.Text = "&View Supplier Cheque Report";
+            this.button72.UseVisualStyleBackColor = true;
+            this.button72.Click += new System.EventHandler(this.button72_Click);
+            // 
+            // button69
+            // 
+            this.button69.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button69.Location = new System.Drawing.Point(883, 25);
+            this.button69.Name = "button69";
+            this.button69.Size = new System.Drawing.Size(112, 40);
+            this.button69.TabIndex = 114;
+            this.button69.Text = "&Export Excell";
+            this.button69.UseVisualStyleBackColor = true;
+            this.button69.Click += new System.EventHandler(this.button69_Click);
+            // 
+            // button70
+            // 
+            this.button70.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button70.Location = new System.Drawing.Point(259, 25);
+            this.button70.Name = "button70";
+            this.button70.Size = new System.Drawing.Size(224, 40);
+            this.button70.TabIndex = 112;
+            this.button70.Text = "&View Customer Cheque Report";
+            this.button70.UseVisualStyleBackColor = true;
+            this.button70.Click += new System.EventHandler(this.button70_Click);
+            // 
+            // button71
+            // 
+            this.button71.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button71.Location = new System.Drawing.Point(746, 25);
+            this.button71.Name = "button71";
+            this.button71.Size = new System.Drawing.Size(112, 40);
+            this.button71.TabIndex = 113;
+            this.button71.Text = "&Exit";
+            this.button71.UseVisualStyleBackColor = true;
+            this.button71.Click += new System.EventHandler(this.button71_Click);
             // 
             // FormBranchwiseReports
             // 
@@ -2901,11 +3175,22 @@
             this.groupBox33.ResumeLayout(false);
             this.groupBox33.PerformLayout();
             this.tabPage18.ResumeLayout(false);
-            this.groupBox35.ResumeLayout(false);
-            this.groupBox35.PerformLayout();
             this.groupBox36.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView18)).EndInit();
+            this.groupBox35.ResumeLayout(false);
+            this.groupBox35.PerformLayout();
+            this.tabPage19.ResumeLayout(false);
+            this.groupBox38.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView19)).EndInit();
+            this.groupBox37.ResumeLayout(false);
+            this.groupBox37.PerformLayout();
+            this.tabPage20.ResumeLayout(false);
+            this.groupBox40.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView20)).EndInit();
+            this.groupBox39.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -3137,5 +3422,27 @@
         internal System.Windows.Forms.DateTimePicker dateTimePicker18;
         internal System.Windows.Forms.Label label33;
         internal System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TabPage tabPage19;
+        private System.Windows.Forms.GroupBox groupBox38;
+        private DevExpress.XtraGrid.GridControl gridControl19;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView19;
+        private System.Windows.Forms.GroupBox groupBox37;
+        internal System.Windows.Forms.Button button65;
+        internal System.Windows.Forms.Button button66;
+        internal System.Windows.Forms.Button button67;
+        internal System.Windows.Forms.DateTimePicker dateTimePicker19;
+        internal System.Windows.Forms.DateTimePicker dateTimePicker20;
+        internal System.Windows.Forms.Label label35;
+        internal System.Windows.Forms.Label label36;
+        internal System.Windows.Forms.Button button68;
+        private System.Windows.Forms.TabPage tabPage20;
+        private System.Windows.Forms.GroupBox groupBox40;
+        private DevExpress.XtraGrid.GridControl gridControl20;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView20;
+        private System.Windows.Forms.GroupBox groupBox39;
+        internal System.Windows.Forms.Button button72;
+        internal System.Windows.Forms.Button button69;
+        internal System.Windows.Forms.Button button70;
+        internal System.Windows.Forms.Button button71;
     }
 }

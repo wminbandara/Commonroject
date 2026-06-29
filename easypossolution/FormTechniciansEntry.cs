@@ -9,6 +9,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -332,43 +334,80 @@ namespace easyPOSSolution
                 {
                     string message2;
                     to = Convert.ToInt64(textBoxContactNo.Text).ToString();
-                    message2 = "Dear " + textBoxCustName.Text + " Your Device Repair is completed, Your Ref No is: " + txtReprint.Text + " Date : " + DateTime.Now.ToString() + ". " + companyname.ToString() + ".You can come and collect your device. Thank you.";
+                    //message2 = "Dear " + textBoxCustName.Text + " Your Invoice details are, Invoice No : " + txtInvoiceNo.Text + " Payment Mode : " + comboBoxPayMode.Text + " Invoice Total : " + lblNetTotal.Text + " Date : " + DateTime.Now.ToString() + ". " + companyname.ToString() + ". Thank you come again.";
+
+                    message2 = "Dear " + textBoxCustName.Text + " Your Device Repair is completed, Your Ref No is: " + txtReprint.Text + " Date : " + DateTime.Now.ToString() + ". You can come and collect your device. Thank you. " + companyname.ToString() + ".";
 
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
                                         SecurityProtocolType.Tls11 |
                                         SecurityProtocolType.Tls12;
 
-                    string url = SMSUrl + apikey + "&destination=94" + to + "&message=" + message2 + "&from=" + fromval;
+                    System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+
+
+                    string url = SMSUrl + apikey + "&apitoken=" + apitoken + "&type=sms" + "&from=" + fromval + "&to=94" + to + "&text=" + message2;
+
                     //Call web api to send sms messages
                     string result = client.DownloadString(url);
                     if (result.Contains("0"))
                         MessageBox.Show("Your message has been successfully sent.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
                         MessageBox.Show("Message send failure.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+
+
+                                   }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-            //try
-            //{
-            //    WebClient client = new WebClient();
-            //    //string to, message, apitoken, fromval, apikey;
-            //    string message2;
-            //    to = textBoxContactNo.Text;
-            //    message2 = "Dear " + textBoxCustName.Text + " Your Mobile Repair is completed, Your Ref No is: " + txtReprint.Text + " Date : " + DateTime.Now.ToString() + ". " + companyname.ToString() + ".You can come and collect your mobile. Thank you.";
-
-            //    string baseURL = "http://app.newsletters.lk/smsAPI?sendsms&apikey=" + apikey + "&apitoken=" + apitoken + "&type=sms" + "&from=" + fromval + "&to=94" + to + "&text=" + message2;
-
-            //    client.OpenRead(baseURL);
-            //    //MessageBox.Show("Successfully sent message");
-            //}
-            //catch (Exception exp)
-            //{
-            //    MessageBox.Show(exp.ToString());
-            //}
         }
+
+        //public void sendCustomerMessage()
+        //{
+        //    using (System.Net.WebClient client = new System.Net.WebClient())
+        //    {
+        //        try
+        //        {
+        //            string message2;
+        //            to = Convert.ToInt64(textBoxContactNo.Text).ToString();
+        //            message2 = "Dear " + textBoxCustName.Text + " Your Device Repair is completed, Your Ref No is: " + txtReprint.Text + " Date : " + DateTime.Now.ToString() + ". " + companyname.ToString() + ".You can come and collect your device. Thank you.";
+
+        //            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+        //                                SecurityProtocolType.Tls11 |
+        //                                SecurityProtocolType.Tls12;
+
+        //            string url = SMSUrl + apikey + "&destination=94" + to + "&message=" + message2 + "&from=" + fromval;
+        //            //Call web api to send sms messages
+        //            string result = client.DownloadString(url);
+        //            if (result.Contains("0"))
+        //                MessageBox.Show("Your message has been successfully sent.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            else
+        //                MessageBox.Show("Message send failure.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+
+        //    //try
+        //    //{
+        //    //    WebClient client = new WebClient();
+        //    //    //string to, message, apitoken, fromval, apikey;
+        //    //    string message2;
+        //    //    to = textBoxContactNo.Text;
+        //    //    message2 = "Dear " + textBoxCustName.Text + " Your Mobile Repair is completed, Your Ref No is: " + txtReprint.Text + " Date : " + DateTime.Now.ToString() + ". " + companyname.ToString() + ".You can come and collect your mobile. Thank you.";
+
+        //    //    string baseURL = "http://app.newsletters.lk/smsAPI?sendsms&apikey=" + apikey + "&apitoken=" + apitoken + "&type=sms" + "&from=" + fromval + "&to=94" + to + "&text=" + message2;
+
+        //    //    client.OpenRead(baseURL);
+        //    //    //MessageBox.Show("Successfully sent message");
+        //    //}
+        //    //catch (Exception exp)
+        //    //{
+        //    //    MessageBox.Show(exp.ToString());
+        //    //}
+        //}
     }
 }

@@ -94,6 +94,7 @@
             this.textBoxBranchID.Size = new System.Drawing.Size(90, 22);
             this.textBoxBranchID.TabIndex = 51;
             this.textBoxBranchID.Visible = false;
+            this.textBoxBranchID.TextChanged += new System.EventHandler(this.textBoxBranchID_TextChanged);
             // 
             // label12
             // 

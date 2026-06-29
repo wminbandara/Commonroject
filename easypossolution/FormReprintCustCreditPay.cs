@@ -59,19 +59,39 @@ namespace easyPOSSolution
         {
             try
             {
-                Cursor.Current = Cursors.WaitCursor;
-                CrystalReportCustomerCreditPay rpt = new CrystalReportCustomerCreditPay();
-                //CrystalReportCustCreditPay2in rpt = new CrystalReportCustCreditPay2in();
-                ClassPOBAL objPOBAL = new ClassPOBAL();
-                objPOBAL.CustomerId = 0;
-                objPOBAL.PayModeId = 0;
-                objPOBAL.CreditPayHDId = Convert.ToInt32(txtReprint.Text);
-                ClassPODAL objPODAL = new ClassPODAL();
-                objPOBAL.DtDataSet = objPODAL.retreiveCustomerPaymentData(objPOBAL);
-                rpt.SetDataSource(objPOBAL.DtDataSet);
-                crystalReportViewer1.ReportSource = rpt;
-                crystalReportViewer1.Refresh();
-                Cursor.Current = Cursors.Default; 
+                if (checkBoxPrint3In.Checked == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportCustomerCreditPay3In rpt = new CrystalReportCustomerCreditPay3In();
+                    //CrystalReportCustCreditPay2in rpt = new CrystalReportCustCreditPay2in();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.CustomerId = 0;
+                    objPOBAL.PayModeId = 0;
+                    objPOBAL.CreditPayHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveCustomerPaymentData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default; 
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    CrystalReportCustomerCreditPay rpt = new CrystalReportCustomerCreditPay();
+                    //CrystalReportCustCreditPay2in rpt = new CrystalReportCustCreditPay2in();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.CustomerId = 0;
+                    objPOBAL.PayModeId = 0;
+                    objPOBAL.CreditPayHDId = Convert.ToInt32(txtReprint.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveCustomerPaymentData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    crystalReportViewer1.ReportSource = rpt;
+                    crystalReportViewer1.Refresh();
+                    Cursor.Current = Cursors.Default; 
+                }
+                
 
             }
             catch (Exception ex)

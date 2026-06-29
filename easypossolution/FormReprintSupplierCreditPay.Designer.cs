@@ -50,7 +50,7 @@
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.allCustomerInvoiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
+            //this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
             this.StatusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
@@ -254,7 +254,7 @@
             // 
             // allCustomerInvoiceTableAdapter
             // 
-            this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
+            //this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
             // 
             // FormReprintSupplierCreditPay
             // 
@@ -309,6 +309,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
         private System.Windows.Forms.BindingSource allCustomerInvoiceBindingSource;
-        private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
+        //private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
     }
 }

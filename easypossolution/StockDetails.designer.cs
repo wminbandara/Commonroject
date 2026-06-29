@@ -82,6 +82,10 @@
             this.gridControl2 = new DevExpress.XtraGrid.GridControl();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.dateTimePickerTo1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerFrom1 = new System.Windows.Forms.DateTimePicker();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.button21 = new System.Windows.Forms.Button();
             this.textBoxItemCodeRpt = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -405,7 +409,7 @@
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1026, 676);
+            this.tabPage1.Size = new System.Drawing.Size(1026, 654);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Detail Report";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -539,7 +543,7 @@
             this.tabPage3.Controls.Add(this.groupBox3);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1026, 676);
+            this.tabPage3.Size = new System.Drawing.Size(1026, 654);
             this.tabPage3.TabIndex = 6;
             this.tabPage3.Text = "Day Collection Report";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -658,7 +662,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1026, 676);
+            this.tabPage4.Size = new System.Drawing.Size(1026, 654);
             this.tabPage4.TabIndex = 7;
             this.tabPage4.Text = "Item History";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -696,6 +700,10 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.dateTimePickerTo1);
+            this.groupBox5.Controls.Add(this.dateTimePickerFrom1);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.button21);
             this.groupBox5.Controls.Add(this.textBoxItemCodeRpt);
             this.groupBox5.Controls.Add(this.label5);
@@ -710,6 +718,44 @@
             this.groupBox5.Size = new System.Drawing.Size(1009, 81);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
+            // 
+            // dateTimePickerTo1
+            // 
+            this.dateTimePickerTo1.CustomFormat = "yyyy/MM/dd";
+            this.dateTimePickerTo1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerTo1.Location = new System.Drawing.Point(442, 47);
+            this.dateTimePickerTo1.Name = "dateTimePickerTo1";
+            this.dateTimePickerTo1.Size = new System.Drawing.Size(120, 23);
+            this.dateTimePickerTo1.TabIndex = 124;
+            // 
+            // dateTimePickerFrom1
+            // 
+            this.dateTimePickerFrom1.CustomFormat = "yyyy/MM/dd";
+            this.dateTimePickerFrom1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerFrom1.Location = new System.Drawing.Point(442, 17);
+            this.dateTimePickerFrom1.Name = "dateTimePickerFrom1";
+            this.dateTimePickerFrom1.Size = new System.Drawing.Size(120, 23);
+            this.dateTimePickerFrom1.TabIndex = 123;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(392, 18);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 21);
+            this.label8.TabIndex = 121;
+            this.label8.Text = "From";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Palatino Linotype", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(411, 47);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(28, 21);
+            this.label9.TabIndex = 122;
+            this.label9.Text = "To";
             // 
             // button21
             // 
@@ -727,7 +773,7 @@
             this.textBoxItemCodeRpt.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxItemCodeRpt.Location = new System.Drawing.Point(212, 52);
             this.textBoxItemCodeRpt.Name = "textBoxItemCodeRpt";
-            this.textBoxItemCodeRpt.Size = new System.Drawing.Size(207, 23);
+            this.textBoxItemCodeRpt.Size = new System.Drawing.Size(152, 23);
             this.textBoxItemCodeRpt.TabIndex = 119;
             // 
             // label5
@@ -743,9 +789,9 @@
             // button18
             // 
             this.button18.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button18.Location = new System.Drawing.Point(344, 25);
+            this.button18.Location = new System.Drawing.Point(291, 25);
             this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(75, 25);
+            this.button18.Size = new System.Drawing.Size(73, 25);
             this.button18.TabIndex = 117;
             this.button18.Text = "&Clear";
             this.button18.UseVisualStyleBackColor = true;
@@ -774,7 +820,7 @@
             // button19
             // 
             this.button19.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button19.Location = new System.Drawing.Point(884, 19);
+            this.button19.Location = new System.Drawing.Point(888, 19);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(112, 40);
             this.button19.TabIndex = 114;
@@ -784,7 +830,7 @@
             // button20
             // 
             this.button20.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button20.Location = new System.Drawing.Point(603, 22);
+            this.button20.Location = new System.Drawing.Point(638, 20);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(127, 40);
             this.button20.TabIndex = 112;
@@ -795,7 +841,7 @@
             // button22
             // 
             this.button22.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button22.Location = new System.Drawing.Point(754, 20);
+            this.button22.Location = new System.Drawing.Point(770, 20);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(112, 40);
             this.button22.TabIndex = 113;
@@ -972,5 +1018,9 @@
         internal System.Windows.Forms.ToolStripStatusLabel lblUserId;
         internal System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel3;
         public System.Windows.Forms.ToolStripStatusLabel lblBranchID;
+        internal System.Windows.Forms.DateTimePicker dateTimePickerTo1;
+        internal System.Windows.Forms.DateTimePicker dateTimePickerFrom1;
+        internal System.Windows.Forms.Label label8;
+        internal System.Windows.Forms.Label label9;
     }
 }

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode7 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode8 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode5 = new DevExpress.XtraGrid.GridLevelNode();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode6 = new DevExpress.XtraGrid.GridLevelNode();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReturnCheque));
             this.panel2 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
@@ -75,6 +75,7 @@
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBoxBank = new System.Windows.Forms.ComboBox();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
@@ -215,11 +216,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridControl1.Cursor = System.Windows.Forms.Cursors.Default;
-            gridLevelNode1.RelationName = "Level1";
-            gridLevelNode2.RelationName = "Level2";
+            gridLevelNode7.RelationName = "Level1";
+            gridLevelNode8.RelationName = "Level2";
             this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1,
-            gridLevelNode2});
+            gridLevelNode7,
+            gridLevelNode8});
             this.gridControl1.Location = new System.Drawing.Point(7, 73);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
@@ -304,11 +305,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridControl2.Cursor = System.Windows.Forms.Cursors.Default;
-            gridLevelNode3.RelationName = "Level1";
-            gridLevelNode4.RelationName = "Level2";
+            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level2";
             this.gridControl2.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode3,
-            gridLevelNode4});
+            gridLevelNode1,
+            gridLevelNode2});
             this.gridControl2.Location = new System.Drawing.Point(7, 66);
             this.gridControl2.MainView = this.gridView2;
             this.gridControl2.Name = "gridControl2";
@@ -383,11 +384,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridControl3.Cursor = System.Windows.Forms.Cursors.Default;
-            gridLevelNode5.RelationName = "Level1";
-            gridLevelNode6.RelationName = "Level2";
+            gridLevelNode3.RelationName = "Level1";
+            gridLevelNode4.RelationName = "Level2";
             this.gridControl3.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode5,
-            gridLevelNode6});
+            gridLevelNode3,
+            gridLevelNode4});
             this.gridControl3.Location = new System.Drawing.Point(6, 61);
             this.gridControl3.MainView = this.gridView3;
             this.gridControl3.Name = "gridControl3";
@@ -495,9 +496,9 @@
             // 
             this.simpleButton3.Appearance.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.simpleButton3.Appearance.Options.UseFont = true;
-            this.simpleButton3.Location = new System.Drawing.Point(737, 12);
+            this.simpleButton3.Location = new System.Drawing.Point(737, 5);
             this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(83, 40);
+            this.simpleButton3.Size = new System.Drawing.Size(83, 34);
             this.simpleButton3.TabIndex = 188;
             this.simpleButton3.Text = "Close";
             this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
@@ -522,12 +523,28 @@
             this.comboBoxBank.Size = new System.Drawing.Size(241, 22);
             this.comboBoxBank.TabIndex = 198;
             // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Appearance.BackColor = System.Drawing.Color.RoyalBlue;
+            this.simpleButton9.Appearance.BackColor2 = System.Drawing.Color.MediumSlateBlue;
+            this.simpleButton9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simpleButton9.Appearance.Options.UseBackColor = true;
+            this.simpleButton9.Appearance.Options.UseFont = true;
+            this.simpleButton9.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
+            this.simpleButton9.Location = new System.Drawing.Point(737, 44);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(83, 25);
+            this.simpleButton9.TabIndex = 733;
+            this.simpleButton9.Text = "Help";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
+            // 
             // FormReturnCheque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(834, 546);
+            this.Controls.Add(this.simpleButton9);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.comboBoxBank);
             this.Controls.Add(this.simpleButton3);
@@ -604,5 +621,6 @@
         private System.Windows.Forms.TextBox textBoxIssRemarks;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxReturnRemarks;
+        private DevExpress.XtraEditors.SimpleButton simpleButton9;
     }
 }

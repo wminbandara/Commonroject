@@ -164,6 +164,19 @@ namespace easyBAL
         public bool AllowSales { get; set; }
         public bool AllowPurchase { get; set; }
         public bool AllowInventory { get; set; }
+        public int EmployeeID { get; set; }
+        public bool IsLPP { get; set; }
+        public decimal VATPer { get; set; }
+        public decimal VATAmount { get; set; }
+
+        public int CashCollectionhdId { get; set; }
+        public int CashCollectionId { get; set; }
+        public DateTime CollectionDate { get; set; }
+        public decimal CashAmount { get; set; }
+        public int NoOfPieces { get; set; }
+        public decimal GrossAmount { get; set; }
+        public string SearchText { get; set; }
+        public string CostCode { get; set; }
         
     }
 }

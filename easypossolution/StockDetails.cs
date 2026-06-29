@@ -780,6 +780,8 @@ namespace easyPOSSolution
                 {
                     Cursor.Current = Cursors.WaitCursor;
                     ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.date1 = dateTimePickerFrom1.Value;
+                    objPOBAL.date2 = dateTimePickerTo1.Value;
                     //objPOBAL.BranchId = Convert.ToInt32(comboBoxDCWarehouseH.SelectedValue.ToString());
                     ClassPODAL objPODAL = new ClassPODAL();
                     gridControl2.DataSource = null;
@@ -806,7 +808,8 @@ namespace easyPOSSolution
                 {
                     Cursor.Current = Cursors.WaitCursor;
                     ClassPOBAL objPOBAL = new ClassPOBAL();
-                    //objPOBAL.BranchId = Convert.ToInt32(comboBoxDCWarehouseH.SelectedValue.ToString());
+                    objPOBAL.date1 = dateTimePickerFrom1.Value;
+                    objPOBAL.date2 = dateTimePickerTo1.Value;
                     objPOBAL.ItemCode = textBoxItemCodeRpt.Text;
                     ClassPODAL objPODAL = new ClassPODAL();
                     gridControl2.DataSource = null;
@@ -834,7 +837,8 @@ namespace easyPOSSolution
                     Cursor.Current = Cursors.WaitCursor;
                     ClassPOBAL objPOBAL = new ClassPOBAL();
                     objPOBAL.BranchId = Convert.ToInt32(comboBoxDCWarehouseH.SelectedValue.ToString());
-                    //objPOBAL.ItemCode = textBoxItemCodeRpt.Text;
+                    objPOBAL.date1 = dateTimePickerFrom1.Value;
+                    objPOBAL.date2 = dateTimePickerTo1.Value;
                     ClassPODAL objPODAL = new ClassPODAL();
                     gridControl2.DataSource = null;
                     objPOBAL.DtDataSet = objPODAL.retreiveAllItemSummaryBranch(objPOBAL);
@@ -862,6 +866,8 @@ namespace easyPOSSolution
                     ClassPOBAL objPOBAL = new ClassPOBAL();
                     objPOBAL.BranchId = Convert.ToInt32(comboBoxDCWarehouseH.SelectedValue.ToString());
                     objPOBAL.ItemCode = textBoxItemCodeRpt.Text;
+                    objPOBAL.date1 = dateTimePickerFrom1.Value;
+                    objPOBAL.date2 = dateTimePickerTo1.Value;
                     ClassPODAL objPODAL = new ClassPODAL();
                     gridControl2.DataSource = null;
                     objPOBAL.DtDataSet = objPODAL.retreiveAllItemSummaryBranchItemcode(objPOBAL);

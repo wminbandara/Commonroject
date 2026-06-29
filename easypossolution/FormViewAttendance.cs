@@ -118,5 +118,44 @@ namespace easyPOSSolution
                 MessageBox.Show(ex.Message);
             }
         }
+
+        int AttendanceID = 0;
+
+        private void gridView1_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+        {
+            if (this.gridView1.GetFocusedRowCellValue("EmployeeAttendanceId") == null)
+                return;
+
+            AttendanceID = Convert.ToInt32(this.gridView1.GetFocusedRowCellValue("EmployeeAttendanceId"));
+
+            DialogResult result = MessageBox.Show("Do you want Delete this Attendance Record?", "Delete Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                DeleteAttendanceById();
+            }
+        }
+
+        private void DeleteAttendanceById()
+        {
+            try
+            {
+                ClassCommonBAL objBAL = new ClassCommonBAL();
+                objBAL.Id = AttendanceID;
+
+                ClassMasterDAL objDAL = new ClassMasterDAL();
+
+
+                int count = objDAL.DeleteAttendance(objBAL);
+                if (count != 0)
+                {
+                    MessageBox.Show("Attendance Record Deleted Susccessfully.", "Delete Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

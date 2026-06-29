@@ -97,8 +97,8 @@ namespace easyPOSSolution
         private void PrintGiftVucher()
         {
             Cursor.Current = Cursors.WaitCursor;
-            CrystalReportGiftVoucher5in3 rpt = new CrystalReportGiftVoucher5in3();
-            //CrystalReportInvoice3inLogo rpt = new CrystalReportInvoice3inLogo();
+            //CrystalReportGiftVoucher5in3 rpt = new CrystalReportGiftVoucher5in3();
+            CrystalReportGiftVoucher3in3 rpt = new CrystalReportGiftVoucher3in3();
             ClassPOBAL objBAL = new ClassPOBAL();
             objBAL.VoucherNo = Convert.ToInt32(textBoxVoucherId.Text);
             ClassPODAL objDAL = new ClassPODAL();

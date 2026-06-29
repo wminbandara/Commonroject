@@ -30,6 +30,9 @@ namespace easyPOSSolution
         int InvoiceNo = 0;
 
         string to, apitoken, fromval, apikey, companyname, SMSUrl, Email;
+        string PCSellerName, PCCustomerNo, PCCustomerName, PCCompanyName, PCCompanyAddress1, PCCompanyAddress2, PCContactNo1, PCContactNo2, PCActivationPassword;
+
+        int PCLastInvoiceNo = 0;
 
         string pdfFileDayEnd = "C:\\Rpt\\POSDayEndReport.pdf";
 
@@ -46,6 +49,67 @@ namespace easyPOSSolution
         #endregion
 
         #region Methods
+
+        private void SelectCompanyActivationData()
+        {
+            try
+            {
+                ClassCommonBAL objBAL = new ClassCommonBAL();
+                ClassMasterDAL objDAL = new ClassMasterDAL();
+                objBAL.DtDataSet = objDAL.retreivecompanyinfodata(objBAL);
+                if (objBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        PCSellerName = (values[0].ToString().Trim());
+                        PCCustomerNo = (values[1].ToString().Trim());
+                        PCCustomerName = (values[2].ToString().Trim());
+                        PCCompanyName = (values[3].ToString().Trim());
+                        PCCompanyAddress1 = (values[4].ToString().Trim());
+                        PCCompanyAddress2 = (values[5].ToString().Trim());
+                        PCContactNo1 = (values[6].ToString().Trim());
+                        PCContactNo2 = (values[7].ToString().Trim());
+                        PCLastInvoiceNo = Convert.ToInt32(values[8]);
+                        PCActivationPassword = (values[9].ToString().Trim());
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void UpdateSystemUser()
+        {
+            try
+            {
+                ClassInvoiceBAL objInvBAL = new ClassInvoiceBAL();
+                objInvBAL.PCSellerName = PCSellerName.ToString();
+                objInvBAL.PCCustomerNo = PCCustomerNo.ToString();
+                objInvBAL.PCCustomerName = PCCustomerName.ToString();
+                objInvBAL.PCCompanyName = PCCompanyName.ToString();
+                objInvBAL.PCCompanyAddress1 = PCCompanyAddress1.ToString();
+                objInvBAL.PCCompanyAddress2 = PCCompanyAddress2.ToString();
+                objInvBAL.PCContactNo1 = PCContactNo1.ToString();
+                objInvBAL.PCContactNo2 = PCContactNo2.ToString();
+                objInvBAL.PCLastInvoiceNo = PCLastInvoiceNo;
+                objInvBAL.PCActivationPassword = PCActivationPassword.ToString();
+                ClassInvoiveDAL objInvDAL = new ClassInvoiveDAL();
+                int count = objInvDAL.UpdateSystemUserInfo(objInvBAL);
+            }
+            catch
+            {
+                //MessageBox.Show(ex.Message);
+            }
+        }
 
         private void fillCompanyInfo()
         {
@@ -91,6 +155,8 @@ namespace easyPOSSolution
                         //{
                         //    checkBoxAllowSMS.Checked = true;
                         //}
+                        label2.Text = (values[22].ToString());
+                        label3.Text = (values[23].ToString());
                     }
 
                 }
@@ -417,6 +483,12 @@ namespace easyPOSSolution
             tileItemNewItemNotification.Visible = false;
             tileItemLatePaymentSMS.Visible = false;
             tileItemReprintPurchaseReturn.Visible = false;
+            tileItemReprintSalesReturn.Visible = false;
+            tileItemSearchSalesOrders.Visible = false;
+            tileItemSearchGRN.Visible = false;
+            tileItemUpdateInvoice.Visible = false;
+            tileItemGINNew.Visible = false;
+            tileItemReprintGINNew.Visible = false;
         }
 
         private void userPermission()
@@ -706,10 +778,10 @@ namespace easyPOSSolution
                         {
                             tileItemSearchQuotation.Visible = true;
                         }
-                        //if (alistForm[i].ToString().Trim() == "Tuch Invoice")
-                        //{
-                        //    tileItemTuchInvoice.Visible = true;
-                        //}
+                        if (alistForm[i].ToString().Trim() == "Tuch Invoice")
+                        {
+                            tileItemTuchInvoice.Visible = true;
+                        }
                         if (alistForm[i].ToString().Trim() == "UserReport")
                         {
                             tileItemUserInvoiceReport.Visible = true;
@@ -767,6 +839,36 @@ namespace easyPOSSolution
                         if (alistForm[i].ToString().Trim() == "Reprint Purchase Return")
                         {
                             tileItemReprintPurchaseReturn.Visible = true;
+
+                        }
+                        if (alistForm[i].ToString().Trim() == "Reprint Sales Return")
+                        {
+                            tileItemReprintSalesReturn.Visible = true;
+
+                        }
+                        if (alistForm[i].ToString().Trim() == "Reprint Sales Order")
+                        {
+                            tileItemSearchSalesOrders.Visible = true;
+
+                        }
+                        if (alistForm[i].ToString().Trim() == "Reprint GRN")
+                        {
+                            tileItemSearchGRN.Visible = true;
+
+                        }
+                        if (alistForm[i].ToString().Trim() == "Update Invoice")
+                        {
+                            tileItemUpdateInvoice.Visible = true;
+
+                        }
+                        if (alistForm[i].ToString().Trim() == "GIN")
+                        {
+                            tileItemGINNew.Visible = true;
+
+                        }
+                        if (alistForm[i].ToString().Trim() == "Reprint GIN")
+                        {
+                            tileItemReprintGINNew.Visible = true;
 
                         }
                         
@@ -1018,6 +1120,7 @@ namespace easyPOSSolution
             {
                 frm.lblUser.Text = lblUser.Text.Trim();
                 frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.lblBranchID.Text = lblBranchID.Text.Trim();
                 frm.Show();
             }
         }
@@ -1666,24 +1769,26 @@ namespace easyPOSSolution
             timer.Elapsed += timer_Elapsed;
             timer.Start();
             lblTime.Text = DateTime.Now.ToString();
-            DialogResult result = MessageBox.Show("Do you want to Proceed Auto backup?", "Auto backup Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                Process.Start(@"Release1\\MySqlBackupTestApp.exe");
-            }
+            //DialogResult result = MessageBox.Show("Do you want to Proceed Auto backup?", "Auto backup Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            Process.Start(@"Release1\\MySqlBackupTestApp.exe");
+            //}
             UpdateDueDays();
             SelectCompanyData();
+            SelectCompanyActivationData();
+            //UpdateSystemUser();
             Cursor.Current = Cursors.Default;
         }
 
         static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            DialogResult result = MessageBox.Show("Do you want to Proceed Auto backup?", "Auto backup Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                Process.Start(@"Release1\\MySqlBackupTestApp.exe");
-            }
+            //DialogResult result = MessageBox.Show("Do you want to Proceed Auto backup?", "Auto backup Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            //    Process.Start(@"Release1\\MySqlBackupTestApp.exe");
+            //}
             Cursor.Current = Cursors.Default;
         }
 
@@ -1691,11 +1796,11 @@ namespace easyPOSSolution
         {
             Cursor.Current = Cursors.WaitCursor;
             lblTime.Text = DateTime.Now.ToString();
-            DialogResult result = MessageBox.Show("Do you want to Proceed Auto backup?", "Auto backup Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                Process.Start(@"Release1\\MySqlBackupTestApp.exe");
-            }
+            //DialogResult result = MessageBox.Show("Do you want to Proceed Auto backup?", "Auto backup Confirmation.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            //    Process.Start(@"Release1\\MySqlBackupTestApp.exe");
+            //}
             Cursor.Current = Cursors.Default;
             //refresh here...
         }
@@ -1830,6 +1935,7 @@ namespace easyPOSSolution
             {
                 frm.lblUser.Text = lblUser.Text.Trim();
                 frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.lblBranchID.Text = lblBranchID.Text.Trim();
                 frm.Show();
             }
         }
@@ -2729,7 +2835,7 @@ namespace easyPOSSolution
         {
             insertcsv();
             fillstockreport();
-
+            UpdateSystemUser();
         }
 
         private void tileItemReprintExpenses_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
@@ -3021,6 +3127,158 @@ namespace easyPOSSolution
                 foreach (Form f in Application.OpenForms)
                 {
                     if (f.Name.Equals("FormReprintPurchaseReturn"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemReprintSalesReturn_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormReprintSalesReturn frm = new FormReprintSalesReturn();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormReprintSalesReturn");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormReprintSalesReturn"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemSearchSalesOrders_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormSearchSalesOrder frm = new FormSearchSalesOrder();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormSearchSalesOrder");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormSearchSalesOrder"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemSearchGRN_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormSearchGRN frm = new FormSearchGRN();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormSearchGRN");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormSearchGRN"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemUpdateInvoice_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormUpdateInvoice frm = new FormUpdateInvoice();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormUpdateInvoice");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormUpdateInvoice"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.lblBranchID.Text = lblBranchID.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemGINNew_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormGINNew frm = new FormGINNew();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormGINNew");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormGINNew"))
+                    {
+                        f.WindowState = FormWindowState.Normal;
+                        f.BringToFront();
+                        f.Activate();
+                    }
+                }
+            }
+            else
+            {
+                frm.lblUser.Text = lblUser.Text.Trim();
+                frm.lblUserId.Text = lblUserId.Text.Trim();
+                frm.lblBranchID.Text = lblBranchID.Text.Trim();
+                frm.Show();
+            }
+        }
+
+        private void tileItemReprintGINNew_ItemClick(object sender, DevExpress.XtraEditors.TileItemEventArgs e)
+        {
+            FormReprintGINNew frm = new FormReprintGINNew();
+            bool formOpen = Application.OpenForms.Cast<Form>().Any(form => form.Name == "FormReprintGINNew");
+
+            if (formOpen)
+            {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f.Name.Equals("FormReprintGINNew"))
                     {
                         f.WindowState = FormWindowState.Normal;
                         f.BringToFront();

@@ -158,5 +158,11 @@ namespace easyBAL
         public string DayType { get; set; }
         public int RefInvNo { get; set; }
         public decimal FuelLeters { get; set; }
+
+        public int Id { get; set; }
+        public int SuppCreditId { get; set; }
+        public bool ShowInInvoice { get; set; }
+
+        //public int PIHDId { get; set; }
     }
 }

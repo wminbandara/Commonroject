@@ -321,6 +321,28 @@ namespace easyPOSSolution
         }
 
         #endregion
+
+        private void textBoxBranchID_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxBranchID.Text != "")
+            {
+                if (Convert.ToInt32(textBoxBranchID.Text) > 0)
+                {
+                    ButtonUpdate.Enabled = true;
+                    ButtonSave.Enabled = false;
+                }
+                else
+                {
+                    ButtonUpdate.Enabled = false;
+                    ButtonSave.Enabled = true;
+                }
+            }
+            else
+            {
+                ButtonUpdate.Enabled = false;
+                ButtonSave.Enabled = true;
+            }
+        }
         
     }
 }

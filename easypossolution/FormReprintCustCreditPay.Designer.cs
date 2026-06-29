@@ -51,6 +51,7 @@
             this.lblUserId = new System.Windows.Forms.ToolStripStatusLabel();
             this.allCustomerInvoiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label16 = new System.Windows.Forms.Label();
+            this.checkBoxPrint3In = new System.Windows.Forms.CheckBox();
             this.groupBox4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -92,7 +93,7 @@
             // txtReprint
             // 
             this.txtReprint.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtReprint.Location = new System.Drawing.Point(631, 17);
+            this.txtReprint.Location = new System.Drawing.Point(562, 17);
             this.txtReprint.Name = "txtReprint";
             this.txtReprint.Size = new System.Drawing.Size(89, 22);
             this.txtReprint.TabIndex = 687;
@@ -105,7 +106,7 @@
             this.panel2.Controls.Add(this.label12);
             this.panel2.Location = new System.Drawing.Point(5, 7);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(530, 40);
+            this.panel2.Size = new System.Drawing.Size(472, 40);
             this.panel2.TabIndex = 201;
             // 
             // label12
@@ -114,7 +115,7 @@
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label12.Location = new System.Drawing.Point(30, 4);
+            this.label12.Location = new System.Drawing.Point(11, 4);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(437, 28);
             this.label12.TabIndex = 50;
@@ -125,9 +126,9 @@
             // 
             this.groupBox2.Controls.Add(this.buttonExit);
             this.groupBox2.Controls.Add(this.ButtonNew);
-            this.groupBox2.Location = new System.Drawing.Point(730, 0);
+            this.groupBox2.Location = new System.Drawing.Point(744, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(289, 50);
+            this.groupBox2.Size = new System.Drawing.Size(272, 50);
             this.groupBox2.TabIndex = 202;
             this.groupBox2.TabStop = false;
             // 
@@ -136,7 +137,7 @@
             this.buttonExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(160)))));
             this.buttonExit.Font = new System.Drawing.Font("Cambria", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonExit.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonExit.Location = new System.Drawing.Point(145, 12);
+            this.buttonExit.Location = new System.Drawing.Point(142, 12);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(126, 32);
             this.buttonExit.TabIndex = 26;
@@ -199,7 +200,7 @@
             // ToolStripStatusLabel3
             // 
             this.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3";
-            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(606, 17);
+            this.ToolStripStatusLabel3.Size = new System.Drawing.Size(782, 17);
             this.ToolStripStatusLabel3.Spring = true;
             // 
             // ToolStripStatusLabel1
@@ -251,17 +252,28 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label16.Location = new System.Drawing.Point(550, 19);
+            this.label16.Location = new System.Drawing.Point(481, 19);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(77, 18);
             this.label16.TabIndex = 690;
             this.label16.Text = "Payment Id";
+            // 
+            // checkBoxPrint3In
+            // 
+            this.checkBoxPrint3In.AutoSize = true;
+            this.checkBoxPrint3In.Location = new System.Drawing.Point(657, 19);
+            this.checkBoxPrint3In.Name = "checkBoxPrint3In";
+            this.checkBoxPrint3In.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxPrint3In.TabIndex = 705;
+            this.checkBoxPrint3In.Text = "3 Inch Print";
+            this.checkBoxPrint3In.UseVisualStyleBackColor = true;
             // 
             // FormReprintCustCreditPay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1030, 508);
+            this.Controls.Add(this.checkBoxPrint3In);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.txtReprint);
             this.Controls.Add(this.groupBox4);
@@ -312,5 +324,6 @@
         internal System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel3;
         private System.Windows.Forms.BindingSource allCustomerInvoiceBindingSource;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox checkBoxPrint3In;
     }
 }

@@ -64,17 +64,41 @@ namespace easyPOSSolution
 
                 if (dataGridViewUserPermission.Rows.Count > 0)
                 {
-                    
-                    for (int i = 0; i < dataGridViewUserPermission.Rows.Count; i++)
+                    if (lblUserId.Text == "1" && (Convert.ToInt32(dataGridViewUser[0, 0].Value) == Convert.ToInt32(lblUserId.Text)))
                     {
-                        if (Convert.ToBoolean(dataGridViewUserPermission["PermStatus", i].Value) == false)
+                        for (int i = 0; i < dataGridViewUserPermission.Rows.Count; i++)
                         {
-                            objUser = new BALUser();
-                            objUser.USER_ROLE_ID = Convert.ToInt32(dataGridViewUserPermission["USER_ROLE_ID", i].Value);
-                            dalUser = new DALUser();
-                            int count = dalUser.deletePermission(objUser);
+                            if (Convert.ToBoolean(dataGridViewUserPermission["PermStatus", i].Value) == false)
+                            {
+
+                                objUser = new BALUser();
+                                objUser.USER_ID = Convert.ToInt32(dataGridViewUser[0, 0].Value);
+                                objUser.USER_ROLE_ID = Convert.ToInt32(dataGridViewUserPermission["USER_ROLE_ID", i].Value);
+                                dalUser = new DALUser();
+                                int count = dalUser.deletePermission(objUser);
+
+                            }
                         }
                     }
+                    else if (lblUserId.Text != "1" && (Convert.ToInt32(dataGridViewUser[0, 0].Value) != 1))
+                    {
+                        for (int i = 0; i < dataGridViewUserPermission.Rows.Count; i++)
+                        {
+                            if (Convert.ToBoolean(dataGridViewUserPermission["PermStatus", i].Value) == false)
+                            {
+
+                                objUser = new BALUser();
+                                objUser.USER_ID = Convert.ToInt32(dataGridViewUser[0, 0].Value);
+                                objUser.USER_ROLE_ID = Convert.ToInt32(dataGridViewUserPermission["USER_ROLE_ID", i].Value);
+                                dalUser = new DALUser();
+                                int count = dalUser.deletePermission(objUser);
+
+                            }
+                        }
+                    }
+
+                    
+                    
                 }
             }
             catch (Exception ex)
@@ -145,26 +169,54 @@ namespace easyPOSSolution
             {
                 if (dataGridViewNewPermission.Rows.Count > 0)
                 {
-                    objUser = new BALUser();
-                    objUser.USER_ID = Convert.ToInt32(dataGridViewUser[0,0].Value);
-                    for (int i = 0; i < dataGridViewNewPermission.Rows.Count; i++)
+                    if (lblUserId.Text == "1" && (Convert.ToInt32(dataGridViewUser[0, 0].Value) == Convert.ToInt32(lblUserId.Text)))
                     {
-                        if (Convert.ToBoolean(dataGridViewNewPermission["PerStatus", i].Value) == true)
-                        {                            
-                            objUser.ROLE_ID = Convert.ToInt32(dataGridViewNewPermission["ROLE_ID", i].Value);                            
-                            dalUser = new DALUser();
-                            int count = dalUser.insertUserPermission(objUser);
-                            if (count != 0)
+                        objUser = new BALUser();
+                        objUser.USER_ID = Convert.ToInt32(dataGridViewUser[0, 0].Value);
+                        for (int i = 0; i < dataGridViewNewPermission.Rows.Count; i++)
+                        {
+                            if (Convert.ToBoolean(dataGridViewNewPermission["PerStatus", i].Value) == true)
                             {
-                                permissionStatus = true;
+                                objUser.ROLE_ID = Convert.ToInt32(dataGridViewNewPermission["ROLE_ID", i].Value);
+                                dalUser = new DALUser();
+                                int count = dalUser.insertUserPermission(objUser);
+                                if (count != 0)
+                                {
+                                    permissionStatus = true;
+                                }
                             }
                         }
+                        if (permissionStatus == true)
+                        {
+                            MessageBox.Show("Successfully Granted permissions to this user.", "Save Success.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            permissionStatus = false;
+                        }
                     }
-                    if (permissionStatus == true)
+                    else if (lblUserId.Text != "1" && (Convert.ToInt32(dataGridViewUser[0, 0].Value) != 1))
                     {
-                        MessageBox.Show("Successfully Granted permissions to this user.", "Save Success.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        permissionStatus = false;
+                        objUser = new BALUser();
+                        objUser.USER_ID = Convert.ToInt32(dataGridViewUser[0, 0].Value);
+                        for (int i = 0; i < dataGridViewNewPermission.Rows.Count; i++)
+                        {
+                            if (Convert.ToBoolean(dataGridViewNewPermission["PerStatus", i].Value) == true)
+                            {
+                                objUser.ROLE_ID = Convert.ToInt32(dataGridViewNewPermission["ROLE_ID", i].Value);
+                                dalUser = new DALUser();
+                                int count = dalUser.insertUserPermission(objUser);
+                                if (count != 0)
+                                {
+                                    permissionStatus = true;
+                                }
+                            }
+                        }
+                        if (permissionStatus == true)
+                        {
+                            MessageBox.Show("Successfully Granted permissions to this user.", "Save Success.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            permissionStatus = false;
+                        }
                     }
+
+                    
                 }
 
             }

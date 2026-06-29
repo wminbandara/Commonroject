@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRMItemSpoilage));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.textBoxId = new System.Windows.Forms.TextBox();
             this.textBoxItemNameS = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.dateTimePickerTranDate = new System.Windows.Forms.DateTimePicker();
@@ -38,7 +39,15 @@
             this.textBoxDiscount = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxId = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.comboBoxItemCategory = new System.Windows.Forms.ComboBox();
+            this.comboBoxBranch = new System.Windows.Forms.ComboBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.textBoxItemName = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.textBoxItemCode = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxRemarks = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.textBoxQty = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,15 +58,7 @@
             this.lblUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblUserId = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBoxRemarks = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.textBoxItemCode = new System.Windows.Forms.TextBox();
-            this.textBoxItemName = new System.Windows.Forms.TextBox();
-            this.comboBoxBranch = new System.Windows.Forms.ComboBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.comboBoxItemCategory = new System.Windows.Forms.ComboBox();
+            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -80,6 +81,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(718, 40);
             this.panel2.TabIndex = 165;
+            // 
+            // textBoxId
+            // 
+            this.textBoxId.Location = new System.Drawing.Point(318, 6);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.Size = new System.Drawing.Size(84, 20);
+            this.textBoxId.TabIndex = 177;
+            this.textBoxId.Visible = false;
             // 
             // textBoxItemNameS
             // 
@@ -181,6 +190,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.crystalReportViewer1);
             this.groupBox1.Controls.Add(this.label22);
             this.groupBox1.Controls.Add(this.comboBoxItemCategory);
             this.groupBox1.Controls.Add(this.comboBoxBranch);
@@ -200,13 +210,96 @@
             this.groupBox1.TabIndex = 173;
             this.groupBox1.TabStop = false;
             // 
-            // textBoxId
+            // label22
             // 
-            this.textBoxId.Location = new System.Drawing.Point(318, 6);
-            this.textBoxId.Name = "textBoxId";
-            this.textBoxId.Size = new System.Drawing.Size(84, 20);
-            this.textBoxId.TabIndex = 177;
-            this.textBoxId.Visible = false;
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(14, 60);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(80, 14);
+            this.label22.TabIndex = 194;
+            this.label22.Text = "Item Category";
+            // 
+            // comboBoxItemCategory
+            // 
+            this.comboBoxItemCategory.Enabled = false;
+            this.comboBoxItemCategory.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxItemCategory.FormattingEnabled = true;
+            this.comboBoxItemCategory.Location = new System.Drawing.Point(11, 76);
+            this.comboBoxItemCategory.Name = "comboBoxItemCategory";
+            this.comboBoxItemCategory.Size = new System.Drawing.Size(199, 22);
+            this.comboBoxItemCategory.TabIndex = 193;
+            // 
+            // comboBoxBranch
+            // 
+            this.comboBoxBranch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.comboBoxBranch.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxBranch.FormattingEnabled = true;
+            this.comboBoxBranch.Location = new System.Drawing.Point(86, 13);
+            this.comboBoxBranch.Name = "comboBoxBranch";
+            this.comboBoxBranch.Size = new System.Drawing.Size(255, 22);
+            this.comboBoxBranch.TabIndex = 191;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(14, 18);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(65, 14);
+            this.label34.TabIndex = 192;
+            this.label34.Text = "Warehouse";
+            // 
+            // textBoxItemName
+            // 
+            this.textBoxItemName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBoxItemName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxItemName.Enabled = false;
+            this.textBoxItemName.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxItemName.Location = new System.Drawing.Point(216, 76);
+            this.textBoxItemName.Name = "textBoxItemName";
+            this.textBoxItemName.Size = new System.Drawing.Size(496, 22);
+            this.textBoxItemName.TabIndex = 181;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(381, 18);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(86, 14);
+            this.label20.TabIndex = 180;
+            this.label20.Text = "Item Code (F2)";
+            // 
+            // textBoxItemCode
+            // 
+            this.textBoxItemCode.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBoxItemCode.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxItemCode.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxItemCode.Location = new System.Drawing.Point(473, 13);
+            this.textBoxItemCode.Name = "textBoxItemCode";
+            this.textBoxItemCode.Size = new System.Drawing.Size(239, 22);
+            this.textBoxItemCode.TabIndex = 179;
+            this.textBoxItemCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxItemCode_KeyDown);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(14, 114);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 14);
+            this.label5.TabIndex = 178;
+            this.label5.Text = "Remarks :";
+            // 
+            // textBoxRemarks
+            // 
+            this.textBoxRemarks.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxRemarks.Location = new System.Drawing.Point(11, 131);
+            this.textBoxRemarks.Multiline = true;
+            this.textBoxRemarks.Name = "textBoxRemarks";
+            this.textBoxRemarks.Size = new System.Drawing.Size(456, 22);
+            this.textBoxRemarks.TabIndex = 177;
             // 
             // buttonSave
             // 
@@ -312,96 +405,16 @@
             this.ToolStripStatusLabel3.Size = new System.Drawing.Size(485, 17);
             this.ToolStripStatusLabel3.Spring = true;
             // 
-            // label5
+            // crystalReportViewer1
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(14, 114);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 14);
-            this.label5.TabIndex = 178;
-            this.label5.Text = "Remarks :";
-            // 
-            // textBoxRemarks
-            // 
-            this.textBoxRemarks.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxRemarks.Location = new System.Drawing.Point(11, 131);
-            this.textBoxRemarks.Multiline = true;
-            this.textBoxRemarks.Name = "textBoxRemarks";
-            this.textBoxRemarks.Size = new System.Drawing.Size(456, 22);
-            this.textBoxRemarks.TabIndex = 177;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(381, 18);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(86, 14);
-            this.label20.TabIndex = 180;
-            this.label20.Text = "Item Code (F2)";
-            // 
-            // textBoxItemCode
-            // 
-            this.textBoxItemCode.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBoxItemCode.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxItemCode.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxItemCode.Location = new System.Drawing.Point(473, 13);
-            this.textBoxItemCode.Name = "textBoxItemCode";
-            this.textBoxItemCode.Size = new System.Drawing.Size(239, 22);
-            this.textBoxItemCode.TabIndex = 179;
-            this.textBoxItemCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxItemCode_KeyDown);
-            // 
-            // textBoxItemName
-            // 
-            this.textBoxItemName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBoxItemName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxItemName.Enabled = false;
-            this.textBoxItemName.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxItemName.Location = new System.Drawing.Point(216, 76);
-            this.textBoxItemName.Name = "textBoxItemName";
-            this.textBoxItemName.Size = new System.Drawing.Size(496, 22);
-            this.textBoxItemName.TabIndex = 181;
-            // 
-            // comboBoxBranch
-            // 
-            this.comboBoxBranch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.comboBoxBranch.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxBranch.FormattingEnabled = true;
-            this.comboBoxBranch.Location = new System.Drawing.Point(86, 13);
-            this.comboBoxBranch.Name = "comboBoxBranch";
-            this.comboBoxBranch.Size = new System.Drawing.Size(255, 22);
-            this.comboBoxBranch.TabIndex = 191;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.Location = new System.Drawing.Point(14, 18);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(65, 14);
-            this.label34.TabIndex = 192;
-            this.label34.Text = "Warehouse";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(14, 60);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(80, 14);
-            this.label22.TabIndex = 194;
-            this.label22.Text = "Item Category";
-            // 
-            // comboBoxItemCategory
-            // 
-            this.comboBoxItemCategory.Enabled = false;
-            this.comboBoxItemCategory.Font = new System.Drawing.Font("Cambria", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxItemCategory.FormattingEnabled = true;
-            this.comboBoxItemCategory.Location = new System.Drawing.Point(11, 76);
-            this.comboBoxItemCategory.Name = "comboBoxItemCategory";
-            this.comboBoxItemCategory.Size = new System.Drawing.Size(199, 22);
-            this.comboBoxItemCategory.TabIndex = 193;
+            this.crystalReportViewer1.ActiveViewIndex = -1;
+            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crystalReportViewer1.Location = new System.Drawing.Point(629, 41);
+            this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.Size = new System.Drawing.Size(83, 34);
+            this.crystalReportViewer1.TabIndex = 717;
+            this.crystalReportViewer1.Visible = false;
             // 
             // FRMItemSpoilage
             // 
@@ -464,5 +477,6 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox comboBoxItemCategory;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
     }
 }

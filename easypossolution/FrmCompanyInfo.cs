@@ -22,6 +22,7 @@ namespace easyPOSSolution
         DALUser dalUser = new DALUser();
         int CompanyInfoId = 0;
         bool loadStatus = false;
+        string FormURL;
 
         #endregion
 
@@ -35,6 +36,35 @@ namespace easyPOSSolution
         #endregion
 
         #region Methods
+
+        private void SelectFormHelp()
+        {
+            try
+            {
+                FormURL = "";
+                BALUser objUser = new BALUser();
+                objUser.FormId = 6;
+                DALUser dalUser = new DALUser();
+                objUser.DtDataSet = dalUser.retreiveFormHelpURL(objUser);
+                if (objUser.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objUser.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        FormURL = (values[0].ToString().Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void loadArea()
         {
@@ -96,6 +126,7 @@ namespace easyPOSSolution
                 {
                     objUser.AllowSMS = false;
                 }
+                objUser.QuotationFooter = textBoxQuotationFooter.Text.Trim();
 
                 dalUser = new DALUser();
                 int count = dalUser.insertCompanyInfo(objUser);
@@ -155,6 +186,7 @@ namespace easyPOSSolution
                         {
                             checkBoxAllowSMS.Checked = true;
                         }
+                        textBoxQuotationFooter.Text = (values[21].ToString());
                     }
                     
                 }
@@ -252,6 +284,12 @@ namespace easyPOSSolution
                 textBoxCommissionRate.Enabled = true;
                 checkBoxAllowSMS.Enabled = true;
             }
+            SelectFormHelp();
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(FormURL.ToString());
         }
 
         #region Validation Methods

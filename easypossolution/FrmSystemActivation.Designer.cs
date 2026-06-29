@@ -195,6 +195,7 @@
             this.comboBoxActivationType.FormattingEnabled = true;
             this.comboBoxActivationType.Items.AddRange(new object[] {
             "1 Month",
+            "6 Months",
             "1 Year",
             "Life time"});
             this.comboBoxActivationType.Location = new System.Drawing.Point(151, 201);

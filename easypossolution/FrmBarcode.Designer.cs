@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBarcode));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
@@ -84,6 +84,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.textBoxGRNNo = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.ItemCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InternalNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -92,6 +94,7 @@
             this.BCStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BCEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SerialNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgView)).BeginInit();
@@ -309,6 +312,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.progressBar1);
             this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.label13);
@@ -354,7 +359,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(318, 84);
+            this.label13.Location = new System.Drawing.Point(449, 60);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(127, 19);
             this.label13.TabIndex = 206;
@@ -385,7 +390,8 @@
             this.BCPrice,
             this.BCStart,
             this.BCEnd,
-            this.ItemsId});
+            this.ItemsId,
+            this.SerialNo});
             this.dgView.Location = new System.Drawing.Point(12, 116);
             this.dgView.Name = "dgView";
             this.dgView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -724,6 +730,27 @@
             this.label14.TabIndex = 56;
             this.label14.Text = "GRN Id :";
             // 
+            // textBox2
+            // 
+            this.textBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBox2.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(177, 84);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(206, 26);
+            this.textBox2.TabIndex = 212;
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(180, 65);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(80, 19);
+            this.label15.TabIndex = 211;
+            this.label15.Text = "Serial No :";
+            // 
             // ItemCode
             // 
             this.ItemCode.HeaderText = "Item No./ Barcode";
@@ -745,32 +772,32 @@
             // 
             // BCQty
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.BCQty.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.BCQty.DefaultCellStyle = dataGridViewCellStyle9;
             this.BCQty.HeaderText = "Quantity";
             this.BCQty.Name = "BCQty";
             this.BCQty.Width = 92;
             // 
             // BCPrice
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.BCPrice.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.BCPrice.DefaultCellStyle = dataGridViewCellStyle10;
             this.BCPrice.HeaderText = "Unit Price";
             this.BCPrice.Name = "BCPrice";
             this.BCPrice.Width = 93;
             // 
             // BCStart
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.BCStart.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.BCStart.DefaultCellStyle = dataGridViewCellStyle11;
             this.BCStart.HeaderText = "Start From";
             this.BCStart.Name = "BCStart";
             this.BCStart.Visible = false;
             // 
             // BCEnd
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.BCEnd.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.BCEnd.DefaultCellStyle = dataGridViewCellStyle12;
             this.BCEnd.HeaderText = "End";
             this.BCEnd.Name = "BCEnd";
             this.BCEnd.Visible = false;
@@ -782,6 +809,12 @@
             this.ItemsId.Name = "ItemsId";
             this.ItemsId.Visible = false;
             this.ItemsId.Width = 86;
+            // 
+            // SerialNo
+            // 
+            this.SerialNo.HeaderText = "SerialNo";
+            this.SerialNo.Name = "SerialNo";
+            this.SerialNo.Width = 93;
             // 
             // FrmBarcode
             // 
@@ -876,6 +909,8 @@
         public System.Windows.Forms.TextBox textBoxGRNNo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ProgressBar progressBar1;
+        public System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
         private System.Windows.Forms.DataGridViewTextBoxColumn InternalNo;
@@ -884,5 +919,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn BCStart;
         private System.Windows.Forms.DataGridViewTextBoxColumn BCEnd;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemsId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SerialNo;
     }
 }

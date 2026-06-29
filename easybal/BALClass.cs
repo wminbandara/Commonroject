@@ -66,5 +66,8 @@ namespace easyBAL
         public int PayModeId { get; set; }
         public int BankId { get; set; }
 
+        public decimal AllocatedLeaveDays { get; set; }
+        public decimal WorkingHoursPerDay { get; set; }
+
     }
 }

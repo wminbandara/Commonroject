@@ -67,6 +67,7 @@
             this.lblUserId = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.simpleButton9 = new DevExpress.XtraEditors.SimpleButton();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -84,6 +85,8 @@
             this.label15 = new System.Windows.Forms.Label();
             this.textBoxSMSUrl = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.textBoxQuotationFooter = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -97,6 +100,8 @@
             // GroupBox1
             // 
             this.GroupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.GroupBox1.Controls.Add(this.textBoxQuotationFooter);
+            this.GroupBox1.Controls.Add(this.label19);
             this.GroupBox1.Controls.Add(this.label13);
             this.GroupBox1.Controls.Add(this.label14);
             this.GroupBox1.Controls.Add(this.textBoxDiscRate);
@@ -132,7 +137,7 @@
             this.GroupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.GroupBox1.Size = new System.Drawing.Size(626, 437);
+            this.GroupBox1.Size = new System.Drawing.Size(626, 487);
             this.GroupBox1.TabIndex = 1;
             this.GroupBox1.TabStop = false;
             // 
@@ -141,7 +146,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(451, 376);
+            this.label13.Location = new System.Drawing.Point(451, 434);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(93, 18);
@@ -153,7 +158,7 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(451, 312);
+            this.label14.Location = new System.Drawing.Point(451, 370);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(97, 18);
@@ -163,7 +168,7 @@
             // textBoxDiscRate
             // 
             this.textBoxDiscRate.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold);
-            this.textBoxDiscRate.Location = new System.Drawing.Point(448, 397);
+            this.textBoxDiscRate.Location = new System.Drawing.Point(448, 455);
             this.textBoxDiscRate.Name = "textBoxDiscRate";
             this.textBoxDiscRate.ReadOnly = true;
             this.textBoxDiscRate.Size = new System.Drawing.Size(175, 25);
@@ -176,7 +181,7 @@
             this.comboBoxArea.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.comboBoxArea.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold);
             this.comboBoxArea.FormattingEnabled = true;
-            this.comboBoxArea.Location = new System.Drawing.Point(448, 333);
+            this.comboBoxArea.Location = new System.Drawing.Point(448, 391);
             this.comboBoxArea.Name = "comboBoxArea";
             this.comboBoxArea.Size = new System.Drawing.Size(176, 26);
             this.comboBoxArea.TabIndex = 205;
@@ -184,7 +189,7 @@
             // 
             // textBoxWeb
             // 
-            this.textBoxWeb.Location = new System.Drawing.Point(146, 396);
+            this.textBoxWeb.Location = new System.Drawing.Point(146, 454);
             this.textBoxWeb.Name = "textBoxWeb";
             this.textBoxWeb.Size = new System.Drawing.Size(272, 25);
             this.textBoxWeb.TabIndex = 116;
@@ -194,7 +199,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(33, 400);
+            this.label11.Location = new System.Drawing.Point(33, 458);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(35, 18);
@@ -203,7 +208,7 @@
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Location = new System.Drawing.Point(146, 365);
+            this.textBoxEmail.Location = new System.Drawing.Point(146, 423);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(272, 25);
             this.textBoxEmail.TabIndex = 114;
@@ -213,7 +218,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(33, 369);
+            this.label9.Location = new System.Drawing.Point(33, 427);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(43, 18);
@@ -222,7 +227,7 @@
             // 
             // textBoxBRNo
             // 
-            this.textBoxBRNo.Location = new System.Drawing.Point(146, 334);
+            this.textBoxBRNo.Location = new System.Drawing.Point(146, 392);
             this.textBoxBRNo.Name = "textBoxBRNo";
             this.textBoxBRNo.Size = new System.Drawing.Size(272, 25);
             this.textBoxBRNo.TabIndex = 112;
@@ -232,7 +237,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(33, 338);
+            this.label7.Location = new System.Drawing.Point(33, 396);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(106, 18);
@@ -261,7 +266,7 @@
             // 
             // textBoxVAT
             // 
-            this.textBoxVAT.Location = new System.Drawing.Point(146, 303);
+            this.textBoxVAT.Location = new System.Drawing.Point(146, 361);
             this.textBoxVAT.Name = "textBoxVAT";
             this.textBoxVAT.Size = new System.Drawing.Size(272, 25);
             this.textBoxVAT.TabIndex = 108;
@@ -271,7 +276,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(33, 305);
+            this.label5.Location = new System.Drawing.Point(33, 363);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 18);
@@ -435,7 +440,7 @@
             this.panel1.Controls.Add(this.label21);
             this.panel1.Location = new System.Drawing.Point(10, 7);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(376, 40);
+            this.panel1.Size = new System.Drawing.Size(312, 40);
             this.panel1.TabIndex = 193;
             // 
             // label21
@@ -444,7 +449,7 @@
             this.label21.BackColor = System.Drawing.Color.Transparent;
             this.label21.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.SteelBlue;
-            this.label21.Location = new System.Drawing.Point(61, 6);
+            this.label21.Location = new System.Drawing.Point(49, 6);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(226, 25);
             this.label21.TabIndex = 50;
@@ -458,7 +463,7 @@
             this.lblUser,
             this.lblUserId,
             this.ToolStripStatusLabel3});
-            this.StatusStrip1.Location = new System.Drawing.Point(0, 530);
+            this.StatusStrip1.Location = new System.Drawing.Point(0, 580);
             this.StatusStrip1.Name = "StatusStrip1";
             this.StatusStrip1.Size = new System.Drawing.Size(674, 22);
             this.StatusStrip1.TabIndex = 197;
@@ -499,18 +504,36 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.simpleButton9);
             this.groupBox2.Controls.Add(this.buttonExit);
             this.groupBox2.Controls.Add(this.buttonSave);
-            this.groupBox2.Location = new System.Drawing.Point(392, 1);
+            this.groupBox2.Location = new System.Drawing.Point(328, 1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(248, 49);
+            this.groupBox2.Size = new System.Drawing.Size(334, 49);
             this.groupBox2.TabIndex = 198;
             this.groupBox2.TabStop = false;
+            // 
+            // simpleButton9
+            // 
+            this.simpleButton9.Appearance.BackColor = System.Drawing.Color.SteelBlue;
+            this.simpleButton9.Appearance.BackColor2 = System.Drawing.Color.RoyalBlue;
+            this.simpleButton9.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simpleButton9.Appearance.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.simpleButton9.Appearance.Options.UseBackColor = true;
+            this.simpleButton9.Appearance.Options.UseFont = true;
+            this.simpleButton9.Appearance.Options.UseForeColor = true;
+            this.simpleButton9.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
+            this.simpleButton9.Location = new System.Drawing.Point(247, 14);
+            this.simpleButton9.Name = "simpleButton9";
+            this.simpleButton9.Size = new System.Drawing.Size(74, 30);
+            this.simpleButton9.TabIndex = 732;
+            this.simpleButton9.Text = "Help";
+            this.simpleButton9.Click += new System.EventHandler(this.simpleButton9_Click);
             // 
             // buttonExit
             // 
             this.buttonExit.Font = new System.Drawing.Font("Palatino Linotype", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonExit.Location = new System.Drawing.Point(129, 13);
+            this.buttonExit.Location = new System.Drawing.Point(128, 13);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(113, 31);
             this.buttonExit.TabIndex = 12;
@@ -540,7 +563,7 @@
             this.tabControl1.Location = new System.Drawing.Point(5, 52);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(649, 475);
+            this.tabControl1.Size = new System.Drawing.Size(649, 525);
             this.tabControl1.TabIndex = 199;
             // 
             // tabPage1
@@ -549,7 +572,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(641, 449);
+            this.tabPage1.Size = new System.Drawing.Size(641, 499);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Company Profile";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -694,12 +717,32 @@
             this.label12.TabIndex = 101;
             this.label12.Text = "SMS Url";
             // 
+            // textBoxQuotationFooter
+            // 
+            this.textBoxQuotationFooter.Location = new System.Drawing.Point(146, 303);
+            this.textBoxQuotationFooter.Multiline = true;
+            this.textBoxQuotationFooter.Name = "textBoxQuotationFooter";
+            this.textBoxQuotationFooter.Size = new System.Drawing.Size(470, 48);
+            this.textBoxQuotationFooter.TabIndex = 210;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Location = new System.Drawing.Point(33, 307);
+            this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(113, 18);
+            this.label19.TabIndex = 209;
+            this.label19.Text = "Quotation Footer";
+            // 
             // FrmCompanyInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.ClientSize = new System.Drawing.Size(674, 552);
+            this.ClientSize = new System.Drawing.Size(674, 602);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.StatusStrip1);
@@ -782,5 +825,8 @@
         private System.Windows.Forms.TextBox textBoxCommissionRate;
         internal System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox checkBoxAllowSMS;
+        private DevExpress.XtraEditors.SimpleButton simpleButton9;
+        private System.Windows.Forms.TextBox textBoxQuotationFooter;
+        internal System.Windows.Forms.Label label19;
     }
 }

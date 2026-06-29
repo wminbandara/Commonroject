@@ -208,6 +208,9 @@
   <data name="Purchase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Purchase1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="WhatsApp Image 2022-12-02 at 20.25.14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WhatsApp Image 2022-12-02 at 20.25.14.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="FixedAsset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FixedAsset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -430,6 +433,9 @@
   <data name="Limited_users" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Limited_users.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="umlogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\umlogo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Collection1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Collection1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -583,7 +589,7 @@
   <data name="vsoft - Copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vsoft - Copy.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="WhatsApp Image 2022-12-02 at 20.25.14" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WhatsApp Image 2022-12-02 at 20.25.14.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UpdateInvoice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UpdateInvoice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

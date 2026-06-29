@@ -17,6 +17,71 @@ namespace easyDAL
 
         #region Select
 
+        public DataSet retreiveAllItemsByItmCatSearchName(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[3];
+                param[0] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                param[1] = new MySqlParameter("ItemSubCatId1", obj.ItemSubCatId);
+                param[2] = new MySqlParameter("ItemName1", obj.ItemName);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllItemsByItmCatSearchName", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllItemsByItmSubCat(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                param[1] = new MySqlParameter("ItemSubCatId1", obj.ItemSubCatId);
+
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllItemsByItmSubCat", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveCashReturn(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("POHDId1", obj.POHDId);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllCashReturn", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveBranchwseSalesByInvoice(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("ReportBranchSalesByInvoice", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
 
         public DataSet retreiveCustomerDepositChequesByCust(ClassPOBAL obj)
         {
@@ -657,6 +722,22 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveBranchwiseCancelSales(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("ReportBranchSalesCancel", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveBranchwiseSalesCard(ClassPOBAL obj)
         {
             try
@@ -809,6 +890,22 @@ namespace easyDAL
                 param[0] = new MySqlParameter("date1", obj.date1);
                 param[1] = new MySqlParameter("date2", obj.date2);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("ReportSalaryAdvance", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllSalaryPayment(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllEmpSalary", param);
             }
             catch (Exception ex)
             {
@@ -1001,6 +1098,37 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveAllItemsByItmCat(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllItemsByItmCat", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllItemsByItmCatName(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                param[1] = new MySqlParameter("ItemName1", obj.ItemName);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllItemsByItmCatName", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveAllStockByItmCategory(ClassPOBAL obj)
         {
             try
@@ -1138,6 +1266,22 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveSearchStockBySearchText(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("ItemName1", obj.ItemName);
+                param[1] = new MySqlParameter("BranchId1", obj.BranchId);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectSearchItemsBySearchText", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreiveSearchStockByCat(ClassPOBAL obj)
         {
             try
@@ -1177,6 +1321,21 @@ namespace easyDAL
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("SelectItemSubCategory", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveItemCategoryData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectItemCategoryData", param);
             }
             catch (Exception ex)
             {
@@ -1241,6 +1400,25 @@ namespace easyDAL
                 param[1] = new MySqlParameter("date2", obj.date2);
                 obj.dataTable = "DataTablePAndL";
                 obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportProfitLost", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveProfitLostbyDateCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[4];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                param[2] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[3] = new MySqlParameter("IsLPP1", obj.IsLPP);
+                obj.dataTable = "DataTablePAndL";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportProfitLostCommon", param, obj);
             }
             catch (Exception ex)
             {
@@ -1766,6 +1944,21 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveInvoiceAllCategoryData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("Action", "SelectDepartment");
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectInvAllCategories", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreivesSuppliers(ClassPOBAL obj)
         {
             try
@@ -1969,7 +2162,7 @@ namespace easyDAL
             {
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
-                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectItemCodeData", param);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectStockItemCodeData", param);
             }
             catch (Exception ex)
             {
@@ -2000,6 +2193,21 @@ namespace easyDAL
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("SelectItemCodeSelectedData", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveVarientItemCodeData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectVariantItemCodeData", param);
             }
             catch (Exception ex)
             {
@@ -2118,6 +2326,96 @@ namespace easyDAL
 
         #region Insert
 
+        public int InsertCashRtnDT(ClassPOBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[7];
+                param[0] = new MySqlParameter("CashCollectionhdId1", obj.CashCollectionhdId);
+                param[1] = new MySqlParameter("CashCollectionId1", obj.CashCollectionId);
+                param[2] = new MySqlParameter("CollectionDate1", obj.CollectionDate);
+                param[3] = new MySqlParameter("CreatedBy1", obj.CreatedBy);
+                param[4] = new MySqlParameter("CashAmount1", obj.CashAmount);
+                param[5] = new MySqlParameter("NoOfPieces1", obj.NoOfPieces);
+                param[6] = new MySqlParameter("GrossAmount1", obj.GrossAmount);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("InsertCashReturnDT", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public string InsertNewCashReturn(ClassPOBAL obj)
+        {
+            try
+            {
+                MySqlParameter outParam = new MySqlParameter
+                {
+                    ParameterName = "CashCollectionhdId1",
+                    MySqlDbType = MySqlDbType.Int32,
+                    Direction = ParameterDirection.Output
+                };
+                MySqlParameter[] sqlParams = new MySqlParameter[] {
+                    new MySqlParameter("CollectionDate1", obj.CollectionDate),
+                    new MySqlParameter("POGrossTotal1", obj.POGrossTotal),
+                    new MySqlParameter("CreatedBy1", obj.CreatedBy),                    
+
+                    outParam };
+
+                objDataAccess.beginTransaction();
+                objDataAccess.executeReturnInt("InsertNewCashReturn", sqlParams);
+                objDataAccess.commitTransaction();
+                return Convert.ToString(outParam.Value, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+        }
+
+        public string InsertNewSpoilage(ClassPOBAL obj)
+        {
+            try
+            {
+                MySqlParameter outParam = new MySqlParameter
+                {
+                    ParameterName = "SpoilageId1",
+                    MySqlDbType = MySqlDbType.Int32,
+                    Direction = ParameterDirection.Output
+                };
+                MySqlParameter[] sqlParams = new MySqlParameter[] {
+                    new MySqlParameter("PurchaseDate1", obj.PurchaseDate),
+                    new MySqlParameter("ItemsId1", obj.ItemsId),
+                    new MySqlParameter("ItemCode1", obj.ItemCode),
+                    new MySqlParameter("ItemCatId1", obj.ItemCatId),
+                    new MySqlParameter("Qty1", obj.Qty),
+                    new MySqlParameter("BranchId1", obj.BranchId),
+                    new MySqlParameter("Remarks1", obj.Remarks),
+                    new MySqlParameter("CreatedBy1", obj.CreatedBy),
+
+                    outParam };
+
+                objDataAccess.beginTransaction();
+                objDataAccess.executeReturnInt("InsertNewSpoilage", sqlParams);
+                objDataAccess.commitTransaction();
+                return Convert.ToString(outParam.Value, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+        }
+
         public string InsertFixedAsset(Fixedasset obj)
         {
             try
@@ -2171,6 +2469,35 @@ namespace easyDAL
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertStockTransfer", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public int InsertGINDt(ClassPOBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[9];
+                param[0] = new MySqlParameter("ItemsId1", obj.ItemsId);
+                param[1] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[2] = new MySqlParameter("PurchaseQty1", obj.PurchaseQty);
+                param[3] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[4] = new MySqlParameter("ToBranchId1", obj.ToBranchId);
+                param[5] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
+                param[6] = new MySqlParameter("PurchasePrice1", obj.PurchasePrice);
+                param[7] = new MySqlParameter("SellingPrice1", obj.SellingPrice);
+                param[8] = new MySqlParameter("NetAmount1", obj.NetAmount);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("InsertGINDTNew", param);
                 objDataAccess.commitTransaction();
 
             }
@@ -2269,6 +2596,8 @@ namespace easyDAL
                     new MySqlParameter("Qty1", obj.Qty),
                     new MySqlParameter("PurchasePrice1", obj.PurchasePrice),
                     new MySqlParameter("SellingPrice1", obj.SellingPrice),
+                    new MySqlParameter("EmployeeID1", obj.EmployeeID),
+
                     outParam };
 
                 objDataAccess.beginTransaction();
@@ -2345,6 +2674,8 @@ namespace easyDAL
                     new MySqlParameter("BranchId1", obj.BranchId),
                     new MySqlParameter("ReturnTotal1", obj.ReturnTotal),
                     new MySqlParameter("CreditDueDays1", obj.CreditDueDays),
+                    new MySqlParameter("VATPer1", obj.VATPer),
+                    new MySqlParameter("VATAmount1", obj.VATAmount),
 
                     outParam };
 
@@ -2844,6 +3175,13 @@ namespace easyDAL
                 new MySqlParameter("MItemCode1", obj.MItemCode),
                 new MySqlParameter("ConvertionQty1", obj.ConvertionQty),
                 new MySqlParameter("MaintainQty1", obj.MaintainQty),
+                new MySqlParameter("ScaleItem1", obj.ScaleItem),
+                new MySqlParameter("TItemName1", obj.TItemName),
+                new MySqlParameter("BundleItem1", obj.BundleItem),
+                new MySqlParameter("RawMaterial1", obj.RawMaterial),
+                new MySqlParameter("AllowSales1", obj.AllowSales),
+                new MySqlParameter("AllowPurchase1", obj.AllowPurchase),
+                new MySqlParameter("AllowInventory1", obj.AllowInventory),
 
                     outParam };
 
@@ -2885,7 +3223,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[41];
+                param = new MySqlParameter[43];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
                 param[1] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
                 param[2] = new MySqlParameter("ItemName1", obj.ItemName);
@@ -2928,6 +3266,8 @@ namespace easyDAL
                 param[38] = new MySqlParameter("AllowSales1", obj.AllowSales);
                 param[39] = new MySqlParameter("AllowPurchase1", obj.AllowPurchase);
                 param[40] = new MySqlParameter("AllowInventory1", obj.AllowInventory);
+                param[41] = new MySqlParameter("SearchText1", obj.SearchText);
+                param[42] = new MySqlParameter("CostCode1", obj.CostCode);
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertUpdateStock", param);
@@ -2947,7 +3287,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[43];
+                param = new MySqlParameter[45];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
                 param[1] = new MySqlParameter("ItemCategory1", obj.ItemCategory);
                 param[2] = new MySqlParameter("ItemName1", obj.ItemName);
@@ -2992,10 +3332,34 @@ namespace easyDAL
                 param[40] = new MySqlParameter("AllowSales1", obj.AllowSales);
                 param[41] = new MySqlParameter("AllowPurchase1", obj.AllowPurchase);
                 param[42] = new MySqlParameter("AllowInventory1", obj.AllowInventory);
+                param[43] = new MySqlParameter("SearchText1", obj.SearchText);
+                param[44] = new MySqlParameter("CostCode1", obj.CostCode);
                 
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("ImportStock", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public int ImportStockQty(ClassPOBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[1] = new MySqlParameter("AvailableQty1", obj.AvailableQty);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("ImportStockQty", param);
                 objDataAccess.commitTransaction();
 
             }
@@ -3323,7 +3687,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[9];
+                param = new MySqlParameter[10];
                 param[0] = new MySqlParameter("SupplierId1", obj.SupplierId);
                 param[1] = new MySqlParameter("POHDId1", obj.POHDId);
                 param[2] = new MySqlParameter("ChequeBank1", obj.ChequeBank);
@@ -3333,6 +3697,8 @@ namespace easyDAL
                 param[6] = new MySqlParameter("CreatedBy1", obj.CreatedBy);
                 param[7] = new MySqlParameter("BankId1", obj.BankId);
                 param[8] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[9] = new MySqlParameter("CreditPayHDId1", obj.CreditPayHDId);
+
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertSupplierCheque", param);
                 objDataAccess.commitTransaction();
@@ -3374,6 +3740,34 @@ namespace easyDAL
         #endregion
 
         #region Update
+
+        public int UpdateImportStock(ClassPOBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[8];
+                param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[1] = new MySqlParameter("CostPrice1", obj.CostPrice);
+                param[2] = new MySqlParameter("SellingPrice1", obj.SellingPrice);
+                param[3] = new MySqlParameter("SellingPrice2", obj.SellingPrice2);
+                param[4] = new MySqlParameter("DefaultCostPrice1", obj.DefaultCostPrice);
+                param[5] = new MySqlParameter("ShopPrice1", obj.ShopPrice);
+                param[6] = new MySqlParameter("Discount1", obj.Discount);
+                param[7] = new MySqlParameter("WholeSaleDiscount1", obj.WholeSaleDiscount);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("UpdateImportStock", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
 
         public int UpdateReceivedChqDeosit(ClassPOBAL obj)
         {
@@ -3819,13 +4213,178 @@ namespace easyDAL
 
         #region Report
 
-        public DataSet retreiveAllItemSummary(ClassPOBAL obj)
+        public DataSet retreiveSalesCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[6];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                param[2] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[3] = new MySqlParameter("PayModeId1", obj.PayModeId);
+                param[4] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[5] = new MySqlParameter("CustomerId1", obj.CustomerId);
+                obj.dataTable = "DataTableSalesSP";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("SalesReportByDateCommon", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveSalesWithReturnCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[7];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                param[2] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[3] = new MySqlParameter("PayModeId1", obj.PayModeId);
+                param[4] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[5] = new MySqlParameter("CustomerId1", obj.CustomerId);
+                param[6] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                obj.dataTable = "DataTableSalesSP";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("SalesReportWithReturnByDateCommon", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveSalesWithCustomerCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[7];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                param[2] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[3] = new MySqlParameter("PayModeId1", obj.PayModeId);
+                param[4] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[5] = new MySqlParameter("CustomerId1", obj.CustomerId);
+                param[6] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
+                obj.dataTable = "DataTableSalesSP";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("SalesReportWithCustomerByDateCommon", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+        public DataSet retreiveSalesReturnCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[6];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                param[2] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[3] = new MySqlParameter("PayModeId1", obj.PayModeId);
+                param[4] = new MySqlParameter("ItemCode1", obj.ItemCode);
+                param[5] = new MySqlParameter("CustomerId1", obj.CustomerId);
+                obj.dataTable = "DataTableSalesSP";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("SalesReturnReportByDateCommon", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveTAWInvoiceLineReturnData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("BillNo1", obj.SOHDId);
+                obj.dataTable = "TKAInvoice";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportTAWInvoiceLineReturn", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveTAWSpoilageData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("BillNo1", obj.SOHDId);
+                obj.dataTable = "TKAInvoice";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportTAWSpoilage", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllCashInReport(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectAllCashInReport", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllCustomerChequeReport(ClassPOBAL obj)
         {
             try
             {
                 param = new MySqlParameter[0];
-                //param[0] = new MySqlParameter("BranchId1", obj.BranchId);
-                //obj.DtDataSet = objDataAccess.executeReturnDataset("ReportDayCollection", param);
+                //param[0] = new MySqlParameter("date1", obj.date1);
+                //param[1] = new MySqlParameter("date2", obj.date2);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("ReportAllCustomerCheque", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllSupplierChequeReport(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("date1", obj.date1);
+                //param[1] = new MySqlParameter("date2", obj.date2);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("ReportAllSupplierCheque", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveAllItemSummary(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("date2", obj.date2);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("ReportItemHistoryAll", param);
             }
             catch (Exception ex)
@@ -3839,9 +4398,10 @@ namespace easyDAL
         {
             try
             {
-                param = new MySqlParameter[1];
+                param = new MySqlParameter[3];
                 param[0] = new MySqlParameter("ItemCode1", obj.ItemCode);
-                //obj.DtDataSet = objDataAccess.executeReturnDataset("ReportDayCollection", param);
+                param[1] = new MySqlParameter("date1", obj.date1);
+                param[2] = new MySqlParameter("date2", obj.date2);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("ReportItemHistoryAllItemCode", param);
             }
             catch (Exception ex)
@@ -3855,9 +4415,10 @@ namespace easyDAL
         {
             try
             {
-                param = new MySqlParameter[1];
+                param = new MySqlParameter[3];
                 param[0] = new MySqlParameter("BranchId1", obj.BranchId);
-                //obj.DtDataSet = objDataAccess.executeReturnDataset("ReportDayCollection", param);
+                param[1] = new MySqlParameter("date1", obj.date1);
+                param[2] = new MySqlParameter("date2", obj.date2);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("ReportItemHistoryAllBranch", param);
             }
             catch (Exception ex)
@@ -3871,10 +4432,11 @@ namespace easyDAL
         {
             try
             {
-                param = new MySqlParameter[2];
+                param = new MySqlParameter[4];
                 param[0] = new MySqlParameter("BranchId1", obj.BranchId);
                 param[1] = new MySqlParameter("ItemCode1", obj.ItemCode);
-                //obj.DtDataSet = objDataAccess.executeReturnDataset("ReportDayCollection", param);
+                param[2] = new MySqlParameter("date1", obj.date1);
+                param[3] = new MySqlParameter("date2", obj.date2);
                 obj.DtDataSet = objDataAccess.executeReturnDataset("ReportItemHistoryAllBranchItemCode", param);
             }
             catch (Exception ex)
@@ -4025,6 +4587,23 @@ namespace easyDAL
                 //param[2] = new MySqlParameter("ItemCatId1", obj.ItemCatId);
                 obj.dataTable = "DataTableAllCat";
                 obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportByCategorySalesDateAll", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveSalesSummarybyDateCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[2];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("BranchId1", obj.BranchId);
+                obj.dataTable = "DataTableSalesSP";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportBySalesDateSummaryPrintCommon", param, obj);
             }
             catch (Exception ex)
             {
@@ -4215,6 +4794,24 @@ namespace easyDAL
                 param[1] = new MySqlParameter("date2", obj.date2);
                 obj.dataTable = "DataTableSalesSP";
                 obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportBySalesDateTax", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveSummaryDataNewCommon(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[3];
+                param[0] = new MySqlParameter("date1", obj.date1);
+                param[1] = new MySqlParameter("BranchId1", obj.BranchId);
+                param[2] = new MySqlParameter("UserID1", obj.UserID);
+                obj.dataTable = "DataTableDayEnd";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("SelectNewSummaryReportCommon", param, obj);
             }
             catch (Exception ex)
             {
@@ -4425,6 +5022,38 @@ namespace easyDAL
             return obj.DtDataSet;
         }
 
+        public DataSet retreiveGINPrintData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
+                obj.dataTable = "DataTableStockTransfer";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("PrintStockTransfer", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreiveGINPrintNewData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
+                obj.dataTable = "DataTableStockTransfer";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("PrintGINNewr", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
         public DataSet retreivePOData(ClassPOBAL obj)
         {
             try
@@ -4432,6 +5061,22 @@ namespace easyDAL
                 param = new MySqlParameter[1];
                 param[0] = new MySqlParameter("POHDId1", obj.POHDId);
                 obj.dataTable = "DataTablePO";
+                obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportPOReport", param, obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
+
+        public DataSet retreivePOSummaryData(ClassPOBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("POHDId1", obj.POHDId);
+                obj.dataTable = "POSummaryPrint";
                 obj.DtDataSet = objDataAccess.executeReturnReportDataset("ReportPOReport", param, obj);
             }
             catch (Exception ex)

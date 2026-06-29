@@ -604,10 +604,10 @@ namespace easyPOSSolution
                 objBAL.ItemCode = textBoxItemCode.Text.Trim();
                 objDAL = new ClassPODAL();
                 objBAL.DtDataSet = objDAL.retreiveItemCodeData(objBAL);
-                if (objBAL.DtDataSet.Tables[2].Rows.Count > 0)
+                if (objBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
                     List<ArrayList> newval = new List<ArrayList>();
-                    foreach (DataRow dRow in objBAL.DtDataSet.Tables[2].Rows)
+                    foreach (DataRow dRow in objBAL.DtDataSet.Tables[0].Rows)
                     {
                         ArrayList values = new ArrayList();
                         values.Clear();

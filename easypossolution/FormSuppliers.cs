@@ -199,6 +199,10 @@ namespace easyPOSSolution
                     deleteSupplierAccount();
                     MessageBox.Show("Supplier Deleted Susccessfully.", "Delete Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                else
+                {
+                    MessageBox.Show("Supplier can not be Deleted.", "Delete failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
             }
             catch (Exception ex)

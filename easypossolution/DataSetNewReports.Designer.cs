@@ -4755,6 +4755,10 @@ namespace easyPOSSolution {
             
             private global::System.Data.DataColumn columnDirectCashPurchaseReturnTotal;
             
+            private global::System.Data.DataColumn columnTotalCharges;
+            
+            private global::System.Data.DataColumn columnAdvanceAmount;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DataTableDayEndDataTable() {
@@ -5134,6 +5138,22 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TotalChargesColumn {
+                get {
+                    return this.columnTotalCharges;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AdvanceAmountColumn {
+                get {
+                    return this.columnAdvanceAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5212,7 +5232,9 @@ namespace easyPOSSolution {
                         int SuppCreditPayHDId, 
                         int SupplierId, 
                         decimal DirectPurchaseReturnTotal, 
-                        decimal DirectCashPurchaseReturnTotal) {
+                        decimal DirectCashPurchaseReturnTotal, 
+                        decimal TotalCharges, 
+                        decimal AdvanceAmount) {
                 DataTableDayEndRow rowDataTableDayEndRow = ((DataTableDayEndRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         TotalSale,
@@ -5257,7 +5279,9 @@ namespace easyPOSSolution {
                         SuppCreditPayHDId,
                         SupplierId,
                         DirectPurchaseReturnTotal,
-                        DirectCashPurchaseReturnTotal};
+                        DirectCashPurchaseReturnTotal,
+                        TotalCharges,
+                        AdvanceAmount};
                 rowDataTableDayEndRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTableDayEndRow);
                 return rowDataTableDayEndRow;
@@ -5323,6 +5347,8 @@ namespace easyPOSSolution {
                 this.columnSupplierId = base.Columns["SupplierId"];
                 this.columnDirectPurchaseReturnTotal = base.Columns["DirectPurchaseReturnTotal"];
                 this.columnDirectCashPurchaseReturnTotal = base.Columns["DirectCashPurchaseReturnTotal"];
+                this.columnTotalCharges = base.Columns["TotalCharges"];
+                this.columnAdvanceAmount = base.Columns["AdvanceAmount"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5414,6 +5440,10 @@ namespace easyPOSSolution {
                 base.Columns.Add(this.columnDirectPurchaseReturnTotal);
                 this.columnDirectCashPurchaseReturnTotal = new global::System.Data.DataColumn("DirectCashPurchaseReturnTotal", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDirectCashPurchaseReturnTotal);
+                this.columnTotalCharges = new global::System.Data.DataColumn("TotalCharges", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotalCharges);
+                this.columnAdvanceAmount = new global::System.Data.DataColumn("AdvanceAmount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAdvanceAmount);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9857,6 +9887,38 @@ namespace easyPOSSolution {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal TotalCharges {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableDataTableDayEnd.TotalChargesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TotalCharges\' in table \'DataTableDayEnd\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTableDayEnd.TotalChargesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal AdvanceAmount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableDataTableDayEnd.AdvanceAmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AdvanceAmount\' in table \'DataTableDayEnd\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTableDayEnd.AdvanceAmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsTotalSaleNull() {
                 return this.IsNull(this.tableDataTableDayEnd.TotalSaleColumn);
             }
@@ -10369,6 +10431,30 @@ namespace easyPOSSolution {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDirectCashPurchaseReturnTotalNull() {
                 this[this.tableDataTableDayEnd.DirectCashPurchaseReturnTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTotalChargesNull() {
+                return this.IsNull(this.tableDataTableDayEnd.TotalChargesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTotalChargesNull() {
+                this[this.tableDataTableDayEnd.TotalChargesColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAdvanceAmountNull() {
+                return this.IsNull(this.tableDataTableDayEnd.AdvanceAmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAdvanceAmountNull() {
+                this[this.tableDataTableDayEnd.AdvanceAmountColumn] = global::System.Convert.DBNull;
             }
         }
         

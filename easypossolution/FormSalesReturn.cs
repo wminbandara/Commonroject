@@ -21,6 +21,8 @@ namespace easyPOSSolution
         ClassSOBAL objBAL = new ClassSOBAL();
         ClassSODAL objDAL = new ClassSODAL();
 
+        string FormURL;
+
         #endregion
 
         #region Constructor
@@ -61,6 +63,35 @@ namespace easyPOSSolution
         }
 
         #region Methods
+
+        private void SelectFormHelp()
+        {
+            try
+            {
+                FormURL = "";
+                BALUser objUser = new BALUser();
+                objUser.FormId = 2;
+                DALUser dalUser = new DALUser();
+                objUser.DtDataSet = dalUser.retreiveFormHelpURL(objUser);
+                if (objUser.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objUser.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        FormURL = (values[0].ToString().Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         public void Reset()
         {
@@ -245,25 +276,64 @@ namespace easyPOSSolution
             }
         }
 
+        //private void printInvoice()
+        //{
+        //    try
+        //    {
+
+        //        Cursor.Current = Cursors.WaitCursor;
+        //        CrystalReportSalesRtn3in rpt = new CrystalReportSalesRtn3in();
+        //        ClassPOBAL objBAL = new ClassPOBAL();
+        //        objBAL.SOHDId = Convert.ToInt32(textBoxSOID.Text);
+        //        objBAL.ItemsId = Convert.ToInt32(textBoxItemId.Text);
+        //        ClassPODAL objDAL = new ClassPODAL();
+        //        objBAL.DtDataSet = objDAL.retreiveSalesRtnData(objBAL);
+        //        rpt.SetDataSource(objBAL.DtDataSet);
+        //        crystalReportViewer1.ReportSource = rpt;
+        //        crystalReportViewer1.Refresh();
+        //        //crystalReportViewer1.PrintReport();
+        //        rpt.PrintOptions.PrinterName = "";
+        //        rpt.PrintToPrinter(1, false, 0, 0);
+        //        Cursor.Current = Cursors.Default;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
+
         private void printInvoice()
         {
             try
             {
-
                 Cursor.Current = Cursors.WaitCursor;
-                CrystalReportSalesRtn3in rpt = new CrystalReportSalesRtn3in();
+                CrystalReportInvoice3in3exRtn rpt = new CrystalReportInvoice3in3exRtn();
                 ClassPOBAL objBAL = new ClassPOBAL();
-                objBAL.SOHDId = Convert.ToInt32(textBoxSOID.Text);
-                objBAL.ItemsId = Convert.ToInt32(textBoxItemId.Text);
+                objBAL.SOHDId = Convert.ToInt32(textBoxBillNo.Text);
                 ClassPODAL objDAL = new ClassPODAL();
-                objBAL.DtDataSet = objDAL.retreiveSalesRtnData(objBAL);
+                objBAL.DtDataSet = objDAL.retreiveTAWInvoiceLineReturnData(objBAL);
                 rpt.SetDataSource(objBAL.DtDataSet);
                 crystalReportViewer1.ReportSource = rpt;
                 crystalReportViewer1.Refresh();
-                //crystalReportViewer1.PrintReport();
                 rpt.PrintOptions.PrinterName = "";
                 rpt.PrintToPrinter(1, false, 0, 0);
                 Cursor.Current = Cursors.Default;
+
+                //Cursor.Current = Cursors.WaitCursor;
+                //CrystalReportSalesRtn3in rpt = new CrystalReportSalesRtn3in();
+                //ClassPOBAL objBAL = new ClassPOBAL();
+                //objBAL.SOHDId = Convert.ToInt32(textBoxSOID.Text);
+                //objBAL.ItemsId = Convert.ToInt32(textBoxItemId.Text);
+                //ClassPODAL objDAL = new ClassPODAL();
+                //objBAL.DtDataSet = objDAL.retreiveSalesRtnData(objBAL);
+                //rpt.SetDataSource(objBAL.DtDataSet);
+                //crystalReportViewer1.ReportSource = rpt;
+                //crystalReportViewer1.Refresh();
+                ////crystalReportViewer1.PrintReport();
+                //rpt.PrintOptions.PrinterName = "";
+                //rpt.PrintToPrinter(1, false, 0, 0);
+                //Cursor.Current = Cursors.Default;
 
             }
             catch (Exception ex)
@@ -428,5 +498,23 @@ namespace easyPOSSolution
             }
             
         }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(FormURL.ToString());
+        }
+
+        private void lblUserId_TextChanged(object sender, EventArgs e)
+        {
+            SelectFormHelp();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            printInvoice();
+        }
+
+        
+
     }
 }

@@ -431,7 +431,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[8];
+                param = new MySqlParameter[9];
                 param[0] = new MySqlParameter("SupplierId1", obj.SupplierId);
                 param[1] = new MySqlParameter("PaymentDate1", obj.PaymentDate);
                 param[2] = new MySqlParameter("PaymentAmount1", obj.PaymentAmount);
@@ -440,6 +440,7 @@ namespace easyDAL
                 param[5] = new MySqlParameter("PayModeId1", obj.PayModeId);
                 param[6] = new MySqlParameter("CardChequeNo1", obj.ChequeNo);
                 param[7] = new MySqlParameter("CreditPayHDId1", obj.CreditPayHDId);
+                param[8] = new MySqlParameter("SuppCreditId1", obj.SuppCreditId);
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertSuppCreditPay", param);
@@ -501,6 +502,7 @@ namespace easyDAL
                     new MySqlParameter("PayModeId1", obj.PayModeId),
                     new MySqlParameter("ReciptNo1", obj.ReciptNo),
                     new MySqlParameter("BankId1", obj.BankId),
+                    new MySqlParameter("BranchId1", obj.BranchId),
 
                     outParam };
 
@@ -534,6 +536,7 @@ namespace easyDAL
                     new MySqlParameter("BillNo1", obj.PIHDId),
                     new MySqlParameter("PayModeId1", obj.PayModeId),
                     new MySqlParameter("BankId1", obj.BankId),
+                    new MySqlParameter("BranchId1", obj.BranchId),
 
                     outParam };
 
@@ -905,8 +908,9 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[1];
+                param = new MySqlParameter[2];
                 param[0] = new MySqlParameter("ItemCatName1", obj.CatDescription);
+                param[1] = new MySqlParameter("ShowInInvoice1", obj.ShowInInvoice);
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InserItemCategory", param);
@@ -1048,6 +1052,90 @@ namespace easyDAL
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("DeleteExpense", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public int DeleteAdvance(ClassCommonBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("Id1", obj.Id);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("DeleteAdvance", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public int DeleteAttendance(ClassCommonBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("Id1", obj.Id);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("DeleteAttendance", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public int DeleteSalaryRecord(ClassCommonBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("Id1", obj.Id);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("DeleteSalaryRecord", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
+        public int DeleteLeaveRecord(ClassCommonBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("Id1", obj.Id);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("DeleteLeave", param);
                 objDataAccess.commitTransaction();
 
             }
@@ -1233,6 +1321,27 @@ namespace easyDAL
             return count;
         }
 
+        public int updateGRNConfirm(ClassCommonBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("PIHDId1", obj.PIHDId);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("UpdateGRNConfirmation", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
+
         public int updateStockTransferCancel(ClassCommonBAL obj)
         {
             int count = 0;
@@ -1254,6 +1363,26 @@ namespace easyDAL
             return count;
         }
 
+        public int updateGINNewCancel(ClassCommonBAL obj)
+        {
+            int count = 0;
+            try
+            {
+                param = new MySqlParameter[1];
+                param[0] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
+
+                objDataAccess.beginTransaction();
+                count = objDataAccess.executeReturnInt("UpdateGINNEWCancel", param);
+                objDataAccess.commitTransaction();
+
+            }
+            catch (Exception ex)
+            {
+                objDataAccess.rollBAckTransaction();
+                throw ex;
+            }
+            return count;
+        }
         public int updateSupplierCredPayCancel(ClassCommonBAL obj)
         {
             int count = 0;
@@ -1560,6 +1689,21 @@ namespace easyDAL
         #endregion
 
         #region Select
+
+        public DataSet retreivecompanyinfodata(ClassCommonBAL obj)
+        {
+            try
+            {
+                param = new MySqlParameter[0];
+                //param[0] = new MySqlParameter("CustomerId1", obj.CustomerId);
+                obj.DtDataSet = objDataAccess.executeReturnDataset("SelectCompanyRegData", param);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obj.DtDataSet;
+        }
 
         public DataSet retreiveAllEmployeeLeaves(ClassCommonBAL obj)
         {

@@ -456,6 +456,7 @@ namespace easyPOSSolution
                     comboBoxBank.SelectedValue = 0;
                 }
                 objBAL.BankId = Convert.ToInt32(comboBoxBank.SelectedValue);
+                objBAL.BranchId = Convert.ToInt32(lblBranchID.Text);
                
                 objDAL = new ClassMasterDAL();
 
@@ -629,24 +630,48 @@ namespace easyPOSSolution
         {
             try
             {
+                if (checkBoxPrint3In.Checked == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    FormReport REPORT = new FormReport();
+                    REPORT.Show();
+                    CrystalReportCustomerCreditPay3In rpt = new CrystalReportCustomerCreditPay3In();
+                    //CrystalReportCustCreditPay2in rpt = new CrystalReportCustCreditPay2in();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue.ToString());
+                    objPOBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+                    objPOBAL.CreditPayHDId = Convert.ToInt32(textBoxHDId.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveCustomerPaymentData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    REPORT.crystalReportViewer1.ReportSource = rpt;
+                    REPORT.crystalReportViewer1.Refresh();
+                    //REPORT.crystalReportViewer1.PrintReport();
+                    //rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    FormReport REPORT = new FormReport();
+                    REPORT.Show();
+                    CrystalReportCustomerCreditPay rpt = new CrystalReportCustomerCreditPay();
+                    //CrystalReportCustCreditPay2in rpt = new CrystalReportCustCreditPay2in();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue.ToString());
+                    objPOBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
+                    objPOBAL.CreditPayHDId = Convert.ToInt32(textBoxHDId.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveCustomerPaymentData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    REPORT.crystalReportViewer1.ReportSource = rpt;
+                    REPORT.crystalReportViewer1.Refresh();
+                    //REPORT.crystalReportViewer1.PrintReport();
+                    //rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
 
-                Cursor.Current = Cursors.WaitCursor;
-                FormReport REPORT = new FormReport();
-                REPORT.Show();
-                CrystalReportCustomerCreditPay rpt = new CrystalReportCustomerCreditPay();
-                //CrystalReportCustCreditPay2in rpt = new CrystalReportCustCreditPay2in();
-                ClassPOBAL objPOBAL = new ClassPOBAL();
-                objPOBAL.CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue.ToString());
-                objPOBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
-                objPOBAL.CreditPayHDId = Convert.ToInt32(textBoxHDId.Text);
-                ClassPODAL objPODAL = new ClassPODAL();
-                objPOBAL.DtDataSet = objPODAL.retreiveCustomerPaymentData(objPOBAL);
-                rpt.SetDataSource(objPOBAL.DtDataSet);
-                REPORT.crystalReportViewer1.ReportSource = rpt;
-                REPORT.crystalReportViewer1.Refresh();
-                //REPORT.crystalReportViewer1.PrintReport();
-                //rpt.PrintToPrinter(1, false, 0, 0);
-                Cursor.Current = Cursors.Default;
+                
             
             }
             catch (Exception ex)
@@ -1048,6 +1073,11 @@ namespace easyPOSSolution
                 }
 
             }
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://youtu.be/kjEtsDlSTBk");
         }
     }
 }

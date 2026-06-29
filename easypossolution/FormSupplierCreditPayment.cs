@@ -57,6 +57,7 @@ namespace easyPOSSolution
                         objBAL.ChequeAmount = Convert.ToDecimal(textBoxPayment.Text);
                         objBAL.ChequeExpDate = dateTimePickerChqExpDate.Value;
                         objBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
+                        objBAL.CreditPayHDId = Convert.ToInt32(textBoxHDId.Text);
                         ClassPODAL objDAL = new ClassPODAL();
                         int count = objDAL.InsertSupplierCheque(objBAL);
 
@@ -126,6 +127,7 @@ namespace easyPOSSolution
                         dataGridView1.DataSource = objBAL.DtDataSet.Tables[1];
                         //dataGridView1.Columns["PIHDId"].Visible = false;
                         dataGridView1.Columns["SupplierId"].Visible = false;
+                        dataGridView1.Columns["SuppCreditId"].Visible = false;
                         dataGridView1.Columns["CreditAmount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     }
                     if (objBAL.DtDataSet.Tables[2].Rows.Count > 0)
@@ -171,6 +173,7 @@ namespace easyPOSSolution
                             dataGridView3.Rows[n].Cells["CreditDate"].Value = Convert.ToDateTime(values[2].ToString().Trim()).ToString("yyyy/MM/dd");
                             dataGridView3.Rows[n].Cells["CreditAmount"].Value = (values[3].ToString().Trim());
                             dataGridView3.Rows[n].Cells["PaymentAmount"].Value = "0";
+                            dataGridView3.Rows[n].Cells["SuppCreditId"].Value = (values[5].ToString().Trim());
 
                             dataGridView3.FirstDisplayedScrollingRowIndex = n;
                             dataGridView3.CurrentCell = dataGridView3.Rows[n].Cells[0];
@@ -231,6 +234,8 @@ namespace easyPOSSolution
                     comboBoxBank.SelectedValue = 0;
                 }
                 objBAL.BankId = Convert.ToInt32(comboBoxBank.SelectedValue);
+                objBAL.BranchId = Convert.ToInt32(lblBranchID.Text);
+
                 objDAL = new ClassMasterDAL();
 
                 string count = objDAL.InsertSupplierCredPayHD(objBAL);
@@ -266,6 +271,7 @@ namespace easyPOSSolution
                         objBAL.PayModeId = Convert.ToInt32(comboBoxPayMode.SelectedValue.ToString());
                         objBAL.ChequeNo = textBoxChequeNo.Text;
                         objBAL.CreditPayHDId = Convert.ToInt32(textBoxHDId.Text);
+                        objBAL.SuppCreditId = Convert.ToInt32(dataGridView3.Rows[i].Cells["SuppCreditId"].Value);
                         objDAL = new ClassMasterDAL();
                         int count = objDAL.InsertSuppCredPay(objBAL);
                         if (count != 0)
@@ -289,6 +295,11 @@ namespace easyPOSSolution
                 //{
                 if (savestate == true)
                 {
+                    if (comboBoxPayMode.Text == "Cheque")
+                    {
+                        insertSupplierCheque();
+                    }
+
                     MessageBox.Show("Supplier Credit Payment Saved Susccessfully.", "Save Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     DialogResult result = MessageBox.Show("Do you want to print this Payment Recipt ", "Print Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
@@ -472,16 +483,18 @@ namespace easyPOSSolution
                     {
                         //insertSupplierCredit();
                         insertSupplierCreditHD();
-                        if (comboBoxPayMode.Text == "Cheque")
-                        {
-                            insertSupplierCheque();
-                        }
+                        //if (comboBoxPayMode.Text == "Cheque")
+                        //{
+                        //    insertSupplierCheque();
+                        //}
                         SelectSupplierData();
                         fillItemTotalBalanceValue();
                     }
                     label14.Visible = false;
                     textBoxChequeAmount.Visible = false;
                     textBoxChequeAmount.Text = "0.00";
+                    textBoxChequeAmount.Text = "0.00";
+                    textBoxChequeNo.Clear();
                 }
                 else
                 {

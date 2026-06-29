@@ -110,5 +110,24 @@ namespace easyBAL
             public string VoucherCode { get; set; }
             public int CreditPayHDId { get; set; }
 
+            public string PCSellerName { get; set; }
+            public string PCCustomerNo { get; set; }
+            public string PCCustomerName { get; set; }
+            public string PCCompanyName { get; set; }
+            public string PCCompanyAddress1 { get; set; }
+            public string PCCompanyAddress2 { get; set; }
+            public string PCContactNo1 { get; set; }
+            public string PCContactNo2 { get; set; }
+            public string PCActivationPassword { get; set; }
+            public int PCLastInvoiceNo { get; set; }
+
+            public decimal TotDiscPer { get; set; }
+            public decimal VATPer { get; set; }
+            public decimal NBTPer { get; set; }
+            public decimal ChargesPer { get; set; }
+            public decimal AdvanceAmount { get; set; }
+            public decimal OurPrice { get; set; }
+            public decimal TotalCost { get; set; }
+
     }
 }

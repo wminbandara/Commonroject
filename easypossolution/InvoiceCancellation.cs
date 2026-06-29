@@ -20,6 +20,8 @@ namespace easyPOSSolution
         ClassSOBAL objBAL = new ClassSOBAL();
         ClassSODAL objDAL = new ClassSODAL();
 
+        string FormURL;
+
         #endregion
 
         #region Constructor
@@ -32,6 +34,36 @@ namespace easyPOSSolution
         #endregion
 
         #region Methods
+
+        private void SelectFormHelp()
+        {
+            try
+            {
+                FormURL = "";
+                BALUser objUser = new BALUser();
+                objUser.FormId = 3;
+                DALUser dalUser = new DALUser();
+                objUser.DtDataSet = dalUser.retreiveFormHelpURL(objUser);
+                if (objUser.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objUser.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        FormURL = (values[0].ToString().Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
         public void Reset()
         {
@@ -178,6 +210,16 @@ namespace easyPOSSolution
             {
                 insertCamcellation();
             }
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(FormURL.ToString());
+        }
+
+        private void lblUserId_TextChanged(object sender, EventArgs e)
+        {
+            SelectFormHelp();
         }
 
 

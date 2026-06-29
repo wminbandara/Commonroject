@@ -1,5 +1,6 @@
 ﻿using easyBAL;
 using easyDAL;
+using easyPOSSolution.Utility;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections;
@@ -27,6 +28,7 @@ namespace easyPOSSolution
         bool loadStatus, insertDTStatus, newStatus, poLoadStatus, NewPurchase, AddtoBarcode, autocomplete, duplicatestatus;
         public int POID = 0;
         public decimal CreditPay = 0;
+        decimal TotDiscPer, VATPer, NBTPer, ChargePer;
         ArrayList alistForm = new ArrayList();
         int TransferHDIdNew;
 
@@ -42,6 +44,46 @@ namespace easyPOSSolution
 
         #region Methods
 
+        private void SelectCompanyData()
+        {
+            try
+            {
+                ClassCommonBAL objBAL = new ClassCommonBAL();
+                ClassMasterDAL objDAL = new ClassMasterDAL();
+                objBAL.DtDataSet = objDAL.retreivecompanydata(objBAL);
+                if (objBAL.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objBAL.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        //companyname = (values[0].ToString().Trim());
+                        //to = (values[3].ToString().Trim());
+                        //apikey = (values[12].ToString().Trim());
+                        //apitoken = (values[13].ToString().Trim());
+                        //fromval = (values[14].ToString().Trim());
+                        //companydisc = Convert.ToDecimal(values[16].ToString().Trim());
+                        //SMSUrl = (values[17].ToString().Trim());
+                        //AllowSMS = Convert.ToBoolean(values[18]);
+                        //TotDiscPer = Convert.ToDecimal(values[20].ToString().Trim());
+                        VATPer = Convert.ToDecimal(values[21].ToString().Trim());
+                        NBTPer = Convert.ToDecimal(values[22].ToString().Trim());
+                        //ChargePer = Convert.ToDecimal(values[23].ToString().Trim());
+                        //PriceMode = (values[24].ToString().Trim());
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void FillCodeData()
         {
             if (textBoxItemCode.Text != "")
@@ -53,10 +95,10 @@ namespace easyPOSSolution
                     objPOBAL.ItemCode = textBoxItemCode.Text.Trim();
                     ClassPODAL objPODAL = new ClassPODAL();
                     objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                    if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                    if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                     {
                         List<ArrayList> newval = new List<ArrayList>();
-                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                        foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                         {
                             ArrayList values = new ArrayList();
                             values.Clear();
@@ -441,10 +483,10 @@ namespace easyPOSSolution
                 //objPOBAL.Wharehouse = "Wharehouse1";
                 ClassPODAL objPODAL = new ClassPODAL();
                 objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
                     List<ArrayList> newval = new List<ArrayList>();
-                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                    foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                     {
                         ArrayList values = new ArrayList();
                         values.Clear();
@@ -568,6 +610,7 @@ namespace easyPOSSolution
                         objBAL.ChequeExpDate = dateTimePickerChqExpDate.Value;
                         objBAL.CreatedBy = Convert.ToInt32(lblUserId.Text);
                         objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
+                        objBAL.CreditPayHDId = 0;
                         objDAL = new ClassPODAL();
                         int count = objDAL.InsertSupplierCheque(objBAL);
 
@@ -706,6 +749,8 @@ namespace easyPOSSolution
             textBoxAvailableQty.Text = "0.00";
             textBoxItemCode.Select();
             textBoxFromBranchId.Text = "0";
+            textBoxVAT.Text = "0.00";
+            checkBoxVAT.Checked = false;
             TransferHDIdNew = 0;
             button2.Enabled = true;
             ButtonSave.Enabled = true;
@@ -854,6 +899,8 @@ namespace easyPOSSolution
                 objBAL.BranchId = Convert.ToInt32(comboBoxBranch.SelectedValue.ToString());
                 objBAL.ReturnTotal = Convert.ToDecimal(textBoxReturn.Text);
                 objBAL.CreditDueDays = Convert.ToInt32(textBoxCreditDueDays.Text);
+                objBAL.VATPer = VATPer;
+                objBAL.VATAmount = Convert.ToDecimal(textBoxVAT.Text);
 
                 objDAL = new ClassPODAL();
                 string count = objDAL.InsertNewPIHD(objBAL);
@@ -1430,12 +1477,23 @@ namespace easyPOSSolution
         {
             try
             {
-                  textBoxTotNet.Text = (Convert.ToDecimal(textBoxTotGrosse.Text) - Convert.ToDecimal(textBoxTotDiscount.Text)).ToString("0.00");
-                  textBoxBalance.Text = ((Convert.ToDecimal(textBoxTotNet.Text) - Convert.ToDecimal(textBoxReturn.Text)) - Convert.ToDecimal(textBoxCash.Text)).ToString("0.00");
+                textBoxTotNet.Text = ((Convert.ToDecimal(textBoxTotGrosse.Text) + Convert.ToDecimal(textBoxVAT.Text)) - Convert.ToDecimal(textBoxTotDiscount.Text)).ToString("0.00");
+                textBoxBalance.Text = ((Convert.ToDecimal(textBoxTotNet.Text) - Convert.ToDecimal(textBoxReturn.Text)) - Convert.ToDecimal(textBoxCash.Text)).ToString("0.00");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void calculateVAT()
+        {
+            try
+            {
+                textBoxVAT.Text = (((Convert.ToDecimal(textBoxTotGrosse.Text) - Convert.ToDecimal(textBoxTotDiscount.Text)) * VATPer) / 100).ToString("0.00");
+            }
+            catch
+            {
             }
         }
 
@@ -2042,6 +2100,157 @@ namespace easyPOSSolution
             }
         }
 
+        private void AddtoGridSerial()
+        {
+            try
+            {
+                int n = dgView.Rows.Add();
+
+                dgView.Rows[n].Cells["ItemsId"].Value = textBoxItemId.Text;
+                if (checkBoxReturn.Checked == true)
+                {
+                    dgView.Rows[n].Cells["Rtn"].Value = "1";
+                }
+                else
+                {
+                    dgView.Rows[n].Cells["Rtn"].Value = "0";
+                }
+                dgView.Rows[n].Cells["ItemCode"].Value = textBoxItemCode.Text;
+                dgView.Rows[n].Cells["ItemCatId"].Value = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+                dgView.Rows[n].Cells["ItemUnit"].Value = comboBoxUnit.Text;
+                dgView.Rows[n].Cells["PurchaseQty"].Value = "1.00";
+                dgView.Rows[n].Cells["MinQty"].Value = textBoxMinQty.Text;
+                dgView.Rows[n].Cells["Discount"].Value = textBoxDiscAmount.Text;
+                dgView.Rows[n].Cells["PurchasePrice"].Value = textBoxUnitCostPrice.Text;
+                dgView.Rows[n].Cells["SellingPrice"].Value = textBoxSellingPrice.Text;
+                dgView.Rows[n].Cells["FreeIssue"].Value = textBoxFreeIssue.Text;
+                dgView.Rows[n].Cells["NetAmount"].Value = textBoxNetAmount.Text;
+                dgView.Rows[n].Cells["ItemName"].Value = textBoxItemName.Text;
+                dgView.Rows[n].Cells["WholesalePrice"].Value = textBoxWholesalePrice.Text;
+                dgView.Rows[n].Cells["ShopPrice"].Value = textBoxShopPrice.Text;
+                dgView.Rows[n].Cells["SerialNo"].Value = textBoxSerial.Text;
+                dgView.Rows[n].Cells["TransferHDId"].Value = TransferHDIdNew.ToString();
+                dgView.Rows[n].Cells["FromBranchId"].Value = textBoxFromBranchId.Text;
+
+                dgView.FirstDisplayedScrollingRowIndex = n;
+                dgView.CurrentCell = dgView.Rows[n].Cells[0];
+                dgView.Rows[n].Selected = true;
+
+                //textBoxItemId.Text = "0";
+                //textBoxItemCode.Text = "";
+                //comboBoxItemCategory.SelectedIndex = -1;
+                //comboBoxUnit.Text = "";
+                //textBoxQty.Text = "0";
+                //textBoxMinQty.Text = "0";
+                //textBoxUnitCostPrice.Text = "0";
+                //textBoxSellingPrice.Text = "0.00";
+                //textBoxWholesalePrice.Text = "0.00";
+                //textBoxShopPrice.Text = "0.00";
+                //textBoxFreeIssue.Text = "0.00";
+                //textBoxNetAmount.Text = "0.00";
+                //textBoxDiscPer.Text = "0";
+                //textBoxDiscAmount.Text = "0.00";
+                //textBoxItemName.Text = "";
+                //textBoxDefPurchasePrice.Text = "0.00";
+                //textBoxUnitCostPrice.Text = "0.00";
+                //CalculateTotal();
+                //textBoxCash.Text = "0.00";
+                //textBoxItemCode.Select();
+                textBoxSerial.Clear();
+                //textBoxFromBranchId.Text = "0";
+                //TransferHDIdNew = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void AddtoGridWithSerialGenerator()
+        {
+            try
+            {
+
+                int val;
+                int qty;
+
+                val = int.Parse(textBoxStartSerial.Text);
+                qty = int.Parse(textBoxQty.Text);
+
+                for (int i = val; i <= (val + qty - 1); i++)
+                {
+
+                    string ser = i.ToString();
+                    int n = dgView.Rows.Add();
+                    textBoxSerial.Text = ser.ToString();
+
+                    dgView.Rows[n].Cells["ItemsId"].Value = textBoxItemId.Text;
+                    if (checkBoxReturn.Checked == true)
+                    {
+                        dgView.Rows[n].Cells["Rtn"].Value = "1";
+                    }
+                    else
+                    {
+                        dgView.Rows[n].Cells["Rtn"].Value = "0";
+                    }
+                    dgView.Rows[n].Cells["ItemCode"].Value = textBoxItemCode.Text;
+                    dgView.Rows[n].Cells["ItemCatId"].Value = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
+                    dgView.Rows[n].Cells["ItemUnit"].Value = comboBoxUnit.Text;
+                    dgView.Rows[n].Cells["PurchaseQty"].Value = "1.00";
+                    dgView.Rows[n].Cells["MinQty"].Value = textBoxMinQty.Text;
+                    dgView.Rows[n].Cells["Discount"].Value = textBoxDiscAmount.Text;
+                    dgView.Rows[n].Cells["PurchasePrice"].Value = textBoxUnitCostPrice.Text;
+                    dgView.Rows[n].Cells["SellingPrice"].Value = textBoxSellingPrice.Text;
+                    dgView.Rows[n].Cells["FreeIssue"].Value = textBoxFreeIssue.Text;
+                    dgView.Rows[n].Cells["NetAmount"].Value = textBoxNetAmount.Text;
+                    dgView.Rows[n].Cells["ItemName"].Value = textBoxItemName.Text;
+                    dgView.Rows[n].Cells["WholesalePrice"].Value = textBoxWholesalePrice.Text;
+                    dgView.Rows[n].Cells["ShopPrice"].Value = textBoxShopPrice.Text;
+                    dgView.Rows[n].Cells["SerialNo"].Value = textBoxSerial.Text;
+                    dgView.Rows[n].Cells["TransferHDId"].Value = TransferHDIdNew.ToString();
+                    dgView.Rows[n].Cells["FromBranchId"].Value = textBoxFromBranchId.Text;
+
+                    dgView.FirstDisplayedScrollingRowIndex = n;
+                    dgView.CurrentCell = dgView.Rows[n].Cells[0];
+                    dgView.Rows[n].Selected = true;
+
+                    CalculateTotal();
+
+                }
+
+                textBoxItemId.Text = "0";
+                textBoxItemCode.Text = "";
+                comboBoxItemCategory.SelectedIndex = -1;
+                comboBoxUnit.Text = "";
+                textBoxQty.Text = "0";
+                textBoxMinQty.Text = "0";
+                textBoxUnitCostPrice.Text = "0";
+                textBoxSellingPrice.Text = "0.00";
+                textBoxWholesalePrice.Text = "0.00";
+                textBoxShopPrice.Text = "0.00";
+                textBoxFreeIssue.Text = "0.00";
+                textBoxNetAmount.Text = "0.00";
+                textBoxDiscPer.Text = "0";
+                textBoxDiscAmount.Text = "0.00";
+                textBoxItemName.Text = "";
+                textBoxDefPurchasePrice.Text = "0.00";
+                textBoxUnitCostPrice.Text = "0.00";
+                CalculateTotal();
+                textBoxCash.Text = "0.00";
+                textBoxItemCode.Select();
+                textBoxSerial.Clear();
+                textBoxFromBranchId.Text = "0";
+                TransferHDIdNew = 0;
+                textBoxStartSerial.Clear();
+                textBoxItemCode.Select();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         void RemoveItem()
         {
             try
@@ -2290,8 +2499,22 @@ namespace easyPOSSolution
             //{
             //    AddtoBarcodeGrid();
             //}
-            AddtoGrid();
-            textBoxItemCode.Select();
+            errorProvider1.Clear();
+            bool isValid = ValidateQty() &&
+                            ValidateMinQty() &&
+                            ValidateFreeIssue() &&
+                            ValidatePurchasePrice() &&
+                            ValidateDiscPer() &&
+                            ValidateDiscAmount() &&
+                            ValidateUnitCost() &&
+                            ValidateRetailPrice() &&
+                            ValidateShopPrice() &&
+                            ValidateWholesalePrice();
+            if (isValid)
+            {
+                AddtoGrid();
+                textBoxItemCode.Select();
+            }
         }
 
         private void ButtonDeleteLine_Click(object sender, EventArgs e)
@@ -2317,10 +2540,10 @@ namespace easyPOSSolution
                         //objPOBAL.Wharehouse = "Wharehouse1";
                         ClassPODAL objPODAL = new ClassPODAL();
                         objPOBAL.DtDataSet = objPODAL.retreiveItemCodeData(objPOBAL);
-                        if (objPOBAL.DtDataSet.Tables[1].Rows.Count > 0)
+                        if (objPOBAL.DtDataSet.Tables[0].Rows.Count > 0)
                         {
                             List<ArrayList> newval = new List<ArrayList>();
-                            foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[1].Rows)
+                            foreach (DataRow dRow in objPOBAL.DtDataSet.Tables[0].Rows)
                             {
                                 ArrayList values = new ArrayList();
                                 values.Clear();
@@ -2368,11 +2591,11 @@ namespace easyPOSSolution
                                     SearchBranchQty();
                                 }
                             }
-                            textBoxSerial.Select();
+                            textBoxQty.Select();
                         }
                         else
                         {
-                            comboBoxItemCategory.Select();
+                            textBoxItemCode.Select();
                         }
                     }
                     catch (Exception ex)
@@ -2390,60 +2613,93 @@ namespace easyPOSSolution
 
         private void textBoxQty_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateQty();
+            if (isValid)
             {
-                textBoxMinQty.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxMinQty.Select();
+                }
             }
+            
         }
 
         private void textBoxMinQty_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateMinQty();
+            if (isValid)
             {
-                textBoxFreeIssue.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxFreeIssue.Select();
+                }
             }
         }
 
         private void textBoxUnitCostPrice_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateUnitCost();
+            if (isValid)
             {
-                textBoxSellingPrice.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxSellingPrice.Select();
+                }
             }
         }
 
         private void textBoxSellingPrice_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateRetailPrice();
+            if (isValid)
             {
-                textBoxWholesalePrice.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxWholesalePrice.Select();
+                }
             }
         }
 
         private void textBoxQty_TextChanged(object sender, EventArgs e)
         {
-            if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+            try
             {
-                textBoxDiscPer.Text = "0";
-                textBoxDiscAmount.Text = "0.00";
+                errorProvider1.Clear();
+                bool isValid = ValidateQty();
+                if (isValid)
+                {
+                    if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+                    {
+                        textBoxDiscPer.Text = "0";
+                        textBoxDiscAmount.Text = "0.00";
+                    }
+                    else if (Convert.ToDecimal(textBoxDiscPer.Text) > 0)
+                    {
+                        textBoxDiscAmount.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) * (Convert.ToDecimal(textBoxDiscPer.Text) / 100)).ToString("0.00");
+                        textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
+                        textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                    }
+                    textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                }
             }
-            else if (Convert.ToDecimal(textBoxDiscPer.Text) > 0)
+            catch (Exception ex)
             {
-                textBoxDiscAmount.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) * (Convert.ToDecimal(textBoxDiscPer.Text) / 100)).ToString("0.00");
-                textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
-                textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                MessageBox.Show(ex.Message);
             }
-            textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+            
         }
 
         private void textBoxUnitCostPrice_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                if ((string.IsNullOrEmpty(textBoxUnitCostPrice.Text)) || (textBoxUnitCostPrice.Text.Trim().Equals(string.Empty)))
-                {
-                }
-                else
+                errorProvider1.Clear();
+                bool isValid = ValidateUnitCost();
+                if (isValid)
                 {
                     if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
                     {
@@ -2458,8 +2714,8 @@ namespace easyPOSSolution
                     }
                     textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
                     CalcProfit();
-                    
                 }
+
                 
             }
             catch (Exception ex)
@@ -2788,15 +3044,20 @@ namespace easyPOSSolution
 
         private void textBoxFreeIssue_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateFreeIssue();
+            if (isValid)
             {
-                textBoxDefPurchasePrice.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxDefPurchasePrice.Select();
+                }
             }
         }
 
         private void comboBoxPayMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (loadStatus = false)
+            if (loadStatus == false)
             {
                 errorProvider1.Clear();
                 comboBoxBank.Enabled = false;
@@ -2937,41 +3198,64 @@ namespace easyPOSSolution
 
         private void textBoxDiscPer_TextChanged(object sender, EventArgs e)
         {
-            if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+            try
             {
-                textBoxDiscPer.Text = "0";
-                textBoxDiscAmount.Text = "0.00";
+                errorProvider1.Clear();
+                bool isValid = ValidateDiscPer();
+                if (isValid)
+                {
+                    if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+                    {
+                        textBoxDiscPer.Text = "0";
+                        textBoxDiscAmount.Text = "0.00";
+                    }
+                    else if ((Convert.ToDecimal(textBoxDiscPer.Text) == 0) && (textBoxItemCode.Text != ""))
+                    {
+                        textBoxDiscAmount.Text = "0.00";
+                        textBoxUnitCostPrice.Text = textBoxDefPurchasePrice.Text;
+                    }
+                    else if (Convert.ToDecimal(textBoxDiscPer.Text) > 0)
+                    {
+                        textBoxDiscAmount.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) * (Convert.ToDecimal(textBoxDiscPer.Text) / 100)).ToString("0.00");
+                        textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
+                        textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                    }
+                }
             }
-            else if ((Convert.ToDecimal(textBoxDiscPer.Text) == 0) && (textBoxItemCode.Text != ""))
+            catch (Exception ex)
             {
-                textBoxDiscAmount.Text = "0.00";
-                textBoxUnitCostPrice.Text = textBoxDefPurchasePrice.Text;
+                MessageBox.Show(ex.Message);
             }
-            else if (Convert.ToDecimal(textBoxDiscPer.Text) > 0)
-            {
-                textBoxDiscAmount.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) * (Convert.ToDecimal(textBoxDiscPer.Text) / 100)).ToString("0.00");
-                textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
-                textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-            }
+            
         }
 
         private void textBoxDiscPer_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateDiscPer();
+            if (isValid)
             {
-                textBoxSellingPrice.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxSellingPrice.Select();
+                }
             }
         }
 
         private void textBoxDefPurchasePrice_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidatePurchasePrice();
+            if (isValid)
             {
-                if (Convert.ToDecimal(textBoxUnitCostPrice.Text) == 0)
+                if (e.KeyCode == Keys.Enter)
                 {
-                    textBoxUnitCostPrice.Text = textBoxDefPurchasePrice.Text;
+                    if (Convert.ToDecimal(textBoxUnitCostPrice.Text) == 0)
+                    {
+                        textBoxUnitCostPrice.Text = textBoxDefPurchasePrice.Text;
+                    }
+                    textBoxDiscPer.Select();
                 }
-                textBoxDiscPer.Select();
             }
         }
 
@@ -3146,22 +3430,35 @@ namespace easyPOSSolution
 
         private void textBoxDefPurchasePrice_TextChanged(object sender, EventArgs e)
         {
-            if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+            try
             {
-                textBoxDiscPer.Text = "0";
-                textBoxDiscAmount.Text = "0.00";
+                errorProvider1.Clear();
+                bool isValid = ValidatePurchasePrice();
+                if (isValid)
+                {
+                    if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+                    {
+                        textBoxDiscPer.Text = "0";
+                        textBoxDiscAmount.Text = "0.00";
+                    }
+                    else if ((Convert.ToDecimal(textBoxDiscPer.Text) == 0) && (textBoxItemCode.Text != ""))
+                    {
+                        textBoxDiscAmount.Text = "0.00";
+                        textBoxUnitCostPrice.Text = textBoxDefPurchasePrice.Text;
+                    }
+                    else if (Convert.ToDecimal(textBoxDiscPer.Text) > 0)
+                    {
+                        textBoxDiscAmount.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) * (Convert.ToDecimal(textBoxDiscPer.Text) / 100)).ToString("0.00");
+                        textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
+                        textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
+                    }
+                }
             }
-            else if ((Convert.ToDecimal(textBoxDiscPer.Text) == 0) && (textBoxItemCode.Text != ""))
+            catch (Exception ex)
             {
-                textBoxDiscAmount.Text = "0.00";
-                textBoxUnitCostPrice.Text = textBoxDefPurchasePrice.Text;
+                MessageBox.Show(ex.Message);
             }
-            else if (Convert.ToDecimal(textBoxDiscPer.Text) > 0)
-            {
-                textBoxDiscAmount.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) * (Convert.ToDecimal(textBoxDiscPer.Text) / 100)).ToString("0.00");
-                textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
-                textBoxNetAmount.Text = (Convert.ToDecimal(textBoxQty.Text) * Convert.ToDecimal(textBoxUnitCostPrice.Text)).ToString("0.00");
-            }
+            
         }
 
         private void textBoxReturn_TextChanged(object sender, EventArgs e)
@@ -3204,28 +3501,64 @@ namespace easyPOSSolution
 
         private void textBoxWholesalePrice_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateWholesalePrice();
+            if (isValid)
             {
-                textBoxShopPrice.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxShopPrice.Select();
+                }
             }
         }
 
         private void textBoxShopPrice_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            errorProvider1.Clear();
+            bool isValid = ValidateShopPrice();
+            if (isValid)
             {
-                ButtonAdd.Select();
+                if (e.KeyCode == Keys.Enter)
+                {
+                    textBoxSerial.Select();
+                }
             }
         }
 
         private void textBoxSellingPrice_TextChanged(object sender, EventArgs e)
         {
-            CalcProfit();
+            try
+            {
+                errorProvider1.Clear();
+                bool isValid = ValidateRetailPrice();
+                if (isValid)
+                {
+                    CalcProfit();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void textBoxWholesalePrice_TextChanged(object sender, EventArgs e)
         {
-            CalcProfit();
+            try
+            {
+                errorProvider1.Clear();
+                bool isValid = ValidateWholesalePrice();
+                if (isValid)
+                {
+                    CalcProfit();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void lblUserId_TextChanged(object sender, EventArgs e)
@@ -3233,6 +3566,7 @@ namespace easyPOSSolution
             userPermission();
             loadGRNOptions();
             SelectuserGRNPrint();
+            SelectCompanyData();
             if (autocomplete == true)
             {
                 ItemAutoComplete();
@@ -3243,7 +3577,16 @@ namespace easyPOSSolution
         {
             if (e.KeyCode == Keys.Enter)
             {
-                textBoxQty.Select();
+                if (textBoxSerial.Text != "")
+                {
+                    AddtoGridSerial();
+                    textBoxSerial.Select();
+                }
+                else
+                {
+                    ButtonAdd.Select();
+
+                }
             }
         }
 
@@ -3316,6 +3659,325 @@ namespace easyPOSSolution
                 
             }
         }
-        
+
+        private void simpleButton_Click(object sender, EventArgs e)
+        {
+            AddtoGridWithSerialGenerator();
+        }
+
+        private void checkBoxVAT_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxVAT.Checked == false)
+            {
+                textBoxVAT.Text = "0.00";
+            }
+            else
+            {
+                if (dgView.Rows.Count > 0)
+                {
+                    calculateVAT();
+                    calculateBalance();
+                }
+            }
+        }
+
+        private bool ValidateQty()
+        {
+            textBoxQty.Text = textBoxQty.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxQty.Text)) || (textBoxQty.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Qty.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxQty.Text))
+            {
+                errorCode = "Invalid Qty.";
+            }
+            else if (Convert.ToDecimal(textBoxQty.Text) < 0)
+            {
+                errorCode = "Invalid Qty.";
+            }
+            string message = errorCode;
+            errorProvider1.SetError(textBoxQty, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateMinQty()
+        {
+            textBoxMinQty.Text = textBoxMinQty.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxMinQty.Text)) || (textBoxMinQty.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Min Qty.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxMinQty.Text))
+            {
+                errorCode = "Invalid Min Qty.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxMinQty, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateFreeIssue()
+        {
+            textBoxFreeIssue.Text = textBoxFreeIssue.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxFreeIssue.Text)) || (textBoxFreeIssue.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Feee Issue Qty.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxFreeIssue.Text))
+            {
+                errorCode = "Invalid Feee Issue Qty.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxFreeIssue, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidatePurchasePrice()
+        {
+            textBoxDefPurchasePrice.Text = textBoxDefPurchasePrice.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxDefPurchasePrice.Text)) || (textBoxDefPurchasePrice.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Feee Issue Qty.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxDefPurchasePrice.Text))
+            {
+                errorCode = "Invalid Feee Issue Qty.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxDefPurchasePrice, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateDiscPer()
+        {
+            textBoxDiscPer.Text = textBoxDiscPer.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxDiscPer.Text)) || (textBoxDiscPer.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Disc Per.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxDiscPer.Text))
+            {
+                errorCode = "Invalid Disc Per.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxDiscPer, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateDiscAmount()
+        {
+            textBoxDiscAmount.Text = textBoxDiscAmount.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxDiscAmount.Text)) || (textBoxDiscAmount.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Disc Amount.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxDiscAmount.Text))
+            {
+                errorCode = "Invalid Disc Amount.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxDiscAmount, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateUnitCost()
+        {
+            textBoxUnitCostPrice.Text = textBoxUnitCostPrice.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxUnitCostPrice.Text)) || (textBoxUnitCostPrice.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Unit Cost.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxUnitCostPrice.Text))
+            {
+                errorCode = "Invalid Unit Cost.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxUnitCostPrice, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateRetailPrice()
+        {
+            textBoxSellingPrice.Text = textBoxSellingPrice.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxSellingPrice.Text)) || (textBoxSellingPrice.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Retail Price.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxSellingPrice.Text))
+            {
+                errorCode = "Invalid Retail Price.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxSellingPrice, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateWholesalePrice()
+        {
+            textBoxWholesalePrice.Text = textBoxWholesalePrice.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxWholesalePrice.Text)) || (textBoxWholesalePrice.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Wholesale Price.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxWholesalePrice.Text))
+            {
+                errorCode = "Invalid Wholesale Price.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxWholesalePrice, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateShopPrice()
+        {
+            textBoxShopPrice.Text = textBoxShopPrice.Text.Trim();
+            string errorCode = string.Empty;
+            if ((string.IsNullOrEmpty(textBoxShopPrice.Text)) || (textBoxShopPrice.Text.Trim().Equals(string.Empty)))
+            {
+                errorCode = "Please Enter Shop Price.";
+            }
+            else if (!FieldValidationHelper.IsValidDecimal(textBoxShopPrice.Text))
+            {
+                errorCode = "Invalid Shop Price.";
+            }
+            //else if (Convert.ToDecimal(textBoxMinQty.Text) < 0)
+            //{
+            //    errorCode = "Invalid Min Qty.";
+            //}
+            string message = errorCode;
+            errorProvider1.SetError(textBoxShopPrice, message);
+            if (message.Equals(string.Empty))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void textBoxDiscAmount_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                errorProvider1.Clear();
+                bool isValid = ValidateDiscAmount();
+                if (isValid)
+                {
+                    textBoxUnitCostPrice.Text = (Convert.ToDecimal(textBoxDefPurchasePrice.Text) - Convert.ToDecimal(textBoxDiscAmount.Text)).ToString("0.00");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
     }
 }

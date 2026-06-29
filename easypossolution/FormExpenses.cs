@@ -22,6 +22,7 @@ namespace easyPOSSolution
         ClassMasterDAL objDAL = new ClassMasterDAL();
 
         ArrayList alistForm = new ArrayList();
+        string FormURL;
 
         #endregion
 
@@ -34,6 +35,35 @@ namespace easyPOSSolution
         #endregion
 
         #region Methods
+
+        private void SelectFormHelp()
+        {
+            try
+            {
+                FormURL = "";
+                BALUser objUser = new BALUser();
+                objUser.FormId = 4;
+                DALUser dalUser = new DALUser();
+                objUser.DtDataSet = dalUser.retreiveFormHelpURL(objUser);
+                if (objUser.DtDataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<ArrayList> newval = new List<ArrayList>();
+                    foreach (DataRow dRow in objUser.DtDataSet.Tables[0].Rows)
+                    {
+                        ArrayList values = new ArrayList();
+                        values.Clear();
+                        foreach (object value in dRow.ItemArray)
+                            values.Add(value);
+                        newval.Add(values);
+                        FormURL = (values[0].ToString().Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void userPermission()
         {
@@ -229,21 +259,42 @@ namespace easyPOSSolution
         {
             try
             {
+                if (checkBoxPrint3In.Checked == true)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    FormReport REPORT = new FormReport();
+                    REPORT.Show();
+                    CrystalReportPrintExpenses3In rpt = new CrystalReportPrintExpenses3In();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.ExpensesId = Convert.ToInt32(textBoxID.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveExpensePrintData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    REPORT.crystalReportViewer1.ReportSource = rpt;
+                    REPORT.crystalReportViewer1.Refresh();
+                    //REPORT.crystalReportViewer1.PrintReport();
+                    //rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    FormReport REPORT = new FormReport();
+                    REPORT.Show();
+                    CrystalReportPrintExpenses rpt = new CrystalReportPrintExpenses();
+                    ClassPOBAL objPOBAL = new ClassPOBAL();
+                    objPOBAL.ExpensesId = Convert.ToInt32(textBoxID.Text);
+                    ClassPODAL objPODAL = new ClassPODAL();
+                    objPOBAL.DtDataSet = objPODAL.retreiveExpensePrintData(objPOBAL);
+                    rpt.SetDataSource(objPOBAL.DtDataSet);
+                    REPORT.crystalReportViewer1.ReportSource = rpt;
+                    REPORT.crystalReportViewer1.Refresh();
+                    //REPORT.crystalReportViewer1.PrintReport();
+                    //rpt.PrintToPrinter(1, false, 0, 0);
+                    Cursor.Current = Cursors.Default;
+                }
 
-                Cursor.Current = Cursors.WaitCursor;
-                FormReport REPORT = new FormReport();
-                REPORT.Show();
-                CrystalReportPrintExpenses rpt = new CrystalReportPrintExpenses();
-                ClassPOBAL objPOBAL = new ClassPOBAL();
-                objPOBAL.ExpensesId = Convert.ToInt32(textBoxID.Text);
-                ClassPODAL objPODAL = new ClassPODAL();
-                objPOBAL.DtDataSet = objPODAL.retreiveExpensePrintData(objPOBAL);
-                rpt.SetDataSource(objPOBAL.DtDataSet);
-                REPORT.crystalReportViewer1.ReportSource = rpt;
-                REPORT.crystalReportViewer1.Refresh();
-                //REPORT.crystalReportViewer1.PrintReport();
-                //rpt.PrintToPrinter(1, false, 0, 0);
-                Cursor.Current = Cursors.Default;
+                
 
             }
             catch (Exception ex)
@@ -609,11 +660,17 @@ namespace easyPOSSolution
         private void lblUserId_TextChanged(object sender, EventArgs e)
         {
             userPermission();
+            SelectFormHelp();
         }
 
         private void lblBranchID_TextChanged(object sender, EventArgs e)
         {
             comboBoxBranch.SelectedValue = lblBranchID.Text;
+        }
+
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(FormURL.ToString());
         }
 
         

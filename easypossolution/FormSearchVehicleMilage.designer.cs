@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearchVehicleMilage));
-            this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
+            //this.allCustomerInvoiceTableAdapter = new easyPOSSolution.easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.txtReprint = new System.Windows.Forms.TextBox();
@@ -64,7 +64,7 @@
             // 
             // allCustomerInvoiceTableAdapter
             // 
-            this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
+            //this.allCustomerInvoiceTableAdapter.ClearBeforeFill = true;
             // 
             // groupBox4
             // 
@@ -291,7 +291,7 @@
 
         #endregion
 
-        private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
+        //private easyposelpitiyaDataSetTableAdapters.AllCustomerInvoiceTableAdapter allCustomerInvoiceTableAdapter;
         private System.Windows.Forms.GroupBox groupBox4;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
         private System.Windows.Forms.TextBox txtReprint;

@@ -1,4 +1,4 @@
-﻿using easyBAL;
+using easyBAL;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -2737,7 +2737,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[22];
+                param = new MySqlParameter[24];
                 param[0] = new MySqlParameter("PIHDId1", obj.POHDId);
                 param[1] = new MySqlParameter("ItemsId1", obj.ItemsId);
                 param[2] = new MySqlParameter("ItemCode1", obj.ItemCode);
@@ -2760,6 +2760,8 @@ namespace easyDAL
                 param[19] = new MySqlParameter("SerialNo1", obj.SerialNo);
                 param[20] = new MySqlParameter("TransferHDId1", obj.TransferHDId);
                 param[21] = new MySqlParameter("FromBranchId1", obj.FromBranchId);
+                param[22] = new MySqlParameter("TotalQty1", obj.TotalQty);
+                param[23] = new MySqlParameter("BagWeight1", obj.BagWeight);
 
                 objDataAccess.beginTransaction();
                 count = objDataAccess.executeReturnInt("InsertPIDT", param);
@@ -2779,7 +2781,7 @@ namespace easyDAL
             int count = 0;
             try
             {
-                param = new MySqlParameter[17];
+                param = new MySqlParameter[19];
                 param[0] = new MySqlParameter("PIHDId1", obj.POHDId);
                 param[1] = new MySqlParameter("ItemsId1", obj.ItemsId);
                 param[2] = new MySqlParameter("ItemCode1", obj.ItemCode);
@@ -2797,6 +2799,8 @@ namespace easyDAL
                 param[14] = new MySqlParameter("BranchId1", obj.BranchId);
                 param[15] = new MySqlParameter("ItemName1", obj.ItemName);
                 param[16] = new MySqlParameter("SerialNo1", obj.SerialNo);
+                param[17] = new MySqlParameter("TotalQty1", obj.TotalQty);
+                param[18] = new MySqlParameter("BagWeight1", obj.BagWeight);
                
 
                 objDataAccess.beginTransaction();

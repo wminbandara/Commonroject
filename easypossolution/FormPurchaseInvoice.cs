@@ -1,4 +1,4 @@
-﻿using easyBAL;
+using easyBAL;
 using easyDAL;
 using easyPOSSolution.Utility;
 using Microsoft.VisualBasic.FileIO;
@@ -446,6 +446,7 @@ namespace easyPOSSolution
                 loadBank();
                 loadNewSupplierType();
                 //loadGRNOptions();
+                dgView.EditingControlShowing += dgView_EditingControlShowing;
                 loadStatus = false;
                 textBoxItemCode.Select();
             }
@@ -939,6 +940,8 @@ namespace easyPOSSolution
                             objBAL.ItemUnit = dgView.Rows[i].Cells["ItemUnit"].Value.ToString().Trim();
                             //objBAL.ItemLocation = dgView["ItemLocation", i].Value.ToString();
                             objBAL.PurchaseQty = Convert.ToDecimal(dgView.Rows[i].Cells["PurchaseQty"].Value);
+                            objBAL.TotalQty = dgView.Rows[i].Cells["TotalQty"].Value != null ? Convert.ToDecimal(dgView.Rows[i].Cells["TotalQty"].Value) : 0;
+                            objBAL.BagWeight = dgView.Rows[i].Cells["BagWeight"].Value != null ? Convert.ToDecimal(dgView.Rows[i].Cells["BagWeight"].Value) : 0;
                             objBAL.MinQty = Convert.ToDecimal(dgView.Rows[i].Cells["MinQty"].Value);
                             objBAL.FreeIssue = Convert.ToDecimal(dgView.Rows[i].Cells["FreeIssue"].Value.ToString());
                             objBAL.Discount = Convert.ToDecimal(dgView.Rows[i].Cells["Discount"].Value.ToString());
@@ -965,6 +968,8 @@ namespace easyPOSSolution
                             objBAL.ItemUnit = dgView.Rows[i].Cells["ItemUnit"].Value.ToString().Trim();
                             //objBAL.ItemLocation = dgView["ItemLocation", i].Value.ToString();
                             objBAL.PurchaseQty = Convert.ToDecimal(dgView.Rows[i].Cells["PurchaseQty"].Value);
+                            objBAL.TotalQty = dgView.Rows[i].Cells["TotalQty"].Value != null ? Convert.ToDecimal(dgView.Rows[i].Cells["TotalQty"].Value) : 0;
+                            objBAL.BagWeight = dgView.Rows[i].Cells["BagWeight"].Value != null ? Convert.ToDecimal(dgView.Rows[i].Cells["BagWeight"].Value) : 0;
                             objBAL.MinQty = Convert.ToDecimal(dgView.Rows[i].Cells["MinQty"].Value);
                             objBAL.FreeIssue = Convert.ToDecimal(dgView.Rows[i].Cells["FreeIssue"].Value.ToString());
                             objBAL.Discount = Convert.ToDecimal(dgView.Rows[i].Cells["Discount"].Value.ToString());
@@ -1567,6 +1572,8 @@ namespace easyPOSSolution
                         dgView.Rows[n].Cells["ItemCode"].Value = (values[3].ToString().Trim());
                         dgView.Rows[n].Cells["ItemCatId"].Value = (values[4].ToString().Trim());
                         dgView.Rows[n].Cells["ItemUnit"].Value = (values[5].ToString().Trim());
+                        dgView.Rows[n].Cells["TotalQty"].Value = (values[6].ToString().Trim());
+                        dgView.Rows[n].Cells["BagWeight"].Value = "0.00";
                         dgView.Rows[n].Cells["PurchaseQty"].Value = (values[6].ToString().Trim());
                         dgView.Rows[n].Cells["MinQty"].Value = (values[7].ToString().Trim());
                         dgView.Rows[n].Cells["PurchasePrice"].Value = (values[8].ToString().Trim());
@@ -1750,6 +1757,8 @@ namespace easyPOSSolution
                         dgView.Rows[n].Cells["ItemCode"].Value = (values[3].ToString().Trim());
                         dgView.Rows[n].Cells["ItemCatId"].Value = (values[4].ToString().Trim());
                         dgView.Rows[n].Cells["ItemUnit"].Value = (values[5].ToString().Trim());
+                        dgView.Rows[n].Cells["TotalQty"].Value = (values[18].ToString().Trim());
+                        dgView.Rows[n].Cells["BagWeight"].Value = (values[19].ToString().Trim());
                         dgView.Rows[n].Cells["PurchaseQty"].Value = (values[6].ToString().Trim());
                         dgView.Rows[n].Cells["MinQty"].Value = (values[7].ToString().Trim());
                         dgView.Rows[n].Cells["Discount"].Value = (values[13].ToString().Trim());                        
@@ -2052,6 +2061,8 @@ namespace easyPOSSolution
                 dgView.Rows[n].Cells["ItemCode"].Value = textBoxItemCode.Text;
                 dgView.Rows[n].Cells["ItemCatId"].Value = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
                 dgView.Rows[n].Cells["ItemUnit"].Value = comboBoxUnit.Text;
+                dgView.Rows[n].Cells["TotalQty"].Value = textBoxQty.Text;
+                dgView.Rows[n].Cells["BagWeight"].Value = "0.00";
                 dgView.Rows[n].Cells["PurchaseQty"].Value = textBoxQty.Text;
                 dgView.Rows[n].Cells["MinQty"].Value = textBoxMinQty.Text;
                 dgView.Rows[n].Cells["Discount"].Value = textBoxDiscAmount.Text;
@@ -2118,6 +2129,8 @@ namespace easyPOSSolution
                 dgView.Rows[n].Cells["ItemCode"].Value = textBoxItemCode.Text;
                 dgView.Rows[n].Cells["ItemCatId"].Value = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
                 dgView.Rows[n].Cells["ItemUnit"].Value = comboBoxUnit.Text;
+                dgView.Rows[n].Cells["TotalQty"].Value = "1.00";
+                dgView.Rows[n].Cells["BagWeight"].Value = "0.00";
                 dgView.Rows[n].Cells["PurchaseQty"].Value = "1.00";
                 dgView.Rows[n].Cells["MinQty"].Value = textBoxMinQty.Text;
                 dgView.Rows[n].Cells["Discount"].Value = textBoxDiscAmount.Text;
@@ -2196,6 +2209,8 @@ namespace easyPOSSolution
                     dgView.Rows[n].Cells["ItemCode"].Value = textBoxItemCode.Text;
                     dgView.Rows[n].Cells["ItemCatId"].Value = Convert.ToInt32(comboBoxItemCategory.SelectedValue.ToString());
                     dgView.Rows[n].Cells["ItemUnit"].Value = comboBoxUnit.Text;
+                    dgView.Rows[n].Cells["TotalQty"].Value = "1.00";
+                    dgView.Rows[n].Cells["BagWeight"].Value = "0.00";
                     dgView.Rows[n].Cells["PurchaseQty"].Value = "1.00";
                     dgView.Rows[n].Cells["MinQty"].Value = textBoxMinQty.Text;
                     dgView.Rows[n].Cells["Discount"].Value = textBoxDiscAmount.Text;
@@ -3393,39 +3408,105 @@ namespace easyPOSSolution
             }
         }
 
+        private bool isGridUpdating = false;
+
         private void dgView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 3 && dgView.Rows.Count > 0)
-            {
-                //textBoxTotGrosse.Text = GrossTot.ToString("0.00");
-                //textBoxReturn.Text = RtnTot.ToString("0.00");
+            if (isGridUpdating) return;
+            if (dgView.Rows.Count == 0 || e.RowIndex < 0) return;
 
-                textBoxTotGrosse.Text = CellQtyChange().ToString("0.00");
-                //lblGrossTot.Text = CellQtyChange().ToString("0.00");
-                CalculateTotal();
-            }
-            else if (e.ColumnIndex == 5 && dgView.Rows.Count > 0)
-            {
+            string colName = dgView.Columns[e.ColumnIndex].Name;
 
-                textBoxTotGrosse.Text = CellQtyChange().ToString("0.00");
-                //lblGrossTot.Text = CellQtyChange().ToString("0.00");
-                CalculateTotal();
+            if (colName == "TotalQty" || colName == "BagWeight" || colName == "PurchaseQty" || colName == "PurchasePrice")
+            {
+                try
+                {
+                    isGridUpdating = true;
+                    var row = dgView.Rows[e.RowIndex];
+
+                    decimal totalQty = 0;
+                    decimal bagWeight = 0;
+
+                    if (row.Cells["TotalQty"].Value != null)
+                        decimal.TryParse(row.Cells["TotalQty"].Value.ToString(), out totalQty);
+
+                    if (row.Cells["BagWeight"].Value != null)
+                        decimal.TryParse(row.Cells["BagWeight"].Value.ToString(), out bagWeight);
+
+                    if (colName == "TotalQty" || colName == "BagWeight")
+                    {
+                        decimal purchaseQty = totalQty - bagWeight;
+                        row.Cells["PurchaseQty"].Value = purchaseQty.ToString("0.00");
+                    }
+
+                    decimal finalPurchaseQty = 0;
+                    if (row.Cells["PurchaseQty"].Value != null)
+                        decimal.TryParse(row.Cells["PurchaseQty"].Value.ToString(), out finalPurchaseQty);
+
+                    decimal purchasePrice = 0;
+                    if (row.Cells["PurchasePrice"].Value != null)
+                        decimal.TryParse(row.Cells["PurchasePrice"].Value.ToString(), out purchasePrice);
+
+                    row.Cells["NetAmount"].Value = (finalPurchaseQty * purchasePrice).ToString("0.00");
+
+                    textBoxTotGrosse.Text = GetGridTotalGrosse().ToString("0.00");
+                    CalculateTotal();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    isGridUpdating = false;
+                }
             }
         }
 
-        private double CellQtyChange()
+        private double GetGridTotalGrosse()
         {
             double sum = 0;
             for (int i = 0; i < dgView.Rows.Count; ++i)
             {
-                //dgView.Rows[i].Cells["Amount"].Value = (Convert.ToDecimal(dgView.Rows[i].Cells["Qty"].Value) * Convert.ToDecimal(dgView.Rows[i].Cells["Price"].Value)).ToString("0.00");
-                dgView.Rows[i].Cells["NetAmount"].Value = (Convert.ToDecimal(dgView.Rows[i].Cells["PurchaseQty"].Value) * Convert.ToDecimal(dgView.Rows[i].Cells["PurchasePrice"].Value)).ToString("0.00");
-
-                double d = 0;
-                Double.TryParse(dgView.Rows[i].Cells["NetAmount"].Value.ToString(), out d);
-                sum += d;
+                if (dgView.Rows[i].Cells["NetAmount"].Value != null)
+                {
+                    double d = 0;
+                    Double.TryParse(dgView.Rows[i].Cells["NetAmount"].Value.ToString(), out d);
+                    sum += d;
+                }
             }
             return sum;
+        }
+
+        private void dgView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            TextBox tb = e.Control as TextBox;
+            if (tb != null)
+            {
+                tb.KeyPress -= NumericCell_KeyPress;
+                if (dgView.CurrentCell != null)
+                {
+                    string colName = dgView.Columns[dgView.CurrentCell.ColumnIndex].Name;
+                    if (colName == "TotalQty" || colName == "BagWeight" || colName == "PurchaseQty")
+                    {
+                        tb.KeyPress += NumericCell_KeyPress;
+                    }
+                }
+            }
+        }
+
+        private void NumericCell_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            TextBox txt = sender as TextBox;
+            if (txt != null && (e.KeyChar == '.') && (txt.Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBoxDefPurchasePrice_TextChanged(object sender, EventArgs e)

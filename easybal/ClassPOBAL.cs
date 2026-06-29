@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -177,6 +177,7 @@ namespace easyBAL
         public decimal GrossAmount { get; set; }
         public string SearchText { get; set; }
         public string CostCode { get; set; }
-        
+        public decimal TotalQty { get; set; }
+        public decimal BagWeight { get; set; }
     }
 }

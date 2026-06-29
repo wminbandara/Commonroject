@@ -10597,6 +10597,8 @@ AddBarcode1 bool
 ,SerialNo1 varchar(45)
 ,TransferHDId1 int
 ,FromBranchId1 int
+,TotalQty1 decimal(20, 2)
+,BagWeight1 decimal(20, 2)
 )
 BEGIN
 DECLARE AvgCost1 decimal(10, 2) DEFAULT 0;
@@ -10625,7 +10627,9 @@ INSERT INTO pidt
 , ItemName
 , SerialNo
 , TransferHDId
-, FromBranchId)
+, FromBranchId
+, TotalQty
+, BagWeight)
 VALUES
 (PIHDId1
 , ItemsId1
@@ -10646,7 +10650,9 @@ VALUES
 , ItemName1
 , SerialNo1
 , TransferHDId1
-, FromBranchId1);
+, FromBranchId1
+, TotalQty1
+, BagWeight1);
 IF(SerialNo1 <> '') THEN
 BEGIN
 INSERT INTO serialpurchase
@@ -10897,6 +10903,8 @@ PurchaseDate1 date,
 BranchId1 int,
 Discount1 decimal(10, 2)
 ,SerialNo1 varchar(45)
+,TotalQty1 decimal(20, 2)
+,BagWeight1 decimal(20, 2)
 )
 BEGIN
 INSERT INTO pidtrtn
@@ -10914,7 +10922,9 @@ INSERT INTO pidtrtn
 , CreatedOn
 , CreatedBy
 , Discount
-, SerialNo)
+, SerialNo
+, TotalQty
+, BagWeight)
 VALUES
 (PIHDId1
 , ItemsId1
@@ -10930,7 +10940,9 @@ VALUES
 , CONVERT_TZ(now(), @@session.time_zone, '+05:30')
 , CreatedBy1
 , Discount1
-, SerialNo1);
+, SerialNo1
+, TotalQty1
+, BagWeight1);
 IF(SerialNo1 <> '') THEN
 BEGIN
 UPDATE serialsummary
@@ -34785,6 +34797,8 @@ SELECT A.PIDTId
 , B.ShopPrice
 , A.SerialNo
 , A.FromBranchId
+, A.TotalQty
+, A.BagWeight
 FROM pidt A
 INNER JOIN itemsummary B
 ON A.ItemsId = B.ItemsId

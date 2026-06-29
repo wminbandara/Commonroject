@@ -3957,6 +3957,7 @@ namespace easyPOSSolution
             textBoxTotDiscPerc.Text = companydisc.ToString();
             textBoxChargesPer.Text = ChargePer.ToString();
             textBoxOurPrice.Text = "0.00";
+            textBoxCustomerAddress.Clear();
             cmdSave.Enabled = true;
             lblCashTender.Enabled = true;
             gridControl4.DataSource = null;
@@ -4269,7 +4270,7 @@ namespace easyPOSSolution
 
                 listSuggestCust.Left = clientPoint.X;
                 listSuggestCust.Top = clientPoint.Y + tb.Height;
-                listSuggestCust.Width = Math.Max(tb.Width, 400);
+                listSuggestCust.Width = Math.Max(tb.Width, 450);
                 listSuggestCust.Height = Math.Min(150, matches.Count * 22 + 5);
                 listSuggestCust.Visible = true;
                 listSuggestCust.BringToFront();
@@ -4326,7 +4327,8 @@ namespace easyPOSSolution
                     {
                         string code = dRow["CustomerCode"].ToString().Trim();
                         string name = dRow["CustomerName"].ToString().Trim();
-                        string formatted = string.Format("[{0}] - {1}", code, name);
+                        string tel = dRow["CustomerTelNo"].ToString().Trim();
+                        string formatted = string.Format("[{0}] - {1} - {2}", code, name, tel);
                         allCustomers.Add(formatted);
                     }
                 }

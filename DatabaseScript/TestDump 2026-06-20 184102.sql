@@ -32097,8 +32097,7 @@ CREATE PROCEDURE `SelectItemNamesInvoice`()
 BEGIN
 SELECT ItemsId, ItemCode, ItemName
 FROM itemsummary
-WHERE RawMaterial = 0
-AND AllowSales = 1;
+WHERE AllowSales = 1;
 END |
 DELIMITER ;
 

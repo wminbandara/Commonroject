@@ -2578,7 +2578,7 @@
             // textBoxMessage
             // 
             this.textBoxMessage.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxMessage.Location = new System.Drawing.Point(313, 20);
+            this.textBoxMessage.Location = new System.Drawing.Point(308, 104);
             this.textBoxMessage.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxMessage.Multiline = true;
             this.textBoxMessage.Name = "textBoxMessage";
@@ -2703,7 +2703,7 @@
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SOHDId1});
-            this.dataGridView3.Location = new System.Drawing.Point(552, 16);
+            this.dataGridView3.Location = new System.Drawing.Point(687, 48);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;

@@ -1,4 +1,4 @@
-﻿using easyBAL;
+using easyBAL;
 using easyDAL;
 using easyPOSSolution.Utility;
 using System;
@@ -27,6 +27,12 @@ namespace easyPOSSolution
 
         ArrayList alistOption = new ArrayList();
         ArrayList alistForm = new ArrayList();
+
+        private ListBox listSuggest;
+        private List<string> allItems = new List<string>();
+        private TextBox activeTextBox;
+        private bool isUpdatingText = false;
+        private bool suggestBoxInitialized = false;
 
         #endregion
 
@@ -108,27 +114,170 @@ namespace easyPOSSolution
             }
         }
 
+        private void InitializeSuggestBox()
+        {
+            if (suggestBoxInitialized) return;
+
+            listSuggest = new ListBox();
+            listSuggest.Visible = false;
+            listSuggest.Height = 150;
+            listSuggest.SelectionMode = SelectionMode.One;
+            listSuggest.Font = new Font("Cambria", 11.25F, FontStyle.Bold);
+            listSuggest.DoubleClick += ListSuggest_DoubleClick;
+            listSuggest.KeyDown += ListSuggest_KeyDown;
+
+            textBoxItemName.TextChanged += TextBox_TextChanged;
+            textBoxItemCode.TextChanged += TextBox_TextChanged;
+            textBoxItemName.Enter += TextBox_Enter;
+            textBoxItemCode.Enter += TextBox_Enter;
+            textBoxItemName.Leave += TextBox_Leave;
+            textBoxItemCode.Leave += TextBox_Leave;
+
+            textBoxItemName.AutoCompleteMode = AutoCompleteMode.None;
+            textBoxItemCode.AutoCompleteMode = AutoCompleteMode.None;
+
+            activeTextBox = textBoxItemName;
+            suggestBoxInitialized = true;
+        }
+
+        private void ListSuggest_DoubleClick(object sender, EventArgs e)
+        {
+            SelectSuggestedItem(activeTextBox);
+        }
+
+        private void ListSuggest_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SelectSuggestedItem(activeTextBox);
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                listSuggest.Visible = false;
+                if (activeTextBox != null)
+                {
+                    activeTextBox.Focus();
+                }
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Up && listSuggest.SelectedIndex == 0)
+            {
+                if (activeTextBox != null)
+                {
+                    activeTextBox.Focus();
+                }
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox_Enter(object sender, EventArgs e)
+        {
+            activeTextBox = sender as TextBox;
+        }
+
+        private void TextBox_Leave(object sender, EventArgs e)
+        {
+            if (!this.IsHandleCreated) return;
+
+            this.BeginInvoke(new Action(() =>
+            {
+                if (listSuggest != null && this.ActiveControl != listSuggest && this.ActiveControl != textBoxItemCode && this.ActiveControl != textBoxItemName)
+                {
+                    listSuggest.Visible = false;
+                }
+            }));
+        }
+
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (isUpdatingText) return;
+
+            TextBox tb = sender as TextBox;
+            if (tb == null) return;
+
+            string query = tb.Text;
+            if (string.IsNullOrEmpty(query))
+            {
+                listSuggest.Visible = false;
+                return;
+            }
+
+            var matches = allItems
+                .Where(item => item.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList();
+
+            if (matches.Count > 0)
+            {
+                listSuggest.DataSource = null;
+                listSuggest.DataSource = matches;
+
+                if (listSuggest.Parent != this)
+                {
+                    if (listSuggest.Parent != null)
+                        listSuggest.Parent.Controls.Remove(listSuggest);
+                    this.Controls.Add(listSuggest);
+                }
+
+                Point screenPoint = tb.PointToScreen(new Point(0, 0));
+                Point clientPoint = this.PointToClient(screenPoint);
+
+                listSuggest.Left = clientPoint.X;
+                listSuggest.Top = clientPoint.Y + tb.Height;
+                listSuggest.Width = Math.Max(tb.Width, 350);
+                listSuggest.Height = Math.Min(150, matches.Count * 22 + 5);
+                listSuggest.Visible = true;
+                listSuggest.BringToFront();
+            }
+            else
+            {
+                listSuggest.Visible = false;
+            }
+        }
+
+        private void SelectSuggestedItem(TextBox tb)
+        {
+            if (listSuggest.SelectedItem == null) return;
+
+            string selected = listSuggest.SelectedItem.ToString();
+            int closeBracket = selected.IndexOf(']');
+            if (selected.StartsWith("[") && closeBracket > 0)
+            {
+                string code = selected.Substring(1, closeBracket - 1).Trim();
+                string name = selected.Substring(closeBracket + 1).Replace("- ", "").Trim();
+
+                isUpdatingText = true;
+                textBoxItemCode.Text = code;
+                textBoxItemName.Text = name;
+                listSuggest.Visible = false;
+
+                // Programmatically trigger code keydown lookup logic
+                textBoxItemCode_KeyDown(textBoxItemCode, new KeyEventArgs(Keys.Enter));
+
+                isUpdatingText = false;
+            }
+        }
+
         private void ItemAutoComplete()
         {
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
+                InitializeSuggestBox();
+
                 ClassInvoiceBAL objInvBAL = new ClassInvoiceBAL();
                 ClassInvoiveDAL objInvDAL = new ClassInvoiveDAL();
                 objInvBAL.DtDataSet = objInvDAL.retreiveItemName(objInvBAL);
 
+                allItems.Clear();
                 if (objInvBAL.DtDataSet.Tables[0].Rows.Count > 0)
                 {
-                    List<ArrayList> newval = new List<ArrayList>();
                     foreach (DataRow dRow in objInvBAL.DtDataSet.Tables[0].Rows)
                     {
-                        ArrayList values = new ArrayList();
-                        values.Clear();
-                        foreach (object value in dRow.ItemArray)
-                            values.Add(value);
-                        newval.Add(values);
-                        textBoxItemCode.AutoCompleteCustomSource.Add(values[1].ToString());
-                        textBoxItemName.AutoCompleteCustomSource.Add(values[2].ToString());
+                        string code = dRow[1].ToString().Trim();
+                        string name = dRow[2].ToString().Trim();
+                        string formatted = string.Format("[{0}] - {1}", code, name);
+                        allItems.Add(formatted);
                     }
                 }
                 Cursor.Current = Cursors.Default;
@@ -594,6 +743,21 @@ namespace easyPOSSolution
 
         private void textBoxItemCode_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Down && listSuggest != null && listSuggest.Visible)
+            {
+                listSuggest.Focus();
+                if (listSuggest.Items.Count > 0)
+                    listSuggest.SelectedIndex = 0;
+                e.Handled = true;
+                return;
+            }
+            if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab) && listSuggest != null && listSuggest.Visible && listSuggest.Items.Count > 0)
+            {
+                SelectSuggestedItem(sender as TextBox);
+                e.Handled = true;
+                return;
+            }
+
             if (e.KeyCode == Keys.Enter)
             {
                 if (textBoxItemCode.Text != "")
@@ -786,6 +950,21 @@ namespace easyPOSSolution
 
         private void textBoxItemName_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Down && listSuggest != null && listSuggest.Visible)
+            {
+                listSuggest.Focus();
+                if (listSuggest.Items.Count > 0)
+                    listSuggest.SelectedIndex = 0;
+                e.Handled = true;
+                return;
+            }
+            if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab) && listSuggest != null && listSuggest.Visible && listSuggest.Items.Count > 0)
+            {
+                SelectSuggestedItem(sender as TextBox);
+                e.Handled = true;
+                return;
+            }
+
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 if (textBoxItemName.Text != "")
